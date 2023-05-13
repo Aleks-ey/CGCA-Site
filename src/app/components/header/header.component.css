@@ -1,0 +1,25 @@
+.logo > img {
+    aspect-ratio: 1/1;
+    width: 60px;
+}
+
+.header-spacer {
+    flex: 1 1 auto;
+}
+
+.header-right {
+    /* css for adding space between the elements within the header-right div */
+    flex: .1 1 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media screen and (max-width: 830px) {
+    .header-right {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
