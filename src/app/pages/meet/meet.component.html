@@ -1,0 +1,13 @@
+
+<div class="board-card-container flex flex-col md:flex-row">
+    <div class="board-card" *ngFor="let card of cards" 
+    (click)="currentContent = card.content">
+    <img src="{{ card.image }}">
+    <h2>{{ card.name }}</h2>
+    <h3>{{ card.title }}</h3>
+    </div>
+</div>
+
+<div class="card-expanded">
+    {{ currentContent }}
+</div>

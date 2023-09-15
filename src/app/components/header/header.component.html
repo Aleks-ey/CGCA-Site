@@ -1,17 +1,31 @@
-<mat-toolbar class="sticky top-0 z-30 h-20">
-    <a routerLink="/" class="logo hidden lg:flex">
-        <img src="/favicon.ico" alt="Denver Georgian Association">
+<mat-toolbar class="mat_header sticky top-0 z-30 h-20">
+    <a routerLink="/" class="logo block">
+        <img src="assets/images/CGCA-LOGO.png" alt="Colorado Georgian Community Association">
     </a>
-    <a routerLink="/" class="header-title pl-2 lg:pl-5">
-        Denver Georgian Association
+    <a routerLink="/" class="header_title flex pl-1 lg:pl-2 ">
+        Colorado Georgian <br/> Community Association
     </a>
-    <span class="header-spacer"></span>
+    <span class="header_spacer"></span>
 
-    <div class="header-right gap-3">
+    <div class="header_right hidden lg:flex gap-3">
+        <a routerLink="/" class="header_link">Home</a>
+        <a routerLink="/mission" class="header_link">Our Mission</a>
+        <a routerLink="/meet" class="header_link">Meet the Board</a>
+        <a routerLink="/events" class="header_link">Events</a>
+        <a routerLink="/contact" class="header_link">Contact</a>
+        <button class="header_donate text-2xl px-4 py-2">Donate</button>
+    </div>
+
+    <button mat-button class="hamburger" (click)="toggleMenu()" >
+        <mat-icon class="menu_icon" *ngIf="!isMenuOpen">menu</mat-icon>
+        <mat-icon class="close_icon z-20 text-white" *ngIf="isMenuOpen">close</mat-icon>
+    </button>
+
+    <div class="expanded-menu" *ngIf="isMenuOpen">
         <a routerLink="/" class="header-link">Home</a>
-        <a routerLink="/about" class="header-link">About Us</a>
-        <a routerLink="/members" class="header-link">Members</a>
+        <a routerLink="/mission" class="header-link">Our Mission</a>
+        <a routerLink="/meet" class="header-link">Meet the Board</a>
         <a routerLink="/events" class="header-link">Events</a>
-        <a routerLink="/contact" class="header-link">Contact Us</a>
+        <a routerLink="/contact" class="header-link">Contact</a>
     </div>
 </mat-toolbar>

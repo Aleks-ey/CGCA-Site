@@ -4,7 +4,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 @Component({
   selector: 'app-root',
   template: `
-    <div *ngIf="isDesktop || isTablet">
+    <div *ngIf="isDesktop || isTablet" class="h-max">
       <app-header></app-header>
       <router-outlet></router-outlet>
       <app-scroll-to-top></app-scroll-to-top>
@@ -14,13 +14,16 @@ import { DeviceDetectorService } from 'ngx-device-detector';
     <div *ngIf="isMobile">
       <mat-sidenav-container fullscreen class="mobile-home-container">
         <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')">
-          <div class="sidenav-links">
+          <div class="w-32">
             <a routerLink="/" class="logo">
-              <img src="/favicon.ico" alt=" ">
+              <img src="assets/images/CGCA-LOGO.png" alt="CGCA Logo">
             </a>
+          </div>
+          <div class="sidenav-links">
+            
             <a routerLink="/" class="header-link">Home</a>
-            <a routerLink="/about" class="header-link">About Us</a>
-            <a routerLink="/members" class="header-link">Members</a>
+            <a routerLink="/mission" class="header-link">Our Mission</a>
+            <a routerLink="/meet" class="header-link">Meet the Board</a>
             <a routerLink="/events" class="header-link">Events</a>
             <a routerLink="/contact" class="header-link">Contact</a>
           </div>

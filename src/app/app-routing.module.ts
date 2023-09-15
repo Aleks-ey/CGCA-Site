@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { AboutComponent } from './pages/about/about.component';
-import { MembersComponent } from './pages/members/members.component';
+import { MissionComponent } from './pages/mission/mission.component';
+import { MeetComponent } from './pages/meet/meet.component';
 import { EventsComponent } from './pages/events/events.component';
 import { ContactComponent } from './pages/contact/contact.component';
 
@@ -16,12 +16,12 @@ const routes: Routes = [{
   pathMatch: 'full'
 },
 {
-  path: 'about',
-  component: AboutComponent
+  path: 'mission',
+  component: MissionComponent
 },
 {
-  path: 'members',
-  component: MembersComponent
+  path: 'meet',
+  component: MeetComponent
 },
 {
   path: 'events',

@@ -1,0 +1,26 @@
+.board-card {
+    margin: 1vw;
+    /* padding: 10px; */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 5px #ccc;
+    transition: all 0.3s ease-in-out;
+    /* cursor: pointer; */
+    /* center the text without flex */
+    text-align: center;
+
+}
+
+.card-expanded {
+    margin-left: 1vw;
+    margin-right: 1vw;
+    margin-top: 2vw;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 5px #ccc;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+}

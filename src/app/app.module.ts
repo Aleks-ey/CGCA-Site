@@ -15,24 +15,26 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
-import { AboutComponent } from './pages/about/about.component';
-import { MembersComponent } from './pages/members/members.component';
+import { MissionComponent } from './pages/mission/mission.component';
+import { MeetComponent } from './pages/meet/meet.component';
 import { EventsComponent } from './pages/events/events.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
+import { GeorgiaSliderComponent } from './components/georgia-slider/georgia-slider.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    AboutComponent,
-    MembersComponent,
+    MissionComponent,
+    MeetComponent,
     EventsComponent,
     ContactComponent,
     FooterComponent,
-    ScrollToTopComponent
+    ScrollToTopComponent,
+    GeorgiaSliderComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,6 @@ import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.c
     MatSidenavModule,
     MatTabsModule,
     MatToolbarModule,
-    
   ],
   providers: [],
   bootstrap: [AppComponent]
