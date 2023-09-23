@@ -4,28 +4,32 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 @Component({
   selector: 'app-root',
   template: `
-    <div *ngIf="isDesktop || isTablet" class="h-max">
+    <div *ngIf="isDesktop || isTablet || isMobile" class="h-max">
       <app-header></app-header>
       <router-outlet></router-outlet>
       <app-scroll-to-top></app-scroll-to-top>
       <app-footer></app-footer>
     </div>
 
-    <div *ngIf="isMobile">
-      <mat-sidenav-container fullscreen class="mobile-home-container">
-        <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')">
+    <!-- <div *ngIf="isMobile">
+      <mat-sidenav-container fullscreen class="mobile_home_container">
+        <mat-sidenav #sidenav mode="side" 
+        [(opened)]="opened" 
+        (opened)="events.push('open!')" 
+        (closed)="events.push('close!')"
+        class="sidenav_container">
           <div class="w-32">
             <a routerLink="/" class="logo">
               <img src="assets/images/CGCA-LOGO.png" alt="CGCA Logo">
             </a>
           </div>
-          <div class="sidenav-links">
+          <div class="sidenav_links">
             
-            <a routerLink="/" class="header-link">Home</a>
-            <a routerLink="/mission" class="header-link">Our Mission</a>
-            <a routerLink="/meet" class="header-link">Meet the Board</a>
-            <a routerLink="/events" class="header-link">Events</a>
-            <a routerLink="/contact" class="header-link">Contact</a>
+            <a routerLink="/" class="header_link">Home</a>
+            <a routerLink="/mission" class="header_link">Our Mission</a>
+            <a routerLink="/meet" class="header_link">Meet the Board</a>
+            <a routerLink="/events" class="header_link">Events</a>
+            <a routerLink="/contact" class="header_link">Contact</a>
           </div>
         </mat-sidenav>
       
@@ -39,7 +43,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
         </mat-sidenav-content>
         
       </mat-sidenav-container> 
-    </div>
+    </div> -->
   `,
   styleUrls: ['./app.component.css']
 })

@@ -96,7 +96,7 @@ export class HomeComponent {
       this.isCgcaHeaderVisible = false;
     }
 
-    if (topPosition <= (windowHeight - 560) && topPosition >= -560) {
+    if (topPosition <= (windowHeight - 200) && topPosition >= -200) {
       this.isCgcaBodyVisible = true;
     }
     else {

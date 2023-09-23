@@ -1,8 +1,12 @@
-<mat-toolbar class="mat_header sticky top-0 z-30 h-20">
+<mat-toolbar class="mat_header sticky top-0 z-30 h-20 !px-0 md:!px-4">
     <a routerLink="/" class="logo block">
         <img src="assets/images/CGCA-LOGO.png" alt="Colorado Georgian Community Association">
     </a>
-    <a routerLink="/" class="header_title flex pl-1 lg:pl-2 ">
+    <a routerLink="/" class="header_title flex flex-col pl-1 lg:pl-2" *ngIf="!isMenuOpen">
+        <h1 class="header_title_text !mb-0">CGCA</h1>
+        <!-- <h1 class="header_title_text2 !mb-0">Community Association</h1> -->
+    </a>
+    <a routerLink="/" class="header_title2 flex pl-1 lg:pl-2" *ngIf="isMenuOpen">
         Colorado Georgian <br/> Community Association
     </a>
     <span class="header_spacer"></span>
@@ -17,8 +21,8 @@
     </div>
 
     <button mat-button class="hamburger" (click)="toggleMenu()" >
-        <mat-icon class="menu_icon" *ngIf="!isMenuOpen">menu</mat-icon>
-        <mat-icon class="close_icon z-20 text-white" *ngIf="isMenuOpen">close</mat-icon>
+        <mat-icon class="menu_icon !mr-0" *ngIf="!isMenuOpen">menu</mat-icon>
+        <mat-icon class="close_icon z-20 text-white !mr-0" *ngIf="isMenuOpen">close</mat-icon>
     </button>
 
     <div class="expanded-menu" *ngIf="isMenuOpen">
