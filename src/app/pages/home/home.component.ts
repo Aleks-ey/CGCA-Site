@@ -9,6 +9,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 })
 export class HomeComponent {
   
+  // --------------------- Unity word change animation ---------------------
   originalWord: string = 'ERTOBA';
   word: string = this.originalWord;
   animationInterval?: number;
@@ -75,10 +76,12 @@ export class HomeComponent {
   }
 
   getFontSize(): string {
-    return this.word === this.originalWord ? '20vw' : '20vw'; // Adjust sizes as needed
+    return this.word === this.originalWord ? '5vw' : '5vw'; // Adjust sizes as needed
   }
 
-  // ----------------- cgca_welcome -------------------
+  // --------------------- --------------------- ---------------------
+
+  // --------------------- cgca_welcome ---------------------
 
   isCgcaHeaderVisible:boolean = false;
   isCgcaBodyVisible:boolean = false;

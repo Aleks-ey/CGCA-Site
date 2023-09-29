@@ -1,4 +1,4 @@
-<mat-toolbar class="mat_header sticky top-0 z-30 h-20 !px-0 md:!px-4">
+<mat-toolbar class="mat_header sticky top-0 z-50 h-20 !px-0 md:!px-4">
     <a routerLink="/" class="logo block">
         <img src="assets/images/CGCA-LOGO.png" alt="Colorado Georgian Community Association">
     </a>
@@ -12,12 +12,13 @@
     <span class="header_spacer"></span>
 
     <div class="header_right hidden lg:flex gap-3">
-        <a routerLink="/" class="header_link">Home</a>
         <a routerLink="/mission" class="header_link">Our Mission</a>
         <a routerLink="/meet" class="header_link">Meet the Board</a>
         <a routerLink="/events" class="header_link">Events</a>
         <a routerLink="/contact" class="header_link">Contact</a>
-        <button class="header_donate text-2xl px-4 py-2">Donate</button>
+        <span class="header_spacer"></span>
+        <a routerLink="/" class="header_volunteer_link">Volunteer</a>
+        <button class="header_donate px-4 py-2">Donate</button>
     </div>
 
     <button mat-button class="hamburger" (click)="toggleMenu()" >

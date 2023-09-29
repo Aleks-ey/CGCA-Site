@@ -1,0 +1,56 @@
+<div class="event_container flex flex-col md:flex-row">
+    <div class="event_container_left flex flex-col md:w-1/3 mx-auto pb-6">
+        <div class="upcoming_events ml-4 mt-4">
+            <h1>Upcoming Events</h1>
+            <p>
+                Check out all of our upcoming events within the next two months.
+                We hope to see you there!
+            </p>
+        </div>
+        <div class="event_slider_buttons flex flex-row ml-auto mr-6">
+            <button (click)="onPrevious()" class="event_slider_button_left">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <button (click)="onNext()" class="event_slider_button_right">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="event_container_right flex flex-row md:2/3 justify-center">
+        <div 
+            class="event_card_container"
+            *ngFor="let event of eventsList, let i = index"
+            [ngClass]=""
+        >
+            <!-- <div 
+                class="event_card mx-6 my-8"
+                *ngIf="i == currentEvent" 
+                @eventsAnimation
+            > -->
+            <div 
+                class="event_card mx-6 my-8"
+                @eventsAnimation
+            >
+                <img src="/assets/images/MotherOfGeorgia.jpg" class="event_card_img h-2/5 m-4">
+                <h2 class="!ml-4">
+                    {{ event.title }}
+                </h2>
+                <p class="h-1/5 !ml-4 overflow-scroll">
+                    {{ event.description }}
+                </p>
+                <div class="ml-4">
+                    {{ event.date }}
+                    {{ event.time }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="event_calendar_container flex justify-center">
+    <div class="event_calendar flex flex-col md:w-1/3 md:mx-auto justify-center">
+        <mat-card class="demo-inline-calendar-card">
+            <mat-calendar [(selected)]="selected"></mat-calendar>
+        </mat-card>
+        <p>Selected date: {{selected}}</p>
+    </div>
+</div>

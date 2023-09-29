@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminComponent } from './pages/admin/admin.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MissionComponent } from './pages/mission/mission.component';
 import { MeetComponent } from './pages/meet/meet.component';
@@ -14,6 +15,10 @@ const routes: Routes = [{
   path: '',
   redirectTo: '/home',
   pathMatch: 'full'
+},
+{
+  path: 'admin',
+  component: AdminComponent
 },
 {
   path: 'mission',

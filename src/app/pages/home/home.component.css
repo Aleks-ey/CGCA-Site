@@ -1,13 +1,100 @@
 .home_header {
-    height: 50vw;
+    /* height: 40vw; */
+    width: 90vw;
+}
+
+.home_header_left {
+    width: 45%;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
+}
+
+.home_header_left > h1 {
+    font-family: Merriweather;
+    font-size: 4vw;
+    line-height: 1.1;
+
+    @media screen and (max-width: 768px) {
+        font-size: 8vw;
+    }
+}
+
+.home_header_left > p {
+    margin-top: 1vw;
+    font-family: Oxygen;
+    font-size: x-large;
+    line-height: 1.1;
+}
+
+.home_header_left > hr {
+    margin-top: 2vw;
+    background: black;
+    height: 4px;
+}
+
+.home_header_volunteer {
+    background-color: transparent;
+    border-color: #dc2626;
+    border-radius: 10px;
+    border-width: 1px;
+    border-style: solid;
+    color: #dc2626;
+    font-family: var(--wp--preset--font-family--good);
+    font-size: clamp(0.875rem, 0.875rem + ((1vw - 0.48rem) * 0.481), 1.125rem);
+    font-weight: 700;
+    line-height: 1;
+    padding-top: 1.188rem;
+    padding-right: 2rem;
+    padding-bottom: 1.188rem;
+    padding-left: 2rem;
+    text-decoration: none;
+}
+
+.home_header_volunteer:hover {
+    background-color: #dc2626;
+    border-color: #dc2626;
+    color: white;
+}
+
+.home_header_donate {
+    background-color: #dc2626;
+    border-color: #dc2626;
+    border-radius: 10px;
+    border-width: 1px;
+    border-style: solid;
+    color: white;
+    font-family: var(--wp--preset--font-family--good);
+    font-size: clamp(0.875rem, 0.875rem + ((1vw - 0.48rem) * 0.481), 1.125rem);
+    font-weight: 700;
+    line-height: 1;
+    padding-top: 1.188rem;
+    padding-right: 2.5rem;
+    padding-bottom: 1.188rem;
+    padding-left: 2.5rem;
+    text-decoration: none;
+}
+
+.home_header_donate:hover {
+    background-color: white;
+    border-color: #dc2626;
+    color: #dc2626;
+}
+
+.unity_div {
+    /* height: 30vw; */
+    width: 55%;
     background-image: url("/assets/images/Tbilisi1.jpg");
     background-size: cover;
     /* background-size: 100% 125%; */
     background-attachment: fixed;
     align-items: center;
+    /* align-self: flex-end; */
 
     @media screen and (max-width: 768px) {
         height: 100vw;
+        width: 100%;
     }
 }
 
@@ -16,11 +103,162 @@
     color: black;
     mix-blend-mode: screen;
     background-color: rgb(244, 220, 211);
+    font-size: 5vw;
+
+    @media screen and (max-width: 768px) {
+        font-size: 10vw;
+    }
+}
+
+/* .home_header_cgca {
+    transform: translateY(0px);
+    opacity: 1;
+    transition: transform 2s, opacity 2s;
+} */
+
+/* .home_header_cgca.animate {
+    transform: translateY(100px);
+    opacity: 0;
+} */
+
+.home_header_cgca > h2 {
+    font-size: 35px;
+    font-family: Merriweather;
+    line-height: 1;
+}
+
+@keyframes background-pan {
+    from {
+        background-position: 0% center;
+    }
+    to {
+        background-position: -200% center;
+    }
+}
+
+.home_header_cgca > h2 > span {
+    /* animation: background-pan 3s linear infinite; */
+    /* background: linear-gradient(to right, #dc2626 50%, black 50%); */
+    background-color: black;
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.home_header_cgca > h2 > .cgca_pan1 {
+    animation-delay: 0s;
+}
+
+.home_header_cgca > h2 > .cgca_pan2 {
+    animation-delay: 1s;
+}
+
+.home_header_cgca > h2 > .cgca_pan3 {
+    animation-delay: 2s;
+}
+
+.home_header_cgca > h2 > .cgca_pan4 {
+    animation-delay: 3s;
 }
 
 /* .overlay_buttons {
     transform: translate(0%, -50%);
 } */
+
+/* ----------------------------- Home Mission ----------------------------- */
+
+.home_mission_header > h2{
+    font-size: xx-large;
+}
+
+.home_mission_card > h3 {
+    font-size: x-large;
+    font-family: Merriweather;
+    line-height: 1;
+}
+
+.home_mission_card > p {
+    font-size: 18px;
+    line-height: 28px;
+}
+
+/* -----------------------------  ----------------------------- */
+
+/* ----------------------------- About ----------------------------- */
+.home_about {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+
+    @media screen and (max-width: 768px) {
+    }
+}
+
+.home_about_header > h2 {
+    font-size: xx-large;
+}
+
+.about_card {
+    position: sticky;
+    top: 10vw;
+    width: 90%;
+    height: 80vh;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    box-shadow: gray 0px 0px 5px;
+    border-radius: 10px;
+
+    @media screen and (max-width: 768px) {
+        top: 35vw;
+        height: 135vw;
+    }
+}
+
+.about_card_left {
+    margin: 10vh 20px 0 50px;
+
+    @media screen and (max-width: 768px) {
+        margin: 10vw 30px 0 30px;
+
+    }
+}
+
+.about_card_left > h3 {
+    font-size: xx-large;
+
+    @media screen and (max-width: 768px) {
+    }
+}
+
+.about_card_left > p {
+    font-size: 18px;
+    line-height: 1.3;
+
+    @media screen and (max-width: 768px) {
+        font-size: 16px;
+    }
+}
+
+.about_card_right {
+    margin: 10vh 30px 0 30px;
+
+    @media screen and (max-width: 768px) {
+        margin: 10vw 30px 0 30px;
+    }
+}
+
+.about_card_right > img {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5vw;
+    object-fit: cover;
+    border-radius: 5px;
+}
+/* -----------------------------  ----------------------------- */
 
 /* ----------------------------- CGCA ----------------------------- */
 .home_cgca {
@@ -72,7 +310,7 @@
 
 .home_cgca_body_left {
     /* width: 70%; */
-    min-height: 75%;
+    height: 35vw;
     /* background-color: #F4DCD3; */
     /* background-color: #edd4ab; */
     background-color: white;
@@ -119,34 +357,59 @@
     position: relative;
 
     @media screen and (max-width: 768px) {
-        /* height: 100vw; */
+        height: 100vw;
     }
 }
-/* -----------------------------  ----------------------------- */
 
-/* ----------------------------- GEORGIA ----------------------------- */
-.home_georgia {
-    justify-content: center;
+.home_ertoba_body {
+    width: 100%;
+    /* height: 50vw; */
     align-items: center;
-    height: auto;
-    /* width: 100%; */
-    position: relative;
+    background-color: #dc2626;
+    box-shadow: inset 0px 0px 20px black;
+
+    transform: translateY(0px);
+    opacity: 1;
+    transition: transform 2s, opacity 2s;
 
     @media screen and (max-width: 768px) {
+        width: 96%;
         /* height: 100vw; */
     }
 }
 
-.home_georgia_header_text {
-    font-size: 35px;
-    font-family: "Playfair Display", serif;
-    line-height: 1;
+.home_ertoba_body_right {
+    /* width: 70%; */
+    height: 35vw;
+    /* background-color: #F4DCD3; */
+    /* background-color: #edd4ab; */
+    background-color: white;
+    /* background-color: #1E293B; */
+    box-shadow:  black 0px 0px 15px;
+
+    @media screen and (max-width: 768px) {
+        min-height: auto;
+        background-color: #1E293B;
+        color: white;
+    }
 }
 
-.georgia_slideshow {
-    width: 100%;
-    height: 100%;
-    /* background: #c53636; */
+.home_ertoba_body_left {
+    /* width: 70%; */
+    /* height: 90%; */
+    align-items: center;
+    background-color: #1E293B;
+    box-shadow: black 0px 0px 15px;
+}
+
+.home_ertoba_body_left > img {
+    min-width: 90%;
+    min-height: 90%;
+
+    @media screen and (max-width: 768px) {
+        width: auto;
+        height: auto;
+    }
 }
 /* -----------------------------  ----------------------------- */
 
@@ -160,7 +423,7 @@
     position: relative;
 
     @media screen and (max-width: 768px) {
-        height: 100vw;
+        height: 130vw;
     }
 }
 
@@ -168,23 +431,25 @@
     width: 90%;
     height: 100%;
     background-color: #dc2626;
+    border-radius: 10px;
     box-shadow: inset 0px 0px 20px black;
     
     @media screen and (max-width: 768px) {
-        width: 99%;
+        width: 90%;
     }
 }
 
 .support_box2 {
     align-self: center;
-    width: 70%;
-    height: 60%;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
     background-color: #1E293B;
     box-shadow: black 5px 5px 10px;
 
     @media screen and (max-width: 768px) {
-        width: 90%;
-        height: 80%;
+        width: 100%;
+        height: 100%;
     }
 }
 

@@ -1,0 +1,59 @@
+.event_container_left {
+    background-color: #1E293B;
+}
+
+.upcoming_events {
+    color: white;
+}
+
+.upcoming_events > h1 {
+    font-size: 2.5em;
+    font-weight: 300;
+}
+
+.upcoming_events > p {
+    font-size: 1.5em;
+    font-weight: 100;
+}
+
+.event_slider_buttons {
+    width: auto;
+    color: white;
+    transform: scale(1.5);
+}
+
+.event_container_right {
+    background-color: #DC2626;
+    height: 510px;
+    overflow-x: scroll;
+}
+
+.event_card_container {
+    position: relative;
+    width: 320px;
+    height: 440px;
+    align-items: center;
+    
+}
+
+.event_card {
+    position: absolute;
+    width: 320px;
+    height: 440px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: black 0px 0px 10px;
+    overflow: hidden;
+}
+
+.event_card_img {
+    box-shadow: black 0px 0px 10px;
+    border-radius: 10px 10px 0 0;
+}
+
+.event_calendar {
+    /* width: 98%; */
+    /* height: 100%; */
+    background-color: #fff;
+    border-radius: 5px;
+}

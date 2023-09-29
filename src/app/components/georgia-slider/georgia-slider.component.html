@@ -1,37 +1,45 @@
-<div class="georgia_slider_body flex flex-col md:flex-row mx-auto p-6 justify-center">
-    <!-- <div class="slider" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
-        <img *ngFor="let photo of displayedPhotos; let i = index"
-            [src]="photo.src"
-            [ngClass]="{'big': i === 2, 'medium': i === 1 || i === 3, 'small': i === 0 || i === 4}"
-            (click)="onPhotoClick(i)"
-            class="slider_photos">
-    </div> -->
-    <div class="georgia_slider_body_left flex flex-col w-1/2 pr-6">
-        <div class="slider_buttons flex flex-row">
-            <button (click)="onPrevious()" class="slider_button_left">
-                <mat-icon>keyboard_arrow_left</mat-icon>
-            </button>
-            <button (click)="onNext()" class="slider_button_right">
-                <mat-icon>keyboard_arrow_right</mat-icon>
-            </button>
-        </div>
-        <div class="mt-10">
-            <h2 class="georgia_slider_body_left_header">{{ displayedPhotos[2].catagory }}</h2>
-            <p class="georgia_slider_body_left_text">
-                {{ displayedPhotos[2].catagoryDescription }}
-            </p>
-        </div>
-    </div>
+<div class="home_georgia flex flex-col mt-auto md:mt-0">
+    <img [src]="displayedPhotos[2].src"
+        alt="Georgia Flag"
+        class="home_georgia_bg_img absolute opacity-5 w-full h-full z-10"
+    >
+    <h2 class="home_georgia_header_text z-20 !mt-24">About Georgia</h2>
 
-    <div class="georgia_slider_body_right flex flex-col w-1/2">
-        <div class="main_photo_div">
-            <img [src]="displayedPhotos[2].src" [alt]="displayedPhotos[2].alt" class="main_photo">
+    <div class="georgia_slider_body flex flex-col md:flex-row mx-auto mb-24 p-6 justify-center z-20">
+        <!-- <div class="slider" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
+            <img *ngFor="let photo of displayedPhotos; let i = index"
+                [src]="photo.src"
+                [ngClass]="{'big': i === 2, 'medium': i === 1 || i === 3, 'small': i === 0 || i === 4}"
+                (click)="onPhotoClick(i)"
+                class="slider_photos">
+        </div> -->
+        <div class="georgia_slider_body_left flex flex-col md:w-1/2 pr-6">
+            <div class="slider_buttons flex flex-row">
+                <button (click)="onPrevious()" class="slider_button_left">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+                <button (click)="onNext()" class="slider_button_right">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+            <div class="mt-10">
+                <h2 class="georgia_slider_body_left_header">{{ displayedPhotos[2].catagory }}</h2>
+                <p class="georgia_slider_body_left_text">
+                    {{ displayedPhotos[2].catagoryDescription }}
+                </p>
+            </div>
         </div>
-        <div>
-            <h2 class="georgia_slider_body_right_header">{{ displayedPhotos[2].title }}</h2>
-            <p class="georgia_slider_body_right_text">
-                {{ displayedPhotos[2].description }}
-            </p>
+    
+        <div class="georgia_slider_body_right flex flex-col md:w-1/2">
+            <div class="main_photo_div">
+                <img [src]="displayedPhotos[2].src" [alt]="displayedPhotos[2].alt" class="main_photo">
+            </div>
+            <div class="georgia_slider_body_right_lower">
+                <h2 class="georgia_slider_body_right_header">{{ displayedPhotos[2].title }}</h2>
+                <p class="georgia_slider_body_right_text">
+                    {{ displayedPhotos[2].description }}
+                </p>
+            </div>
         </div>
     </div>
 </div>

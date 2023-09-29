@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Photo } from './photo.model';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-georgia-slider',
   templateUrl: './georgia-slider.component.html',
-  styleUrls: ['./georgia-slider.component.css']
+  styleUrls: ['./georgia-slider.component.css'],
 })
 export class GeorgiaSliderComponent {
   photos: Photo[] = [

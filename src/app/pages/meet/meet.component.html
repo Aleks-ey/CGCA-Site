@@ -1,13 +1,29 @@
 
-<div class="board-card-container flex flex-col md:flex-row">
-    <div class="board-card" *ngFor="let card of cards" 
-    (click)="currentContent = card.content">
+<div class="board_card_container flex flex-col md:flex-row">
+    <div class="board_card" *ngFor="let card of cards" 
+    (click)="currentImg = card.image"
+    (click)="currentName = card.name"
+    (click)="currentTitle = card.title"
+    (click)="currentContent1 = card.content1"
+    (click)="currentContent2 = card.content2"
+    (click)="currentContent3 = card.content3"
+    (click)="currentContent4 = card.content4">
     <img src="{{ card.image }}">
     <h2>{{ card.name }}</h2>
     <h3>{{ card.title }}</h3>
     </div>
 </div>
 
-<div class="card-expanded">
-    {{ currentContent }}
+<div class="card_expanded flex flex-row">
+    <div class="card_expanded_img flex flex-col w-1/3">
+        <img src="{{ currentImg }}"> 
+        <h2>{{ currentName }}</h2>
+        <h3>{{ currentTitle }}</h3>
+    </div>
+    <div class="flex flex-col w-2/3 p-8 justify-center items-center">
+        <p>{{ currentContent1 }}</p>
+        <p>{{ currentContent2 }}</p>
+        <p>{{ currentContent3 }}</p>
+        <p>{{ currentContent4 }}</p>
+    </div>
 </div>

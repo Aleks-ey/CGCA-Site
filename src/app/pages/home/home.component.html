@@ -1,10 +1,33 @@
-<div class="home_header flex justify-center">
-    <h1 id="ertoba" class="unity flex h-3/5 justify-center p-4" 
-    (mouseover)="onMouseOver()" 
-    (mouseout)="onMouseOut()"
-    [ngStyle]="{'font-size': getFontSize()}">
-    {{ word }}
-    </h1>
+<div class="home_header flex flex-col md:flex-row justify-center mt-14 mx-auto md:mx-10">
+    <div class="home_header_left flex flex-col mr-4">
+        <h1>
+            Welcome to the Heart of Georgian Culture in Colorado! 
+        </h1>
+        <p>
+            Join Us: Be Part of a Vibrant Georgian Legacy.
+        </p>
+        <div class="home_header_buttons mt-8">
+            <button class="home_header_volunteer mr-2">Volunteer</button>
+            <button class="home_header_donate">Donate</button>
+        </div>
+        <!-- <hr class="hidden md:block"/> -->
+    </div>
+    <div class="unity_div flex mt-12 md:mt-0 justify-center">
+        <p id="ertoba" class="unity flex h-1/3 justify-center p-4" 
+        (mouseover)="onMouseOver()" 
+        (mouseout)="onMouseOut()">
+        {{ word }}
+        </p>
+    </div>
+</div>
+
+<div class="home_header_cgca flex flex-col mt-28 justify-center text-center" >
+    <h2>
+        <span class="cgca_pan1">C</span>olorado 
+        <span class="cgca_pan2">G</span>eorgian 
+        <span class="cgca_pan3">C</span>ommunity 
+        <span class="cgca_pan4">A</span>ssociation
+    </h2>
 </div>
 
 <!-- <div class="overlay_buttons hidden md:flex flex-row justify-between ml-40 mr-40">
@@ -22,57 +45,121 @@
     </div>
 </div> -->
 
-<div class="home_cgca">
-    <div class="home_cgca_header flex flex-col mt-12 justify-center text-center" >
-        <h2 class="home_cgca_header_text">Colorado Georgian Community Association</h2>
+<div class="home_mission flex justify-center">
+    <!-- <div class="home_mission_header mt-10 text-center">
+        <h2>Learn More About Our Mission</h2>
+    </div> -->
+    <div class="home_mission_container flex flex-col md:flex-row px-10 mt-10 justify-center md:space-x-16 text-center">
+        <div class="home_mission_card flex flex-col md:w-1/4 text-center">
+            <img src="assets/images/CGCA-LOGO.png" alt="Colorado Georgian Community Association">
+            <h3>Promoting Georgian Culture</h3>
+            <p>
+                Discover the rich tapestry of Georgian culture and heritage right here in Colorado. 
+                Join us as we celebrate the timeless traditions and vibrant history of Georgia.
+            </p>
+        </div>
+        <div class="home_mission_card flex flex-col md:w-1/4 text-center">
+            <img src="assets/images/PaperPeople.svg" alt="Colorado Georgian Community Association">
+            <h3>Uniting the Georgian Community</h3>
+            <p>
+                Come together as the Georgian community in Colorado, 
+                standing united in our shared journey towards growth, success, and development. 
+                Let's inspire, engage, and uplift one another in the spirit of unity.
+            </p>
+        </div>
+        <div class="home_mission_card flex flex-col md:w-1/4 text-center">
+            <img src="assets/images/Book.svg" alt="Colorado Georgian Community Association">
+            <h3>Educating Georgian Youth</h3>
+            <p>
+                Offering educational initiatives in Colorado dedicated to preserving the rich essence of Georgian culture. 
+                Join us in celebrating and learning about our cherished traditions and heritage.
+            </p>
+        </div>
     </div>
-    <div class="home_cgca_body flex flex-col md:flex-row mt-12 mx-auto p-6 justify-center" [ngClass]="{'animate': isCgcaBodyVisible}">
-        <div class="home_cgca_body_left flex flex-col md:w-1/3 px-6 py-2 justify-center text-center">
-            <h2 class="home_cgca_body_left_header">Our Mission</h2>
-            <p class="home_cgca_body_left_text">
+</div>
+
+<div class="home_about">
+    <div class="home_about_header flex mt-32 justify-center text-center">
+        <h2>About Georgia</h2>
+    </div>
+    <div class="about_card flex flex-col md:flex-row mt-16">
+        <div class="about_card_left">
+            <h3>Georgia</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+                nisi ut aliquip ex ea commodo consequat.
+            </p>
+        </div>
+        <div class="about_card_right">
+            <img src="assets/images/MotherOfGeorgia2.jpg"/>
+        </div>
+    </div>
+    <div class="about_card flex flex-col md:flex-row mt-12 z-10">
+        <div class="about_card_left">
+            <h3>Food</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+                nisi ut aliquip ex ea commodo consequat.
+            </p>
+        </div>
+        <div class="about_card_right">
+            <img src="assets/images/GeorgianFood.jpg"/>
+        </div>
+    </div>
+    <div class="about_card flex flex-col md:flex-row mt-12 z-20">
+        <div class="about_card_left">
+            <h3>Dance</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+                nisi ut aliquip ex ea commodo consequat.
+            </p>
+        </div>
+        <div class="about_card_right">
+            <img src="assets/images/GeorgianDance.jpg"/>
+        </div>
+    </div>
+    <div class="about_card flex flex-col md:flex-row mt-12 z-30">
+        <div class="about_card_left">
+            <h3>Religion</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+                nisi ut aliquip ex ea commodo consequat.
+            </p>
+        </div>
+        <div class="about_card_right">
+            <img src="assets/images/Tbilisi3.jpg"/>
+        </div>
+    </div>
+</div>
+
+<!-- <app-georgia-slider></app-georgia-slider> -->
+
+<!-- <div class="home_ertoba mt-32">
+    <div class="home_ertoba_body flex flex-col md:flex-row mx-auto p-6 justify-center">
+        <div class="home_ertoba_body_left flex flex-col md:w-2/3 justify-center text-center">
+            <img src="assets/images/MotherOfGeorgia.jpg" 
+            alt="Colorado Georgian Community Association"
+            class="md:p-4">
+        </div>
+        <div class="home_ertoba_body_right flex flex-col md:w-1/3 px-6 py-2 justify-center text-center">
+            <h2 class="home_ertoba_body_right_header">What is Erotba?</h2>
+            <p class="home_ertoba_body_right_text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
             nisi ut aliquip ex ea commodo consequat.
             </p>
         </div>
-        <div class="home_cgca_body_right flex flex-col md:w-2/3 justify-center text-center">
-            <img src="assets/images/MotherOfGeorgia.jpg" 
-            alt="Colorado Georgian Community Association"
-            class="md:p-4">
-        </div>
     </div>
-</div>
-
-<div class="home_georgia flex flex-col mt-auto md:mt-0">
-    <img src="assets/images/GeorgianFood.jpg"
-        alt="Georgia Flag"
-        class="home_georgia_flag absolute opacity-5 w-full h-full z-10"
-    >
-    <h2 class="home_georgia_header_text z-20 !mt-24">About Georgia</h2>
-    <div class="georgia_slideshow mb-24 z-20">
-        <app-georgia-slider></app-georgia-slider>
-    </div>
-</div>
-
-<div class="home_ertoba">
-    <div class="home_cgca_body flex flex-col md:flex-row mx-auto p-6 justify-center">
-        <div class="home_cgca_body_right flex flex-col md:w-2/3 justify-center text-center">
-            <img src="assets/images/MotherOfGeorgia.jpg" 
-            alt="Colorado Georgian Community Association"
-            class="md:p-4">
-        </div>
-        <div class="home_cgca_body_left flex flex-col md:w-1/3 px-6 py-2 justify-center text-center">
-            <h2 class="home_cgca_body_left_header">What is Erotba?</h2>
-            <p class="home_cgca_body_left_text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
-            nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
-    </div>
-</div>
+</div> -->
 
 <!-- <div class="home_georgia flex flex-col mt-24">
     <h2 class="home_georgia_header_text">About Georgia</h2>

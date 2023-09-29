@@ -5,3 +5,53 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@font-face {
+    font-family: AbrilFatface;
+    src: url(./assets/fonts/AbrilFatface-Regular.ttf);
+}
+
+@font-face {
+    font-family: BebasNeue;
+    src: url(./assets/fonts/BebasNeue-Regular.ttf);
+}
+
+@font-face {
+    font-family: FragmentMono;
+    src: url(./assets/fonts/FragmentMono-Regular.ttf);
+}
+
+@font-face {
+    font-family: JosefinSans;
+    src: url(./assets/fonts/JosefinSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: Lobster;
+    src: url(./assets/fonts/Lobster-Regular.ttf);
+}
+
+@font-face {
+    font-family: MartianMono;
+    src: url(./assets/fonts/MartianMono-Regular.ttf);
+}
+
+@font-face {
+    font-family: Merriweather;
+    src: url(./assets/fonts/Merriweather-Regular.ttf);
+}
+
+@font-face {
+    font-family: Oxygen;
+    src: url(./assets/fonts/Oxygen-Regular.ttf);
+}
+
+@font-face {
+    font-family: RobotoSlab;
+    src: url(./assets/fonts/RobotoSlab-Regular.ttf);
+}
+
+@font-face {
+    font-family: TiltPrism;
+    src: url(./assets/fonts/TiltPrism-Regular.ttf);
+}
