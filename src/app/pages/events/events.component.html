@@ -1,13 +1,13 @@
 <div class="event_container flex flex-col md:flex-row">
     <div class="event_container_left flex flex-col md:w-1/3 mx-auto pb-6">
-        <div class="upcoming_events ml-4 mt-4">
+        <div class="upcoming_events ml-4 mt-4 md:mt-28">
             <h1>Upcoming Events</h1>
             <p>
                 Check out all of our upcoming events within the next two months.
                 We hope to see you there!
             </p>
         </div>
-        <div class="event_slider_buttons flex flex-row ml-auto mr-6">
+        <div class="event_slider_buttons flex flex-row ml-auto mr-6 md:mt-24">
             <button (click)="onPrevious()" class="event_slider_button_left">
                 <mat-icon>keyboard_arrow_left</mat-icon>
             </button>
@@ -35,7 +35,7 @@
                 <h2 class="!ml-4">
                     {{ event.title }}
                 </h2>
-                <p class="h-1/5 !ml-4 overflow-scroll">
+                <p class="h-1/5 !ml-4 overflow-y-scroll">
                     {{ event.description }}
                 </p>
                 <div class="ml-4">
@@ -46,7 +46,7 @@
         </div>
     </div>
 </div>
-<div class="event_calendar_container flex justify-center">
+<div class="event_calendar_container mt-20 flex justify-center">
     <div class="event_calendar flex flex-col md:w-1/3 md:mx-auto justify-center">
         <mat-card class="demo-inline-calendar-card">
             <mat-calendar [(selected)]="selected"></mat-calendar>

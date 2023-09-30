@@ -27,10 +27,10 @@
     </button>
 
     <div class="expanded-menu" *ngIf="isMenuOpen">
-        <a routerLink="/" class="header-link">Home</a>
-        <a routerLink="/mission" class="header-link">Our Mission</a>
-        <a routerLink="/meet" class="header-link">Meet the Board</a>
-        <a routerLink="/events" class="header-link">Events</a>
-        <a routerLink="/contact" class="header-link">Contact</a>
+        <a routerLink="/" class="header-link" (click)="closeMenu()">Home</a>
+        <a routerLink="/mission" class="header-link" (click)="closeMenu()">Our Mission</a>
+        <a routerLink="/meet" class="header-link" (click)="closeMenu()">Meet the Board</a>
+        <a routerLink="/events" class="header-link" (click)="closeMenu()">Events</a>
+        <a routerLink="/contact" class="header-link" (click)="closeMenu()">Contact</a>
     </div>
 </mat-toolbar>
