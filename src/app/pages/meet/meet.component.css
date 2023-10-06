@@ -1,5 +1,10 @@
+.board_card_container {
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+}
+
 .board_card {
-    margin: 1vw;
+    margin: 1vw 0.5vw 1vw 0.5vw;
     /* padding: 10px; */
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -10,6 +15,64 @@
     /* center the text without flex */
     text-align: center;
 
+    @media screen and (max-width: 764px) {
+        margin-left: 5vw;
+        margin-right: 5vw;
+        margin-bottom: 4vw;
+        box-shadow: 0 0 10px #aaa;
+    }
+}
+
+.back {
+    @media screen and (max-width: 764px) {
+        transform: rotateY(180deg);
+        transition: all 0.6s ease-in-out;
+    }
+}
+
+.back_img {
+    @media screen and (max-width: 764px) {
+        height: 0;
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+    }
+}
+
+.front {
+    @media screen and (max-width: 764px) {
+        transform: rotateY(0deg);
+        transition: all 0.6s ease-in-out;
+    }
+}
+
+.front_text {
+
+    @media screen and (max-width: 764px) {
+        height: 0;
+        opacity: 0;
+        display: none;
+    }
+}
+
+.board_card_top > img {
+    object-fit: cover;
+    border-radius: 5px 5px 0 0;
+    height: 100%;
+}
+
+.board_card_bottom > h2 {
+    padding-top: 4vw;
+
+    @media screen and (max-width: 764px) {
+        font-size: x-large;
+    }
+}
+
+.board_card_bottom > h3 {
+
+    @media screen and (max-width: 764px) {
+        font-size: large;
+    }
 }
 
 .card_expanded {
@@ -25,6 +88,11 @@
     text-align: center;
 }
 
-.card_expanded_img > img {
+.card_expanded_left > img {
     object-fit: cover;
+    border-radius: 5px;
+}
+
+.card_expanded_left > h2 {
+    padding-top: 4vw;
 }

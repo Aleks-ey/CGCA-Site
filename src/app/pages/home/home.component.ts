@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
@@ -10,45 +10,82 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 export class HomeComponent {
   
   // --------------------- Unity word change animation ---------------------
-  originalWord: string = 'ERTOBA';
-  word: string = this.originalWord;
-  animationInterval?: number;
-  maxIterations = 5;
-  iterations = 0;
-  lastIndex = 0;
-
+  originalWord: string = 'UNITY';
+  alternativeWord: string = 'ERTOBA';
+  word: string = this.alternativeWord;
   synonyms: string[] = ['UNION', 'WHOLE', 'PEACE', 'LOVE', 'OJAKHI', 'IMEDI', 'ERTAD'];
+  synonymChangeInterval?: number;
+  wordChangeTimeout?: number;
+  displayingOriginalWord: boolean = false;
 
-  onMouseOver(): void {
-    this.iterations = 0;
-    this.startAnimation(() => {
-      this.word = "UNITY";
-      this.clearInterval();
-    });
+  ngOnInit(): void {
+    this.startCycle();
   }
 
-  onMouseOut(): void {
-    this.iterations = 0;
-    this.startAnimation(() => {
-      this.word = this.originalWord;
-      this.clearInterval();
-    });
+  startCycle(): void {
+    this.wordChangeTimeout = window.setTimeout(() => {
+      this.startSynonymChange();
+    }, 2000);
   }
 
-  startAnimation(callback: () => void): void {
-    this.clearInterval(); // To ensure we don't have overlapping intervals.
+  startSynonymChange(): void {
+    let synonymIndex = 0;
+    
+    this.synonymChangeInterval = window.setInterval(() => {
+      this.word = this.synonyms[synonymIndex];
+      synonymIndex = (synonymIndex + 1) % this.synonyms.length;
 
-    this.animationInterval = window.setInterval(() => {
-      this.iterations++;
-
-      if (this.iterations <= this.maxIterations) {
-        // this.word = this.randomizeLetters(this.originalWord);
-        this.word = this.getRandomSynonym();
-      } else {
-        callback();
+      if (synonymIndex === 0) {
+        this.endSynonymChange();
       }
     }, 150);
   }
+
+  endSynonymChange(): void {
+    clearInterval(this.synonymChangeInterval!);
+
+    // Swap words
+    this.word = this.displayingOriginalWord ? this.alternativeWord : this.originalWord;
+    this.displayingOriginalWord = !this.displayingOriginalWord;
+
+    this.startCycle();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.synonymChangeInterval!);
+    clearTimeout(this.wordChangeTimeout!);
+  }
+
+  // onMouseOver(): void {
+  //   this.iterations = 0;
+  //   this.startAnimation(() => {
+  //     this.word = "UNITY";
+  //     this.clearInterval();
+  //   });
+  // }
+
+  // onMouseOut(): void {
+  //   this.iterations = 0;
+  //   this.startAnimation(() => {
+  //     this.word = this.originalWord;
+  //     this.clearInterval();
+  //   });
+  // }
+
+  // startAnimation(callback: () => void): void {
+  //   this.clearInterval(); // To ensure we don't have overlapping intervals.
+
+  //   this.animationInterval = window.setInterval(() => {
+  //     this.iterations++;
+
+  //     if (this.iterations <= this.maxIterations) {
+  //       // this.word = this.randomizeLetters(this.originalWord);
+  //       this.word = this.getRandomSynonym();
+  //     } else {
+  //       callback();
+  //     }
+  //   }, 150);
+  // }
 
   // randomizeLetters(word: string): string {
   //   return word.split('').map(letter => {
@@ -57,27 +94,16 @@ export class HomeComponent {
   //   }).join('');
   // }
 
-  getRandomSynonym(): string {
-    const randomIndex = Math.floor(Math.random() * this.synonyms.length);
-    if (randomIndex != this.lastIndex) {
-      this.lastIndex = randomIndex;
-      return this.synonyms[randomIndex];
-    }
-    else {
-      return this.getRandomSynonym();
-    }
-  }
-
-  clearInterval(): void {
-    if (this.animationInterval) {
-      clearInterval(this.animationInterval);
-      this.animationInterval = undefined;
-    }
-  }
-
-  getFontSize(): string {
-    return this.word === this.originalWord ? '5vw' : '5vw'; // Adjust sizes as needed
-  }
+  // getRandomSynonym(): string {
+  //   const randomIndex = Math.floor(Math.random() * this.synonyms.length);
+  //   if (randomIndex != this.lastIndex) {
+  //     this.lastIndex = randomIndex;
+  //     return this.synonyms[randomIndex];
+  //   }
+  //   else {
+  //     return this.getRandomSynonym();
+  //   }
+  // }
 
   // --------------------- --------------------- ---------------------
 

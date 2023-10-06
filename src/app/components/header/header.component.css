@@ -91,6 +91,18 @@
     border-color: white;
 }
 
+.header_menu_volunteer {
+    margin: 10px 0;
+    color: white;
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+.header_menu_volunteer:hover {
+    transform: scale(1.1);
+    color: #dc2626;
+}
+
 .header_donate {
     border-radius: 10px;
     border-width: 1px;
@@ -112,6 +124,18 @@
     border-radius: 10px;
     color: #dc2626;
     background-color: white;
+}
+
+.header_menu_donate {
+    margin: 10px 0;
+    color: white;
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+.header_menu_donate:hover {
+    transform: scale(1.1);
+    color: #dc2626;
 }
 
 .hamburger {

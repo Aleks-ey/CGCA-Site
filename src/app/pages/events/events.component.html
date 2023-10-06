@@ -16,23 +16,20 @@
             </button>
         </div>
     </div>
-    <div class="event_container_right flex flex-row md:2/3 justify-center">
+    <div class="event_container_right flex-row md:2/3 justify-center"
+    (swipeleft)="onNext()" 
+    (swiperight)="onPrevious()">
         <div 
-            class="event_card_container"
+            class="event_card_container m-5"
             *ngFor="let event of eventsList, let i = index"
-            [ngClass]=""
+            [ngStyle]="{ transform: 'translateX(' + x + 'px)', transition: 'transform 0.5s'}"
         >
-            <!-- <div 
-                class="event_card mx-6 my-8"
-                *ngIf="i == currentEvent" 
-                @eventsAnimation
-            > -->
             <div 
-                class="event_card mx-6 my-8"
+                class="event_card p-4"
                 @eventsAnimation
             >
-                <img src="/assets/images/MotherOfGeorgia.jpg" class="event_card_img h-2/5 m-4">
-                <h2 class="!ml-4">
+                <img src="/assets/images/MotherOfGeorgia.jpg" class="event_card_img h-2/5 w-full">
+                <h2 class="!ml-4 !mt-4">
                     {{ event.title }}
                 </h2>
                 <p class="h-1/5 !ml-4 overflow-y-scroll">

@@ -41,7 +41,7 @@
 </div>
 <div class="admin_delete_form mt-6 text-center justify-center">
   <!-- dropdown form to delete event -->
-  <form (ngSubmit)="deleteEvent()" class="flex-col w-2/3 mx-auto">
+  <form (ngSubmit)="deleteEvent()" class="flex flex-col w-2/3 mx-auto">
     <mat-form-field>
       <mat-label>Select Event</mat-label>
       <mat-select [(value)]="selectedEventId">
@@ -50,6 +50,6 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button type="submit" class="py-2 px-4 border-2">Delete</button>
+    <button type="submit" class="w-24 mx-auto py-2 px-4 border-2">Delete</button>
   </form>
 </div>
