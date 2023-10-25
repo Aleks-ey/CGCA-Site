@@ -183,4 +183,23 @@
     transform: scale(1.1);
     color: #dc2626;
 }
-  
+
+.header_link:hover {
+    color: #dc2626;
+}
+.dropdown-content {
+    position: absolute;
+    display: flex;
+    padding: 10px;
+    border: 1px solid;
+    border-image: linear-gradient(to bottom, white, black) 1;
+    border-top: 0;
+    border-radius: 0px 0px 10px 10px;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+    transform: translateX(-13px);
+}
+
+.dropdown-content > a:hover {
+    color: #dc2626;
+}

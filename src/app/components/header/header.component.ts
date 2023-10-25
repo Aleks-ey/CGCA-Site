@@ -24,4 +24,33 @@ export class HeaderComponent {
       this.isMenuOpen = false;
     }
   }
+
+  // ------------------ Dropdown ------------------
+  showDropdown: boolean = false;
+  private timeout: string | number | NodeJS.Timeout | undefined;
+
+  onButtonMouseOver() {
+    this.showDropdown = true;
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+  }
+
+  onButtonMouseOut() {
+    this.timeout = setTimeout(() => {
+      this.showDropdown = false;
+    }, 50); // A delay of 200ms, adjust as necessary
+  }
+
+  onDropdownMouseOver() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+  }
+
+  onDropdownMouseOut() {
+    this.timeout = setTimeout(() => {
+      this.showDropdown = false;
+    }, 50); // A delay of 200ms, adjust as necessary
+  }
 }

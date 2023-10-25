@@ -1,0 +1,25 @@
+<div class="register_container flex justify-center text-center">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <h2>Register</h2>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" formControlName="email">
+            <i style="color: tomato"
+                *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
+                Email is required and must be valid
+            </i>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" formControlName="password">
+            <i style="color: tomato"
+                *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)">
+                Password Must Be at Least 6 Characters
+            </i>
+        </div>
+        
+        <div class="register_submit">
+            <input type="submit" [disabled]="registerForm.invalid">
+        </div>
+    </form>
+</div>

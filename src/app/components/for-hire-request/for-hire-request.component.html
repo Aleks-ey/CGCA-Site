@@ -1,0 +1,51 @@
+<div class="hire_request_container flex justify-center text-center">
+    <form (ngSubmit)="onSubmit()">
+        <mat-form-field class="">
+            <mat-label>Name:</mat-label>
+            <input matInput [(ngModel)]="forHireEntry.name" name="name">
+            <mat-hint>Last Name, First Name</mat-hint>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="">
+            <mat-label>Profession:</mat-label>
+            <input matInput [(ngModel)]="forHireEntry.profession" name="profession">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="">
+            <mat-label>About:</mat-label>
+            <textarea matInput [(ngModel)]="forHireEntry.about" name="about"></textarea>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="">
+            <mat-label>Email:</mat-label>
+            <input matInput [(ngModel)]="forHireEntry.email" name="email">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="">
+            <mat-label>Phone Number:</mat-label>
+            <input matInput [(ngModel)]="forHireEntry.phone_number" name="phone_number">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="">
+            <mat-label>Location:</mat-label>
+            <input matInput [(ngModel)]="forHireEntry.location" name="location">
+        </mat-form-field>
+        <br>
+        <!-- <mat-form-field class=""> -->
+            <!-- <mat-label>Are you willing to work outside your field?</mat-label>
+            <mat-radio-button [(ngModel)]="forHireEntry.work_outside" name="work_outside" value="true">Yes
+                <mat-label>Yes</mat-label>
+                <input type="radio" matInput>
+            </mat-radio-button> -->
+            <!-- <mat-radio-button matInput [(ngModel)]="forHireEntry.work_outside" name="work_outside" value="false">No</mat-radio-button> -->
+        <!-- </mat-form-field> -->
+        <mat-label>Flexible in job choice?</mat-label>
+        <br/>
+        <mat-radio-group [(ngModel)]="forHireEntry.work_outside" name="work_outside">
+            <mat-radio-button value="yes">Yes</mat-radio-button>
+            <mat-radio-button value="no">No</mat-radio-button>
+        </mat-radio-group>
+        <br/>
+        <button type="submit" class="mt-4 py-2 px-4 border-2">Submit</button>
+    </form>
+</div>

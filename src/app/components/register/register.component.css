@@ -1,0 +1,17 @@
+.register_container {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 5%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+}
+
+.register_container > h2 {
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 5%;
+}

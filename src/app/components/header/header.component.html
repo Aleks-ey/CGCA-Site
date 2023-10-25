@@ -11,9 +11,27 @@
     </a>
     <span class="header_spacer"></span>
 
-    <div class="header_right hidden lg:flex gap-3">
-        <a routerLink="/mission" class="header_link">Our Mission</a>
+    <div class="header_right hidden lg:flex gap-6">
+        <!-- <a routerLink="/mission" class="header_link">Our Mission</a> -->
         <a routerLink="/meet" class="header_link">Meet the Board</a>
+        <!-- <a routerLink="/community" class="header_link">Community</a> -->
+        <div class="dropdown-container">
+            <button 
+                class="header_link"
+                routerLink="/community"  
+                (mouseover)="onButtonMouseOver()" 
+                (mouseout)="onButtonMouseOut()">
+                Community
+            </button>
+            <div class="dropdown-content" 
+              *ngIf="showDropdown" 
+              (mouseover)="onDropdownMouseOver()" 
+              (mouseout)="onDropdownMouseOut()">
+              <a routerLink="/business">Businesses</a>
+              <a routerLink="/job-board">Job Board</a>
+              <a routerLink="/for-hire">For Hire</a>
+            </div>
+          </div>
         <a routerLink="/events" class="header_link">Events</a>
         <a routerLink="/contact" class="header_link">Contact</a>
         <span class="header_spacer"></span>
@@ -28,8 +46,9 @@
 
     <div class="expanded-menu" *ngIf="isMenuOpen">
         <a routerLink="/" class="header-link" (click)="closeMenu()">Home</a>
-        <a routerLink="/mission" class="header-link" (click)="closeMenu()">Our Mission</a>
+        <!-- <a routerLink="/mission" class="header-link" (click)="closeMenu()">Our Mission</a> -->
         <a routerLink="/meet" class="header-link" (click)="closeMenu()">Meet the Board</a>
+        <a routerLink="/community" class="header-link" (click)="closeMenu()">Community</a>
         <a routerLink="/events" class="header-link" (click)="closeMenu()">Events</a>
         <a routerLink="/contact" class="header-link" (click)="closeMenu()">Contact</a>
         <a routerLink="/" class="header_menu_volunteer" (click)="closeMenu()">Volunteer</a>
