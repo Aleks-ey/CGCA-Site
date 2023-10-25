@@ -1,0 +1,48 @@
+<!-- FILEPATH: c:\Users\dell\Code_Projects\Georgian-Website\src\app\pages\job-board\job-board.component.html -->
+<div class="job_board_container flex flex-row">
+    <div class="job_filter_container flex flex-col">
+        <!-- Search bar -->
+        <div class="job_filter_search">
+            <input type="text" placeholder="Search...">
+            <button>Search</button>
+        </div>
+        <!-- Filter checkboxes -->
+        <div class="job_filter_type">
+            <h3>Filter by Job Type:</h3>
+            <label><input type="checkbox" name="job-type" value="full-time">Full Time</label>
+            <label><input type="checkbox" name="job-type" value="part-time">Part Time</label>
+            <label><input type="checkbox" name="job-type" value="internship">Internship</label>
+        </div>    
+    </div>
+
+    <!-- Job listings -->
+    <div class="job_listing_container flex flex-col justify-center" *ngFor="let listing of jobsList">
+        <div class="job_listing flex flex-col justify-center">
+            <div class="job_listing_header flex flex-row justify-center">
+                <h3>{{ listing.job_title }}</h3>
+                <p>{{ listing.company_name }}</p>
+            </div>
+            <div class="job_listing_details flex flex-row justify-center">
+                <p>{{ listing.location }}</p>
+                <p>{{ listing.pay }}</p>
+            </div>
+            <div class="job_listing_description">
+                <p>{{ listing.job_description }}</p>
+            </div>
+            <div class="job_listing_contact flex flex-row justify-center">
+                <p>{{ listing.email }}</p>
+                <p>({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pagination buttons -->
+<div class="pagination_container flex flex-row justify-center">
+    <div class="flex w-1/5 justify-between">
+        <button>Previous</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>Next</button>
+    </div> 
+</div>

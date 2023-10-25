@@ -1,0 +1,66 @@
+<button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="float-right mt-2 mr-6">Login</button>
+<div *ngIf="isLoggedIn" class="flex flex-row float-right">
+    <span>{{ userEmail }}</span>
+    <button (click)="logout()">Logout</button>
+</div>
+
+<button (click)="openBusinessDialog()" class="float-right mt-2 mr-6">Request</button>
+
+<div class="business_container flex flex-row">
+    <div class="business_filter_container flex flex-col">
+        <!-- Search bar -->
+        <div class="business_filter_search">
+            <input type="text" placeholder="Search...">
+            <button>Search</button>
+        </div>
+        <!-- Filter checkboxes -->
+        <!-- <div class="business_filter_type">
+            <h3>Filter by Job Type:</h3>
+            <label><input type="checkbox" name="business-type" value="full-time">Full Time</label>
+            <label><input type="checkbox" name="business-type" value="part-time">Part Time</label>
+            <label><input type="checkbox" name="business-type" value="internship">Internship</label>
+        </div>     -->
+    </div>
+
+    <!-- Job listings -->
+    <div class="business_listing_container flex flex-col justify-center" >
+        <div class="business_listing flex flex-col justify-center" *ngFor="let listing of businessesList">
+            <div class="business_listing_header flex flex-row justify-center">
+                <p>{{ listing.company_name }} -&nbsp;</p> 
+                <p> {{ listing.type }}</p>
+            </div>
+            <div class="business_listing_description text-center">
+                <p>{{ listing.description }}</p>
+            </div>
+            <div class="business_listing_details flex flex-row"> 
+                <p>
+                    <mat-icon class="text-black">map</mat-icon>
+                    {{ listing.location }}
+                </p>
+                <p>
+                    <mat-icon class="text-black">phone</mat-icon>
+                    ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
+                </p>
+            </div>
+            <div class="business_listing_contact flex flex-row gap-6">
+                <p>
+                    <mat-icon class="text-black">person</mat-icon>
+                    {{ listing.owner}}
+                    <mat-icon class="text-black">email</mat-icon>
+                    {{ listing.email }}
+                </p>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pagination buttons -->
+<div class="pagination_container flex flex-row justify-center">
+    <div class="flex w-1/5 justify-between">
+        <button>Previous</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>Next</button>
+    </div> 
+</div>

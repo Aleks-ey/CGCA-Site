@@ -1,0 +1,18 @@
+.job_filter_container {
+    padding: 20px;
+}
+
+.job_filter_search > input {
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+}
+
+.job_listing_container {
+    padding: 20px;
+}
+
+.job_listing {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 10px;
+}

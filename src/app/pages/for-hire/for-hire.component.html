@@ -1,0 +1,71 @@
+<!-- FILEPATH: c:\Users\dell\Code_Projects\Georgian-Website\src\app\pages\for-hire\for-hire.component.html -->
+<button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="absolute float-right mt-2 mr-6">Login</button>
+<div *ngIf="isLoggedIn" class="absolute flex flex-row right-10">
+    <span>{{ userEmail }}</span>
+    <button (click)="logout()">Logout</button>
+</div>
+
+<button (click)="openForHireDialog()" class="float-right mt-2 mr-6">Request</button>
+
+<div class="hire_header flex my-16 justify-center text-center">
+    <h1>Find a Member of the Georgian Community <br/> Ready to Work</h1>
+</div>
+
+<div class="for_hire_container flex flex-row">
+    <div class="hire_filter_container flex flex-col">
+        <!-- Search bar -->
+        <div class="hire_filter_search">
+            <input type="text" placeholder="Search...">
+            <button>Search</button>
+        </div>
+        <!-- Filter checkboxes -->
+        <div class="hire_filter_type">
+            <h3>Filter by Job Type:</h3>
+            <label><input type="checkbox" name="hire-type" value="full-time">Full Time</label>
+            <label><input type="checkbox" name="hire-type" value="part-time">Part Time</label>
+            <label><input type="checkbox" name="hire-type" value="internship">Internship</label>
+        </div>    
+    </div>
+
+    <!-- Job listings -->
+    <div class="hire_listing_container flex flex-col justify-center" >
+        <div class="hire_listing flex flex-col justify-center" *ngFor="let listing of hiresList">
+            <div class="hire_listing_header flex flex-row justify-center">
+                <p>{{ listing.name }} -&nbsp;</p> 
+                <p> {{ listing.profession }}</p>
+            </div>
+            <div class="hire_listing_description">
+                <p>{{ listing.about }}</p>
+            </div>
+            <div class="hire_listing_details flex flex-row"> 
+                <p>
+                    <mat-icon class="text-black">map</mat-icon>
+                    {{ listing.location }}
+                </p>
+            </div>
+            <div class="hire_listing_contact flex flex-row gap-6">
+                <p>
+                    <mat-icon class="text-black">email</mat-icon>
+                    {{ listing.email }}
+                </p>
+                <p>
+                    <mat-icon class="text-black">phone</mat-icon>
+                    ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
+                </p>
+            </div>
+            <div class="work_outside" *ngIf=(listing.work_outside)>
+                Willing to work outside of profession
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pagination buttons -->
+<div class="pagination_container flex flex-row justify-center">
+    <div class="flex w-1/5 justify-between">
+        <button>Previous</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>Next</button>
+    </div> 
+</div>

@@ -1,0 +1,31 @@
+.login_register_container {
+    height: 50vw;
+}
+
+.login_register_box {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.login_button {
+    color: #DC2626;
+    border: 1px solid #DC2626;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.login_submit:hover {
+    color: #DC2626;
+    
+}
+
+.register_button {
+    color: #DC2626;
+    border: 1px solid #DC2626;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}

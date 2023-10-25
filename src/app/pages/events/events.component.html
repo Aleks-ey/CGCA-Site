@@ -16,7 +16,7 @@
             </button>
         </div>
     </div>
-    <div class="event_container_right flex-row md:2/3 justify-center"
+    <div class="event_container_right flex-row md:w-2/3 justify-center"
     (swipeleft)="onNext()" 
     (swiperight)="onPrevious()">
         <div 
@@ -43,11 +43,22 @@
         </div>
     </div>
 </div>
-<div class="event_calendar_container mt-20 flex justify-center">
-    <div class="event_calendar flex flex-col md:w-1/3 md:mx-auto justify-center">
-        <mat-card class="demo-inline-calendar-card">
-            <mat-calendar [(selected)]="selected"></mat-calendar>
-        </mat-card>
-        <p>Selected date: {{selected}}</p>
+<div class="event_calendar_container mt-16 p-10 flex flex-col justify-center">
+    <h2>Calendar View</h2>
+    <div class="event_selector flex flex-row">
+        <div class="event_calendar flex flex-col md:w-1/3">
+            <mat-card class="demo-inline-calendar-card">
+                <mat-calendar [(selected)]="selected"></mat-calendar>
+            </mat-card>
+            <p>Selected date: {{onSelect(selected)}}</p>
+        </div>
+        <div class="selected_events w-2/3">
+            <div class="selected_events_card ml-10 p-10" *ngFor="let selectedEvent of selectedEventsList">
+                <h2>{{ selectedEvent.title }}</h2>
+                <p>{{ selectedEvent.description }}</p>
+                <p>{{ selectedEvent.date }}</p>
+                <p>{{ selectedEvent.time }}</p>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,55 +1,149 @@
+<button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="float-right mt-2 mr-6">Login</button>
+<div *ngIf="isLoggedIn" class="flex flex-row float-right">
+  <span>{{ userEmail }}</span>
+  <button (click)="logout()">Logout</button>
+</div>
+
 <div class="admin_header mt-12 justify-center text-center">
   <h1>Welcome Admin!</h1>
 </div>
 
-<div class="admin_add_header mt-12 justify-center text-center">
-  <h2>Add Event:</h2>
-</div>
-<div class="admin_add_form mt-6 text-center">
-  <!-- form to collect event information -->
-  <form (ngSubmit)="onSubmit()">
-    <mat-form-field class="!w-2/3">
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="picker" [(ngModel)]="event.date" name="date">
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <br>
-      <mat-form-field class="!w-2/3">
-        <mat-label>Time</mat-label>
-        <input matInput [(ngModel)]="event.time" name="time">
-        <mat-hint>HH:MM:SS AM/PM</mat-hint>
-      </mat-form-field>
-    <br>
-      <mat-form-field class="!w-2/3">
-        <mat-label>Title</mat-label>
-        <input matInput [(ngModel)]="event.title" name="title">
-      </mat-form-field>
-    <br>
-      <mat-form-field class="!w-2/3">
-        <mat-label>Description</mat-label>
-        <textarea matInput [(ngModel)]="event.description" name="description"></textarea>
-      </mat-form-field>
-    <br>
-    <button type="submit" class="py-2 px-4 border-2">Submit</button>
-  </form>
+<div class="switch_forms_container flex flex-row mx-10 gap-10">
+  <button (click)="switchToEvents()" class="w-1/2 py-2 px-4 border-2">Events</button>
+  <button (click)="switchToApproveHires()" class="w-1/2 py-2 px-4 border-2">Approve Hires</button>
 </div>
 
-<div class="admin_delete_header mt-12 justify-center text-center">
-  <h2>Delete Event:</h2>
+<div class="admin_events" *ngIf="switchForm == 1">
+  <div class="admin_add_header mt-12 justify-center text-center">
+    <h2>Add Event:</h2>
+  </div>
+  <div class="admin_add_form mt-6 text-center">
+    <!-- form to collect event information -->
+    <form (ngSubmit)="onSubmit()">
+      <mat-form-field class="!w-2/3">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="event.date" name="date">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <br>
+        <mat-form-field class="!w-2/3">
+          <mat-label>Time</mat-label>
+          <input matInput [(ngModel)]="event.time" name="time">
+          <mat-hint>HH:MM:SS AM/PM</mat-hint>
+        </mat-form-field>
+      <br>
+        <mat-form-field class="!w-2/3">
+          <mat-label>Title</mat-label>
+          <input matInput [(ngModel)]="event.title" name="title">
+        </mat-form-field>
+      <br>
+        <mat-form-field class="!w-2/3">
+          <mat-label>Description</mat-label>
+          <textarea matInput [(ngModel)]="event.description" name="description"></textarea>
+        </mat-form-field>
+      <br>
+      <button type="submit" class="py-2 px-4 border-2">Submit</button>
+    </form>
+  </div>
+
+  <div class="admin_delete_header mt-12 justify-center text-center">
+    <h2>Delete Event:</h2>
+  </div>
+  <div class="admin_delete_form mt-6 text-center justify-center">
+    <!-- dropdown form to delete event -->
+    <form (ngSubmit)="deleteEvent()" class="flex flex-col w-2/3 mx-auto">
+      <mat-form-field>
+        <mat-label>Select Event</mat-label>
+        <mat-select [(value)]="selectedEventId">
+          <mat-option *ngFor="let event of eventsList" [value]="event.id">
+            {{ event.title }} - {{ event.date }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button type="submit" class="w-24 mx-auto py-2 px-4 border-2">Delete</button>
+    </form>
+  </div>
 </div>
-<div class="admin_delete_form mt-6 text-center justify-center">
-  <!-- dropdown form to delete event -->
-  <form (ngSubmit)="deleteEvent()" class="flex flex-col w-2/3 mx-auto">
-    <mat-form-field>
-      <mat-label>Select Event</mat-label>
-      <mat-select [(value)]="selectedEventId">
-        <mat-option *ngFor="let event of eventsList" [value]="event.id">
-          {{ event.title }} - {{ event.date }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button type="submit" class="w-24 mx-auto py-2 px-4 border-2">Delete</button>
-  </form>
+
+<div class="admin_aprrove_hires" *ngIf="switchForm == 2">
+  <div class="hire_listing_container flex flex-col justify-center" >
+    <div class="mt-12 justify-center text-center">
+      <h2>Approved For Hire Listings:</h2>
+    </div>
+    <div class="hire_listing flex flex-col justify-center" *ngFor="let listing of approvedHiresList" (click)="openApprovalDialog(listing.email)">
+      <div class="hire_listing_header flex flex-row justify-center">
+          <p>{{ listing.name }} -&nbsp;</p> 
+          <p> {{ listing.profession }}</p>
+      </div>
+      <div class="hire_listing_description">
+          <p>{{ listing.about }}</p>
+      </div>
+      <div class="hire_listing_details flex flex-row"> 
+          <p>
+              <mat-icon class="text-black">map</mat-icon>
+              {{ listing.location }}
+          </p>
+      </div>
+      <div class="hire_listing_contact flex flex-row gap-6">
+          <p>
+              <mat-icon class="text-black">email</mat-icon>
+              {{ listing.email }}
+          </p>
+          <p>
+              <mat-icon class="text-black">phone</mat-icon>
+              ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
+          </p>
+      </div>
+      <div class="work_outside" *ngIf=(listing.work_outside)>
+          Willing to work outside of profession
+      </div>
+    </div>
+
+    <div class="mt-12 justify-center text-center">
+      <h2>Unapproved For Hire Listings:</h2>
+    </div>
+    <div class="hire_listing flex flex-col justify-center" *ngFor="let listing of unapprovedHiresList" (click)="openApprovalDialog(listing.email)">
+      <div class="hire_listing_header flex flex-row justify-center">
+          <p>{{ listing.name }} -&nbsp;</p> 
+          <p> {{ listing.profession }}</p>
+      </div>
+      <div class="hire_listing_description">
+          <p>{{ listing.about }}</p>
+      </div>
+      <div class="hire_listing_details flex flex-row"> 
+          <p>
+              <mat-icon class="text-black">map</mat-icon>
+              {{ listing.location }}
+          </p>
+      </div>
+      <div class="hire_listing_contact flex flex-row gap-6">
+          <p>
+              <mat-icon class="text-black">email</mat-icon>
+              {{ listing.email }}
+          </p>
+          <p>
+              <mat-icon class="text-black">phone</mat-icon>
+              ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
+          </p>
+      </div>
+      <div class="work_outside" *ngIf=(listing.work_outside)>
+          Willing to work outside of profession
+      </div>
+    </div>
+
+    <ng-template #dialogTemplate>
+      <h2>Toggle Aprroval Status for {{currentEmail}}:</h2>
+      <form [formGroup]="toggleForm">
+        <mat-slide-toggle formControlName="toggleValue" class="w-full h-auto text-black">
+          Approved
+        </mat-slide-toggle>
+      </form>
+      <div>
+        <button mat-button (click)="submitApproval(currentEmail)">Submit</button>
+        <button mat-button (click)="closeDialog()">Cancel</button>
+      </div>
+    </ng-template>
+  </div>
 </div>

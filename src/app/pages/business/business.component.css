@@ -1,41 +1,42 @@
-.hire_filter_container {
+.business_filter_container {
     padding: 20px;
 }
 
-.hire_filter_search > input {
+.business_filter_search > input {
     border: 1px solid #e5e7eb;
     border-radius: 5px;
 }
 
-.hire_listing_container {
+.business_listing_container {
+    width: 100%;
     padding: 20px;
 }
 
-.hire_listing {
+.business_listing {
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
 }
 
-.hire_listing_header > p {
+.business_listing_header > p {
     font-size: 20px;
     font-weight: bold;
 }
 
-.hire_listing_details > p > mat-icon {
+.business_listing_details > p > mat-icon {
     transform: translateY(7px);
 }
 
-.hire_listing_contact > p > mat-icon {
+.business_listing_contact > p > mat-icon {
     transform: translateY(7px);
 }
 
-.work_outside {
+/* .work_outside {
     width: max-content;
     padding: 0px 7px 0px 7px;
     color: white;
     background-color: #1E293B;
     opacity: 0.8;
     border-radius: 10px;
-}
+} */
