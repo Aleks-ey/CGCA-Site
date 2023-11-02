@@ -1,0 +1,57 @@
+<div class="register_business_container flex flex-col justify-center text-center">
+    <div>
+    <h2>
+        Looking to promote your business?
+    </h2>
+    <p>
+        Fill out the form below and post your business listing to the community business page.
+    </p>
+    </div>
+    <form (ngSubmit)="onSubmit()">
+        <hr/>
+        <div class="mt-4 mb-6">
+            <p class="text-lg">Business Cover Photo:</p>
+            <button type="button" mat-raised-button (click)="fileInput.click()" class="mb-1">Choose File</button>
+            <input hidden (change)="onFileSelected($event)" #fileInput type="file">
+            <p class="file-name">{{selectedFile?.name}}</p>
+        </div>
+        <mat-form-field class="">
+            <mat-label>Last Name, First Name:</mat-label>
+            <input matInput [(ngModel)]="businessListing.owner" name="ownerName">
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="">
+            <mat-label>Company Name:</mat-label>
+            <input matInput [(ngModel)]="businessListing.company_name" name="companyName">
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="">
+            <mat-label>Type of Business:</mat-label>
+            <input matInput [(ngModel)]="businessListing.type" name="type">
+            <mat-hint>Ex: Restaurant, Retail, etc.</mat-hint>
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="">
+            <mat-label>Description:</mat-label>
+            <textarea matInput [(ngModel)]="businessListing.description" name="description"></textarea>
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="">
+            <mat-label>Email:</mat-label>
+            <input matInput [(ngModel)]="businessListing.email" name="email">
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="">
+            <mat-label>Phone Number:</mat-label>
+            <input matInput [(ngModel)]="businessListing.phone_number" name="phone_number" type="tel">
+            <mat-hint>Format: 1234567890</mat-hint>
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="">
+            <mat-label>Location (City):</mat-label>
+            <input matInput [(ngModel)]="businessListing.location" name="location">
+        </mat-form-field>
+        <br/>
+        <button type="submit" class="register_business_submit">Submit</button>
+    </form>
+</div>

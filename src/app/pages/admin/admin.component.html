@@ -1,18 +1,20 @@
 <button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="float-right mt-2 mr-6">Login</button>
 <div *ngIf="isLoggedIn" class="flex flex-row float-right">
   <span>{{ userEmail }}</span>
-  <button (click)="logout()">Logout</button>
+  <button (click)="logout()" class="ml-4">Logout</button>
 </div>
 
-<div class="admin_header mt-12 justify-center text-center">
+<div class="admin_header mt-12 justify-center text-center" [ngClass]="{'mb-28 mt-24':!isAdmin}">
   <h1>Welcome Admin!</h1>
+  <h2 *ngIf="!isAdmin">Please login to the admin account to start making changes!</h2>
 </div>
 
-<div class="switch_forms_container flex flex-row mx-10 gap-10">
+<div class="switch_forms_container flex flex-row mx-10 gap-10" *ngIf="isAdmin" [ngClass]="{'mb-32':switchForm==0, 'mb-0': switchForm>0}">
   <button (click)="switchToEvents()" class="w-1/2 py-2 px-4 border-2">Events</button>
   <button (click)="switchToApproveHires()" class="w-1/2 py-2 px-4 border-2">Approve Hires</button>
+  <button (click)="switchToApproveBusinessAccounts()" class="w-1/2 py-2 px-4 border-2">Approve Business Accounts</button>
 </div>
-
+<!-- SWITCH FORM 1: Events -->
 <div class="admin_events" *ngIf="switchForm == 1">
   <div class="admin_add_header mt-12 justify-center text-center">
     <h2>Add Event:</h2>
@@ -66,7 +68,7 @@
     </form>
   </div>
 </div>
-
+<!-- SWITCH FORM 2: For Hire Approvals -->
 <div class="admin_aprrove_hires" *ngIf="switchForm == 2">
   <div class="hire_listing_container flex flex-col justify-center" >
     <div class="mt-12 justify-center text-center">
@@ -134,7 +136,7 @@
     </div>
 
     <ng-template #dialogTemplate>
-      <h2>Toggle Aprroval Status for {{currentEmail}}:</h2>
+      <h2>Toggle For Hire Aprroval Status for {{currentEmail}}:</h2>
       <form [formGroup]="toggleForm">
         <mat-slide-toggle formControlName="toggleValue" class="w-full h-auto text-black">
           Approved
@@ -143,6 +145,63 @@
       <div>
         <button mat-button (click)="submitApproval(currentEmail)">Submit</button>
         <button mat-button (click)="closeDialog()">Cancel</button>
+      </div>
+    </ng-template>
+  </div>
+</div>
+<!-- SWITCH FORM 3: Business Accounts -->
+<div class="admin_aprrove_business_account" *ngIf="switchForm == 3">
+  <div class="approve_business_account_container flex flex-col justify-center" >
+    <div class="mt-12 justify-center text-center">
+      <h2>Approved Business Accounts:</h2>
+    </div>
+    <div class="business_account_listing flex flex-col justify-center" *ngFor="let listing of approvedBusinessList" (click)="openApprovalDialog(listing.email)">
+      <div class="business_account_listing_header flex flex-row justify-center">
+          <p> {{ listing.name }} </p>
+      </div>
+      <div class="business_account_listing_contact flex flex-row justify-center gap-6">
+          <p>
+              <mat-icon class="text-black">email</mat-icon>
+              {{ listing.email }}
+          </p>
+          <p>
+              <mat-icon class="text-black">phone</mat-icon>
+              ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
+          </p>
+      </div>
+    </div>
+    <!-- Unapproved Business Accounts -->
+    <div class="mt-12 justify-center text-center">
+      <h2>Unapproved Business Accounts:</h2>
+    </div>
+    <div class="business_account_listing flex flex-col justify-center" *ngFor="let listing of unapprovedBusinessList" (click)="openApprovalDialog(listing.email)">
+      <div class="business_account_listing_header flex flex-row justify-center">
+          <p>{{ listing.name }}</p>
+      </div>
+      <div class="business_account_listing_contact flex flex-row justify-center gap-6">
+          <p>
+              <mat-icon class="text-black">email</mat-icon>
+              {{ listing.email }}
+          </p>
+          <p>
+              <mat-icon class="text-black">phone</mat-icon>
+              ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
+          </p>
+      </div>
+    </div>
+    <!-- template for business accounts dialog -->
+    <ng-template #dialogTemplate class="overflow-hidden">
+      <div class="w-full h-32">
+        <h3 class="ml-6">Toggle Business Approval Status for {{currentEmail}}:</h3>
+        <form [formGroup]="toggleForm">
+          <mat-slide-toggle formControlName="toggleValue" class="w-full h-auto text-black ml-6 mb-2">
+            Approved
+          </mat-slide-toggle>
+        </form>
+        <div>
+          <button mat-button (click)="submitBusinessApproval(currentEmail)" class="ml-6">Submit</button>
+          <button mat-button (click)="closeDialog()">Cancel</button>
+        </div>
       </div>
     </ng-template>
   </div>

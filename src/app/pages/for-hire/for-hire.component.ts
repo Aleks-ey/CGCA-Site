@@ -3,20 +3,8 @@ import { SupabaseService } from 'src/app/supabase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatInput } from '@angular/material/input';
 import { ForHireRequestComponent } from 'src/app/components/for-hire-request/for-hire-request.component';
-import { Subscription } from 'rxjs';
 import { LoginComponent } from 'src/app/components/login/login.component';
-
-export interface ForHireListing {
-  id?: number;
-  name: string;
-  profession: string;
-  about: string;
-  email: string;
-  phone_number: string;
-  location: string;
-  work_outside: boolean;
-  approved: boolean;
-}
+import { ForHireListing } from 'src/app/components/for-hire-request/for-hire-request.component'
 
 @Component({
   selector: 'app-for-hire',
@@ -24,16 +12,6 @@ export interface ForHireListing {
   styleUrls: ['./for-hire.component.css'],
 })
 export class ForHireComponent {
-  listing: ForHireListing = {
-    name: '',
-    profession: '',
-    about: '',
-    email: '',
-    phone_number: '',
-    location: '',
-    work_outside: false,
-    approved: false,
-  };
 
   tempHiresList: ForHireListing[] = [];
   hiresList: ForHireListing[] = [];
@@ -53,20 +31,15 @@ export class ForHireComponent {
       for(let i = 0; i < this.tempHiresList.length; i++) {
         if(this.tempHiresList[i].approved == true) {
           this.hiresList.push(this.tempHiresList[i]);
-          // console.log(this.hiresList);
         }
       }
     }
 
-    this.userEmail = await this.supabaseService.fetchUser();
+    this.userEmail = await this.supabaseService.fetchUserEmail();
 
     if(this.userEmail != null) {
       this.isLoggedIn = true;
     }
-  }
-
-  openForHireDialog(): void {
-    this.dialog.open(ForHireRequestComponent);
   }
 
   // ngOnDestroy(): void {
@@ -75,10 +48,6 @@ export class ForHireComponent {
 
   openLoginDialog(): void {
     this.dialog.open(LoginComponent);
-  }
-
-  navigateToUserProfile(): void {
-    // Navigation logic...
   }
 
   logout(): void {

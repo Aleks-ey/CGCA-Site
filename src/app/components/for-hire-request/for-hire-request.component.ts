@@ -13,6 +13,7 @@ export interface ForHireListing {
   phone_number: string;
   location: string;
   work_outside: boolean;
+  approved: boolean;
 }
 
 @Component({
@@ -29,12 +30,16 @@ export class ForHireRequestComponent {
     phone_number: '',
     location: '',
     work_outside: false,
+    approved: false,
   };
 
   constructor(
     private supabaseService: SupabaseService, 
-    private formBuilder: FormBuilder
-    ) { }
+    private formBuilder: FormBuilder,
+    private auth: SupabaseService,
+  ) { }
+
+  userEmail: any;
 
   async onSubmit() {
     const result = await this.supabaseService.addForHire(this.forHireEntry);
@@ -45,6 +50,9 @@ export class ForHireRequestComponent {
 
       // await this.fetchForHire();
 
+      this.userEmail = await this.supabaseService.fetchUserEmail();
+      this.supabaseService.makeForHireRequest(this.userEmail);
+
       this.forHireEntry = {
         name: '',
         profession: '',
@@ -53,6 +61,7 @@ export class ForHireRequestComponent {
         phone_number: '',
         location: '',
         work_outside: false,
+        approved: false,
       };
     }
   }

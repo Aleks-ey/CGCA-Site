@@ -2,6 +2,10 @@
     font-family: Merriweather;
     font-size: 4vw;
     line-height: 1.1;
+
+    @media screen and (max-width: 768px) {
+        font-size: 6vw;
+    }
 }
 
 .hire_filter_container {

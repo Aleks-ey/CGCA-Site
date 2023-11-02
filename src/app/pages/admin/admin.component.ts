@@ -1,12 +1,12 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { SupabaseService } from 'src/app/supabase.service';
+import { Profile, SupabaseService } from 'src/app/supabase.service';
 import { CalendarEvent } from './calendarEvent.model';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { Subscription } from 'rxjs';
-import { JobBoardListing } from '../job-board/job-board.component';
-import { ForHireListing } from '../for-hire/for-hire.component';
+import { ForHireListing } from 'src/app/components/for-hire-request/for-hire-request.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { BusinessListing } from 'src/app/components/register-business/register-business.component';
 
 @Component({
   selector: 'app-admin',
@@ -26,13 +26,18 @@ export class AdminComponent {
 
   isLoggedIn = false;
   userEmail: any;
-  private sub!: Subscription;
+  isAdmin = false;
+  // private sub!: Subscription;
 
   switchForm: number = 0;
   tempHiresList: ForHireListing[] = [];
   unapprovedHiresList: ForHireListing[] = [];
   approvedHiresList: ForHireListing[] = [];
   currentEmail: string = '';
+
+  tempBusinessList: Profile[] = [];
+  approvedBusinessList: Profile[] = [];
+  unapprovedBusinessList: Profile[] = [];
 
   @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
   toggleForm: FormGroup;
@@ -75,22 +80,25 @@ export class AdminComponent {
   }
 
   async ngOnInit() {
+    // check if user is logged in
+    this.userEmail = await this.supabaseService.fetchUserEmail();
+    if(this.userEmail != null) {
+      this.isLoggedIn = true;
+      if (this.userEmail == 'admin@admin.com') {
+        this.isAdmin = true;
+      }
+    }
+    else {
+      this.isLoggedIn = false;
+    }
+    // fetch events
     const result = await this.supabaseService.getAllEvents();
     if (result.error) {
       console.error('Error fetching events:', result.error);
     } else {
       this.eventsList = result.data!;
     }
-
-    this.userEmail = await this.supabaseService.fetchUser();
-
-    if(this.userEmail != null) {
-      this.isLoggedIn = true;
-    }
-    else {
-      this.isLoggedIn = false;
-    }
-
+    // fetch hires
     const result2 = await this.supabaseService.getAllHires();
     if (result2.error) {
       console.error('Error fetching events:', result2.error);
@@ -99,11 +107,26 @@ export class AdminComponent {
       for(let i = 0; i < this.tempHiresList.length; i++) {
         if(this.tempHiresList[i].approved == true) {
           this.approvedHiresList.push(this.tempHiresList[i]);
-          // console.log(this.approvedHiresList);
         }
         if(this.tempHiresList[i].approved == false) {
           this.unapprovedHiresList.push(this.tempHiresList[i]);
-          // console.log(this.unapprovedHiresList);
+        }
+      }
+    }
+    // fetch business accounts
+    const result3 = await this.supabaseService.getAllProfiles();
+    if (result3.error) {
+      console.error('Error fetching events:', result3.error);
+    } else {
+      this.tempBusinessList = result3.data!;
+      for(let i = 0; i < this.tempBusinessList.length; i++) {
+        if(this.tempBusinessList[i].business_acc == true) {
+          this.approvedBusinessList.push(this.tempBusinessList[i]);
+        }
+      }
+      for(let i = 0; i < this.tempBusinessList.length; i++) {
+        if(this.tempBusinessList[i].business_request == true && this.tempBusinessList[i].business_acc == false) {
+          this.unapprovedBusinessList.push(this.tempBusinessList[i]);
         }
       }
     }
@@ -113,11 +136,16 @@ export class AdminComponent {
       // Remove the flag from session storage
       sessionStorage.removeItem('callSwitchToApproveHires');
     }
+    if (sessionStorage.getItem('callSwitchToApproveBusinessAccounts') === 'true') {
+      this.switchToApproveBusinessAccounts();
+      // Remove the flag from session storage
+      sessionStorage.removeItem('callSwitchToApproveBusinessAccounts');
+    }
   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
+  // ngOnDestroy(): void {
+  //   this.sub.unsubscribe();
+  // }
 
   async deleteEvent() {
     if (this.selectedEventId) {
@@ -135,10 +163,6 @@ export class AdminComponent {
     }
   }
 
-  // openLoginDialog(): void {
-  //   this.dialog.open(LoginComponent);
-  // }
-
   openLoginDialog(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
       data: { isLoggedIn: this.isLoggedIn }
@@ -147,7 +171,8 @@ export class AdminComponent {
     dialogRef.afterClosed().subscribe(result => {
       this.isLoggedIn = result;
       if(this.isLoggedIn == true) {
-        this.userEmail = this.supabaseService.fetchUser();
+        this.userEmail = this.supabaseService.fetchUserEmail();
+        window.location.reload();
       }
     });
   }
@@ -155,6 +180,10 @@ export class AdminComponent {
   logout(): void {
     this.supabaseService.signOut();
     this.isLoggedIn = false;
+    // reload window with small delay to allow signout to complete
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   }
 
   switchToEvents(): void {
@@ -163,6 +192,10 @@ export class AdminComponent {
 
   switchToApproveHires(): void {
     this.switchForm = 2;
+  }
+
+  switchToApproveBusinessAccounts(): void {
+    this.switchForm = 3;
   }
 
   openApprovalDialog(email: string): void {
@@ -195,5 +228,23 @@ export class AdminComponent {
 
   closeDialog() {
     this.dialog.closeAll();
+  }
+
+  submitBusinessApproval(email: string): void {
+    const toggleValue = this.toggleForm.get('toggleValue')!.value;
+    console.log('Toggle value:', toggleValue);
+
+    this.supabaseService.updateBusinessApprovedRow(email,toggleValue)
+      .then(response => {
+        console.log('Updated successfully:', response);
+        this.closeDialog();
+        
+        sessionStorage.setItem('callSwitchToApproveBusinessAccounts', 'true');
+
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error('Error updating:', error);
+      });
   }
 }

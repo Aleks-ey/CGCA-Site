@@ -44,6 +44,8 @@ import { JobBoardComponent } from './pages/job-board/job-board.component';
 import { ForHireComponent } from './pages/for-hire/for-hire.component';
 import { ForHireRequestComponent } from './components/for-hire-request/for-hire-request.component';
 import { AccountComponent } from './pages/account/account.component';
+import { RegisterBusinessComponent } from './components/register-business/register-business.component';
+import { RegisterJobBoardComponent } from './components/register-job-board/register-job-board.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { AccountComponent } from './pages/account/account.component';
     ForHireComponent,
     ForHireRequestComponent,
     AccountComponent,
+    RegisterBusinessComponent,
+    RegisterJobBoardComponent,
   ],
   imports: [
     AppRoutingModule,

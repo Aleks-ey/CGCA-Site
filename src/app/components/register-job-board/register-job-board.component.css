@@ -1,4 +1,4 @@
-.hire_request_container {
+.register_job_board_container {
     padding: 20px;
     width: 70vw;
     height: auto;
@@ -10,7 +10,7 @@
     }
 }
 
-.for_hire_submit {
+.register_job_board_submit {
     color: #DC2626;
     border: 1px solid #DC2626;
     border-radius: 10px;

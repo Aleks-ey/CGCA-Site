@@ -1,0 +1,49 @@
+<div class="register_job_board_container flex flex-col justify-center text-center">
+    <div>
+    <h2>
+        Looking to hire someone from the Georgian Community?
+    </h2>
+    <p>
+        Fill out the form below and post your listing to the job board.
+    </p>
+    </div>
+    <form (ngSubmit)="onSubmit()">
+        <mat-form-field class="">
+            <mat-label>Company Name:</mat-label>
+            <input matInput [(ngModel)]="listing.company_name" name="companyName">
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="">
+            <mat-label>Position:</mat-label>
+            <input matInput [(ngModel)]="listing.job_title" name="jobTitle">
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="">
+            <mat-label>Job Description:</mat-label>
+            <textarea matInput [(ngModel)]="listing.job_description" name="jobDescription"></textarea>
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="">
+            <mat-label>Email:</mat-label>
+            <input matInput [(ngModel)]="listing.email" name="email">
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="">
+            <mat-label>Phone Number:</mat-label>
+            <input matInput [(ngModel)]="listing.phone_number" name="phone_number" type="tel">
+            <mat-hint>Format: 1234567890</mat-hint>
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="">
+            <mat-label>Pay:</mat-label>
+            <input matInput [(ngModel)]="listing.pay" name="pay">
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="">
+            <mat-label>Location (City):</mat-label>
+            <input matInput [(ngModel)]="listing.location" name="location">
+        </mat-form-field>
+        <br/>
+        <button type="submit" class="register_job_board_submit">Submit</button>
+    </form>
+</div>

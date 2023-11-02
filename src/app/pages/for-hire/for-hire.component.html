@@ -1,18 +1,19 @@
-<!-- FILEPATH: c:\Users\dell\Code_Projects\Georgian-Website\src\app\pages\for-hire\for-hire.component.html -->
-<button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="absolute float-right mt-2 mr-6">Login</button>
-<div *ngIf="isLoggedIn" class="absolute flex flex-row right-10">
-    <span>{{ userEmail }}</span>
+<a href="/community">
+    <mat-icon class="text-black float-left mt-1.5 ml-2 md:ml-6">keyboard_arrow_left</mat-icon>
+</a>
+<a href="/community" class="float-left mt-2 md:ml-6">Back</a>
+<button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="float-right mt-2 mr-2 md:mr-6">Login</button>
+<div *ngIf="isLoggedIn" class="flex float-right mt-2 mr-2 md:mr-6 gap-2">
+    <a href="/account"> My Account </a>
     <button (click)="logout()">Logout</button>
 </div>
 
-<button (click)="openForHireDialog()" class="float-right mt-2 mr-6">Request</button>
-
-<div class="hire_header flex my-16 justify-center text-center">
+<div class="hire_header flex mt-16 mb-6 md:my-16 px-4 md:px-0 justify-center text-center">
     <h1>Find a Member of the Georgian Community <br/> Ready to Work</h1>
 </div>
 
 <div class="for_hire_container flex flex-row">
-    <div class="hire_filter_container flex flex-col">
+    <div class="hire_filter_container hidden md:flex flex-col">
         <!-- Search bar -->
         <div class="hire_filter_search">
             <input type="text" placeholder="Search...">
@@ -61,7 +62,7 @@
 </div>
 <!-- Pagination buttons -->
 <div class="pagination_container flex flex-row justify-center">
-    <div class="flex w-1/5 justify-between">
+    <div class="flex justify-between gap-2">
         <button>Previous</button>
         <button>1</button>
         <button>2</button>

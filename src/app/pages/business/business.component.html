@@ -1,13 +1,19 @@
-<button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="float-right mt-2 mr-6">Login</button>
-<div *ngIf="isLoggedIn" class="flex flex-row float-right">
-    <span>{{ userEmail }}</span>
-    <button (click)="logout()">Logout</button>
+<a href="/community">
+    <mat-icon class="text-black float-left mt-1.5 ml-2 md:ml-6">keyboard_arrow_left</mat-icon>
+</a>
+<a href="/community" class="float-left mt-2 md:ml-6">Back</a>
+<button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="flex flex-row float-right mt-2 mr-2 md:mr-6">Login</button>
+<div *ngIf="isLoggedIn" class="flex float-right mt-2 mr-2 md:mr-6 gap-2">
+    <a href="/account"> My Account </a>
+    <button (click)="logout()" class="">Logout</button>
 </div>
 
-<button (click)="openBusinessDialog()" class="float-right mt-2 mr-6">Request</button>
+<div class="business_header flex mt-16 mb-6 md:my-16 px-4 md:px-0 justify-center text-center">
+    <h1>Check Out These Georgian Owned Business</h1>
+</div>
 
 <div class="business_container flex flex-row">
-    <div class="business_filter_container flex flex-col">
+    <div class="business_filter_container hidden md:flex flex-col">
         <!-- Search bar -->
         <div class="business_filter_search">
             <input type="text" placeholder="Search...">
@@ -15,48 +21,53 @@
         </div>
         <!-- Filter checkboxes -->
         <!-- <div class="business_filter_type">
-            <h3>Filter by Job Type:</h3>
+            <h3>Filter by Business Location:</h3>
             <label><input type="checkbox" name="business-type" value="full-time">Full Time</label>
             <label><input type="checkbox" name="business-type" value="part-time">Part Time</label>
             <label><input type="checkbox" name="business-type" value="internship">Internship</label>
         </div>     -->
     </div>
 
-    <!-- Job listings -->
+    <!-- Business listings -->
     <div class="business_listing_container flex flex-col justify-center" >
-        <div class="business_listing flex flex-col justify-center" *ngFor="let listing of businessesList">
-            <div class="business_listing_header flex flex-row justify-center">
-                <p>{{ listing.company_name }} -&nbsp;</p> 
-                <p> {{ listing.type }}</p>
+        <div class="business_listing flex flex-row justify-center" *ngFor="let listing of businessesList">
+            <div class="flex w-1/3 object-cover">
+                <img src="{{ listing.image_url }}" alt="business logo">
             </div>
-            <div class="business_listing_description text-center">
-                <p>{{ listing.description }}</p>
-            </div>
-            <div class="business_listing_details flex flex-row"> 
-                <p>
-                    <mat-icon class="text-black">map</mat-icon>
-                    {{ listing.location }}
-                </p>
-                <p>
-                    <mat-icon class="text-black">phone</mat-icon>
-                    ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
-                </p>
-            </div>
-            <div class="business_listing_contact flex flex-row gap-6">
-                <p>
-                    <mat-icon class="text-black">person</mat-icon>
-                    {{ listing.owner}}
-                    <mat-icon class="text-black">email</mat-icon>
-                    {{ listing.email }}
-                </p>
-                
+            <div class="flex flex-col w-2/3 ml-4">
+                <div class="business_listing_header flex flex-col md:flex-row">
+                    <p class="hidden md:block">{{ listing.company_name }} -&nbsp;</p>
+                    <p class="block md:hidden">{{ listing.company_name }}</p>
+                    <p> {{ listing.type }}</p>
+                </div>
+                <div class="business_listing_description">
+                    <p>{{ listing.description }}</p>
+                </div>
+                <div class="business_listing_details flex flex-row"> 
+                    <p>
+                        <mat-icon class="text-black">map</mat-icon>
+                        {{ listing.location }}
+                    </p>
+                    <p>
+                        <mat-icon class="text-black">phone</mat-icon>
+                        ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
+                    </p>
+                </div>
+                <div class="business_listing_contact flex flex-row gap-6">
+                    <p>
+                        <mat-icon class="text-black">person</mat-icon>
+                        {{ listing.owner}}
+                        <mat-icon class="text-black">email</mat-icon>
+                        {{ listing.email }}
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <!-- Pagination buttons -->
 <div class="pagination_container flex flex-row justify-center">
-    <div class="flex w-1/5 justify-between">
+    <div class="flex justify-between gap-2">
         <button>Previous</button>
         <button>1</button>
         <button>2</button>

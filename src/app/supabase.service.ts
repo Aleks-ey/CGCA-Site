@@ -5,19 +5,23 @@ import {
   createClient,
   Session,
   SupabaseClient,
-  User, 
+  User,
 } from '@supabase/supabase-js'
 import { environment } from 'src/environments/environment'
 import { BehaviorSubject } from 'rxjs';
 
 import { CalendarEvent } from './pages/admin/calendarEvent.model';
 import { ForHireListing } from './components/for-hire-request/for-hire-request.component';
-import { BusinessListing } from './pages/business/business.component';
+import { BusinessListing } from './components/register-business/register-business.component';
+import { JobBoardListing } from './components/register-job-board/register-job-board.component';
 
 export interface Profile {
   id?: string;
   email: string;
   business_acc: boolean;
+  business_request: boolean;
+  name: string;
+  phone_number: string;
 }
 
 @Injectable({
@@ -59,8 +63,20 @@ export class SupabaseService {
   async updateHiresApprovedRow(currentEmail:string, toggleValue: boolean) {
     const { data, error } = await this.supabase
       .from('for_hire')
-      .update({ approved: toggleValue }) // Adjust column name accordingly
-      .eq('email', currentEmail); // Add appropriate filtering
+      .update({ approved: toggleValue })
+      .eq('email', currentEmail);
+
+    if (error) {
+      throw error;
+    }
+    return data;
+  }
+
+  async updateBusinessApprovedRow(currentEmail:string, toggleValue: boolean) {
+    const { data, error } = await this.supabase
+      .from('profile')
+      .update({ business_acc: toggleValue })
+      .eq('email', currentEmail);
 
     if (error) {
       throw error;
@@ -78,14 +94,6 @@ export class SupabaseService {
     })
     return this._session
   }
-
-  // profile(user: User) {
-  //   return this.supabase
-  //     .from('profile')
-  //     .select(`full_name, email, phone_number`)
-  //     .eq('id', user.id)
-  //     .single()
-  // }
 
   authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void) {
     return this.supabase.auth.onAuthStateChange(callback)
@@ -113,21 +121,25 @@ export class SupabaseService {
     return this.supabase.auth.signOut()
   }
 
-  // updateProfile(profile: Profile) {
-  //   const update = {
-  //     ...profile,
-  //     updated_at: new Date(),
-  //   }
+  async getAllProfiles() {
+    const { data, error } = await this.supabase.from('profile').select('*');
+    return { data, error };
+  }
 
-  //   return this.supabase.from('profile').upsert(update)
-  // }
-
-  async fetchUser() {
+  async fetchUserEmail() {
     const {
       data: { user },
     } = await this.supabase.auth.getUser();
     // let metadata = user!.user_metadata
     return user?.email
+  }
+
+  async profile(currentEmail:string) {
+    return this.supabase
+      .from('profile')
+      .select(`name, phone_number`)
+      .eq('email', currentEmail)
+      .single()
   }
 
   async checkBusinessAcc(currentEmail:string) {
@@ -142,10 +154,104 @@ export class SupabaseService {
     return data![0].business_acc;
   }
 
-  async getUserData(currentEmail:string) {
+  async checkBusinessRequest(currentEmail:string) {
     const { data, error } = await this.supabase
       .from('profile')
+      .select('business_request')
+      .eq('email', currentEmail);
+
+    if (error) {
+      throw error;
+    }
+    return data![0].business_request;
+  }
+
+  async checkForHireRequest(currentEmail:string) {
+    const { data, error } = await this.supabase
+      .from('profile')
+      .select('for_hire_request')
+      .eq('email', currentEmail);
+
+    if (error) {
+      throw error;
+    }
+    return data![0].for_hire_request;
+  }
+
+  async getUserHires(currentEmail:string) {
+    const { data, error } = await this.supabase
+      .from('for_hire')
       .select('*')
+      .eq('email', currentEmail);
+    return { data, error };
+  }
+
+  async getUserBusiness(currentEmail:string) {
+    const { data, error } = await this.supabase
+      .from('business')
+      .select('*')
+      .eq('email', currentEmail);
+    return { data, error };
+  }
+
+  async getUserJobs(currentEmail:string) {
+    const { data, error } = await this.supabase
+      .from('job_board')
+      .select('*')
+      .eq('email', currentEmail);
+    return { data, error };
+  }
+
+  async updateProfileName(currentEmail:string, name:string) {
+    const { data, error } = await this.supabase
+      .from('profile')
+      .update({ name: name })
+      .eq('email', currentEmail);
+  }
+
+  async updateProfilePhone(currentEmail:string, phone:string) {
+    const { data, error } = await this.supabase
+      .from('profile')
+      .update({ phone_number: phone })
+      .eq('email', currentEmail);
+  }
+
+  async updateProfileEmail(new_email:string) {
+    const { data, error } = await this.supabase.auth.updateUser({email: new_email});
+  }
+
+  async updateProfilePassword(new_password:string) {
+    const { data, error } = await this.supabase.auth.updateUser({password: new_password});
+  }
+
+  async makeBusinessRequest(currentEmail:string) {
+    const { data, error } = await this.supabase
+      .from('profile')
+      .update({ business_request: true })
+      .eq('email', currentEmail);
+
+    if (error) {
+      throw error;
+    }
+    return data;
+  }
+
+  async cancelBusinessRequest(currentEmail:string) {
+    const { data, error } = await this.supabase
+      .from('profile')
+      .update({ business_request: false })
+      .eq('email', currentEmail);
+
+    if (error) {
+      throw error;
+    }
+    return data;
+  }
+
+  async makeForHireRequest(currentEmail:string) {
+    const { data, error } = await this.supabase
+      .from('profile')
+      .update({ for_hire_request: true })
       .eq('email', currentEmail);
 
     if (error) {
@@ -159,6 +265,15 @@ export class SupabaseService {
   async getAllJobs() {
     const { data, error } = await this.supabase.from('job_board').select('*');
     return { data, error };
+  }
+
+  async addJob(jobListing: JobBoardListing) {
+    const { data, error } = await this.supabase
+      .from('job_board')
+      .insert([jobListing]);
+
+    return { data: data ? data[0] : undefined,  // Assuming 'data' is an array, return the first element.
+    error };
   }
 
   // ------------------ For Hire ------------------
@@ -191,6 +306,25 @@ export class SupabaseService {
 
     return { data: data ? data[0] : undefined,  // Assuming 'data' is an array, return the first element.
     error };
+  }
+
+  async addBusinessImage(selectedFile: any) {
+    if (selectedFile) {
+      const { data, error } = await this.supabase.storage
+        .from('business-images')
+        .upload(selectedFile.name, selectedFile);
+
+      if (error) {
+        console.error('Error uploading file:', error);
+        return '';
+      } else {
+        // Save the URL or filename to your database if needed
+        return data.path;
+      }
+    }
+    else {
+      return '';
+    }
   }
 
 }

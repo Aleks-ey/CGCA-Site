@@ -1,21 +1,9 @@
 import { Component } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
 import { MatDialog } from '@angular/material/dialog';
-import { MatInput } from '@angular/material/input';
-import { ForHireRequestComponent } from 'src/app/components/for-hire-request/for-hire-request.component';
-import { Subscription } from 'rxjs';
+import { BusinessListing } from 'src/app/components/register-business/register-business.component';
 import { LoginComponent } from 'src/app/components/login/login.component';
 
-export interface BusinessListing {
-  id?: number;
-  company_name: string;
-  type: string;
-  description: string;
-  owner: string;
-  email: string;
-  phone_number: string;
-  location: string;
-}
 
 @Component({
   selector: 'app-business',
@@ -31,6 +19,7 @@ export class BusinessComponent {
     email: '',
     phone_number: '',
     location: '',
+    image_url: '',
   };
 
   businessesList: BusinessListing[] = [];
@@ -48,15 +37,11 @@ export class BusinessComponent {
       this.businessesList = result.data!;
     }
 
-    this.userEmail = await this.supabaseService.fetchUser();
+    this.userEmail = await this.supabaseService.fetchUserEmail();
 
     if(this.userEmail != null) {
       this.isLoggedIn = true;
     }
-  }
-
-  openBusinessDialog(): void {
-    this.dialog.open(ForHireRequestComponent);
   }
 
   // ngOnDestroy(): void {
@@ -64,14 +49,24 @@ export class BusinessComponent {
   // }
 
   openLoginDialog(): void {
-    this.dialog.open(LoginComponent);
-  }
+    const dialogRef = this.dialog.open(LoginComponent, {
+      data: { isLoggedIn: this.isLoggedIn }
+    });
 
-  navigateToUserProfile(): void {
-    // Navigation logic...
+    dialogRef.afterClosed().subscribe(result => {
+      this.isLoggedIn = result;
+      if(this.isLoggedIn == true) {
+        this.userEmail = this.supabaseService.fetchUserEmail();
+        window.location.reload();
+      }
+    });
   }
 
   logout(): void {
     this.supabaseService.signOut();
+    // refresh page with delay to allow for signout to complete
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   }
 }

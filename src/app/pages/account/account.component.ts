@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { LoginComponent } from 'src/app/components/login/login.component';
 import { SupabaseService } from 'src/app/supabase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from 'src/app/components/register/register.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ForHireListing } from 'src/app/components/for-hire-request/for-hire-request.component';
+import { BusinessListing } from 'src/app/components/register-business/register-business.component';
+import { JobBoardListing } from 'src/app/components/register-job-board/register-job-board.component';
 
 @Component({
   selector: 'app-account',
@@ -11,11 +13,24 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./account.component.css'],
 })
 export class AccountComponent {
+  loginForm!: FormGroup;
+
   userEmail: any;
+  userName: any;
+  userPhone: any;
   isLoggedIn = false;
   isBusiness = false;
 
-  loginForm!: FormGroup;
+  userHireListing: ForHireListing[] = [];
+  hasHireListing = false;
+  hasForHireRequest = false;
+
+  userBusiness: BusinessListing[] = [];
+  hasBusinessRequest = false;
+  hasBusinessListing = false;
+  
+  userJobBoardListing: JobBoardListing[] = [];
+  hasJobBoardListing = false;
 
   constructor(
     private supabaseService: SupabaseService,
@@ -36,11 +51,55 @@ export class AccountComponent {
     }
 
   async ngOnInit() {
-    this.userEmail = await this.supabaseService.fetchUser();
+    this.userEmail = await this.supabaseService.fetchUserEmail();
+    this.supabaseService.profile(this.userEmail)?.then(
+        (res) => { 
+          this.userName = res.data?.name 
+          this.userPhone = res.data?.phone_number}
+      );
 
     if(this.userEmail != null) {
       this.isLoggedIn = true;
       this.isBusiness = await this.supabaseService.checkBusinessAcc(this.userEmail);
+
+      if(!this.isBusiness) {
+        const result = await this.supabaseService.getUserHires(this.userEmail);
+        if (result.error) {
+          console.error('Error fetching events:', result.error);
+        } 
+        else {
+          this.userHireListing = result.data!;
+          if(this.userHireListing.length > 0) {
+            this.hasHireListing = true;
+          }
+        }
+        this.hasBusinessRequest = await this.supabaseService.checkBusinessRequest(this.userEmail);
+        this.hasForHireRequest = await this.supabaseService.checkForHireRequest(this.userEmail);
+      }
+      else {
+        const result2 = await this.supabaseService.getUserBusiness(this.userEmail);
+        if (result2.error) {
+          console.error('Error fetching events:', result2.error);
+        } 
+        else {
+          this.userBusiness = result2.data!;
+          if(this.userBusiness.length > 0) {
+            this.hasBusinessListing = true;
+          }
+        }
+
+        const result3 = await this.supabaseService.getUserJobs(this.userEmail);
+        if (result3.error) {
+          console.error('Error fetching events:', result3.error);
+        } 
+        else {
+          this.userJobBoardListing = result3.data!;
+          if(this.userJobBoardListing.length > 0) {
+            this.hasJobBoardListing = true;
+          }
+        }
+      }
+
     }
     else {
       this.isLoggedIn = false;
@@ -56,7 +115,7 @@ export class AccountComponent {
       .then((res) => {
         console.log(res.data.user.role);
         if (res.data.user.role === 'authenticated') {
-          console.log(this.supabaseService.fetchUser());
+          console.log(this.supabaseService.fetchUserEmail());
           window.location.reload();
           // this.router.navigate(['/dashboard']);
         }
@@ -83,5 +142,43 @@ export class AccountComponent {
 
   // ----------------- User Info -----------------
 
-  
+  newName='';
+  public updateUserName(newName: string) {
+    if(newName != '') {
+      this.supabaseService.updateProfileName(this.userEmail, newName);
+      window.location.reload();
+    }
+  }
+
+  newPhone='';
+  updateUserPhone(newPhone: string) {
+    if(newPhone.length == 10) {
+      this.supabaseService.updateProfilePhone(this.userEmail, newPhone);
+      window.location.reload();
+    }
+  }
+
+  newEmail='';
+  updateUserEmail(newEmail: string) {
+    if(newEmail != '') {
+      this.supabaseService.updateProfileEmail(newEmail);
+      window.location.reload();
+    }
+  }
+
+  newPassword='';
+  updateUserPassword(newPassword: string) {
+    if(newPassword != '') {
+      this.supabaseService.updateProfilePassword(newPassword);
+      window.location.reload();
+    }
+  }
+
+  requestBusiness() {
+    this.supabaseService.makeBusinessRequest(this.userEmail);
+  }
+
+  cancelRequest() {
+    this.supabaseService.cancelBusinessRequest(this.userEmail);
+  }
 }

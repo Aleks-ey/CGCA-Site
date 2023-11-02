@@ -1,12 +1,11 @@
 .login_register_container {
-    height: 50vw;
+    height: 300px;
 }
 
 .login_register_box {
     border: 1px solid #e5e7eb;
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 20px;
 }
 
 .login_button {
@@ -28,4 +27,136 @@
     border-radius: 10px;
     padding: 10px;
     margin-top: 10px;
+}
+
+.logout_button {
+    transform: translateY(-30px);
+}
+/* update account css */
+.update_account_header {
+    margin-left: 15vw;
+
+    @media screen and (max-width: 768px) {
+        margin-left: 5vw;
+    }
+}
+
+.update_account {
+    width: 70vw;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    @media screen and (max-width: 768px) {
+        width: 90vw;
+    }
+}
+
+.show_password_button {
+    transform: scale(0.8);
+    right: 0;
+    top: -3px;
+}
+/* non-business account css for hire listings */
+.no_hire_listing_header {
+    margin-left: 15vw;
+
+    @media screen and (max-width: 768px) {
+        margin-left: 5vw;
+    }
+}
+
+.hire_listing_header {
+    margin-left: 15vw;
+
+    @media screen and (max-width: 768px) {
+        margin-left: 5vw;
+    }
+}
+
+.for_hire_pending {
+    width: 70vw;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    @media screen and (max-width: 768px) {
+        width: 90vw;
+    }
+}
+/* non-business account css for business account registration */
+.business_account_offer {
+    width: 70vw;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    @media screen and (max-width: 768px) {
+        width: 90vw;
+    }
+}
+
+.business_account_rescind {
+    width: 70vw;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    @media screen and (max-width: 768px) {
+        width: 90vw;
+    }
+}
+
+.business_account_offer_header {
+    margin-left: 15vw;
+
+    @media screen and (max-width: 768px) {
+        margin-left: 5vw;
+    }
+}
+
+.business_button {
+    color: #DC2626;
+    border: 1px solid #DC2626;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+/* business account css for business listing */
+.no_business_listing_header {
+    margin-left: 15vw;
+
+    @media screen and (max-width: 768px) {
+        margin-left: 5vw;
+    }
+}
+
+.business_listing_header {
+    margin-left: 15vw;
+
+    @media screen and (max-width: 768px) {
+        margin-left: 5vw;
+    }
+}
+
+/* business account css for job board listings */
+.job_board_listing_header {
+    margin-left: 15vw;
+
+    @media screen and (max-width: 768px) {
+        margin-left: 5vw;
+    }
+}
+
+.no_job_board_listing_header {
+    margin-left: 15vw;
+
+    @media screen and (max-width: 768px) {
+        margin-left: 5vw;
+    }
 }

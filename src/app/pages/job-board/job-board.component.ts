@@ -1,17 +1,8 @@
 import { Component } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
-
-export interface JobBoardListing {
-  id?: number;
-  company_name: string;
-  job_title: string;
-  job_description: string;
-  email: string;
-  phone_number: string;
-  pay: string;
-  location: string;
-  approved: boolean;
-}
+import { JobBoardListing } from 'src/app/components/register-job-board/register-job-board.component';
+import { LoginComponent } from 'src/app/components/login/login.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-job-board',
@@ -20,20 +11,11 @@ export interface JobBoardListing {
 })
 export class JobBoardComponent {
 
-  listing: JobBoardListing = {
-    company_name: '',
-    job_title: '',
-    job_description: '',
-    email: '',
-    phone_number: '',
-    pay: '',
-    location: '',
-    approved: false,
-  };
-
   jobsList: JobBoardListing[] = [];
+  userEmail: any;
+  isLoggedIn = false;
 
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(private supabaseService: SupabaseService, public dialog: MatDialog) {}
 
   async ngOnInit() {
     const result = await this.supabaseService.getAllJobs();
@@ -42,5 +24,19 @@ export class JobBoardComponent {
     } else {
       this.jobsList = result.data!;
     }
+
+    this.userEmail = await this.supabaseService.fetchUserEmail();
+
+    if(this.userEmail != null) {
+      this.isLoggedIn = true;
+    }
+  }
+
+  openLoginDialog(): void {
+    this.dialog.open(LoginComponent);
+  }
+
+  logout(): void {
+    this.supabaseService.signOut();
   }
 }
