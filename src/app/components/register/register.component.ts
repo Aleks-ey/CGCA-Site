@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, TemplateRef, ViewChild } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-register',
@@ -12,10 +12,14 @@ export class RegisterComponent {
   registerForm!: FormGroup;
   router: any;
 
+  @ViewChild('dialogTemplate1') dialogTemplate1!: TemplateRef<any>;
+  @ViewChild('dialogTemplate2') dialogTemplate2!: TemplateRef<any>;
+
   constructor(
       private supabaseService: SupabaseService, 
       private formBuilder: FormBuilder, 
       private auth: SupabaseService,
+      public dialog: MatDialog,
       public dialogRef: MatDialogRef<RegisterComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -38,10 +42,15 @@ export class RegisterComponent {
       .then((res) => {
         console.log(res.data.user.role);
         if (res.data.user.role === 'authenticated') {
-          this.router.navigate(['/dashboard']);
+          const dialogRef = this.dialog.open(this.dialogTemplate1);
+          // set timeout
+          setTimeout(() => {
+            dialogRef.close();
+          }, 4000);
         }
       })
       .catch((err) => {
+        const dialogRef = this.dialog.open(this.dialogTemplate2);
         console.log(err);
       });
   }

@@ -19,7 +19,12 @@
                 </div>
                 
                 <div class="login_submit">
-                    <input class="login_button w-full" type="submit" [disabled]="loginForm.invalid">
+                    <input class="login_button w-full" type="submit">
+                    <ng-template #dialogTemplate class="overflow-hidden">
+                        <div class="p-4">
+                            <p>Invalid email or password!</p>
+                        </div>
+                    </ng-template>
                 </div>
             </form>
         </div>

@@ -39,7 +39,8 @@ export class AdminComponent {
   approvedBusinessList: Profile[] = [];
   unapprovedBusinessList: Profile[] = [];
 
-  @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
+  @ViewChild('dialogTemplate1') dialogTemplate1!: TemplateRef<any>;
+  @ViewChild('dialogTemplate2') dialogTemplate2!: TemplateRef<any>;
   toggleForm: FormGroup;
 
   constructor(
@@ -165,7 +166,9 @@ export class AdminComponent {
 
   openLoginDialog(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
-      data: { isLoggedIn: this.isLoggedIn }
+      data: { isLoggedIn: this.isLoggedIn },
+      height: 'auto',
+      width: '90%',
     });
   
     dialogRef.afterClosed().subscribe(result => {
@@ -200,7 +203,11 @@ export class AdminComponent {
 
   openApprovalDialog(email: string): void {
     this.currentEmail = email;
-    const dialogRef = this.dialog.open(this.dialogTemplate);
+    const dialogRef = this.dialog.open(this.dialogTemplate1, {
+        height: 'auto',
+        width: '80%',
+      }
+    );
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -228,6 +235,19 @@ export class AdminComponent {
 
   closeDialog() {
     this.dialog.closeAll();
+  }
+
+  openBusinessApprovalDialog(email: string): void {
+    this.currentEmail = email;
+    const dialogRef = this.dialog.open(this.dialogTemplate2, {
+        height: 'auto',
+        width: '80%',
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   submitBusinessApproval(email: string): void {

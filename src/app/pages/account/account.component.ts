@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from 'src/app/components/register/register.component';
@@ -31,6 +31,8 @@ export class AccountComponent {
   
   userJobBoardListing: JobBoardListing[] = [];
   hasJobBoardListing = false;
+
+  @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
 
   constructor(
     private supabaseService: SupabaseService,
@@ -121,6 +123,7 @@ export class AccountComponent {
         }
       })
       .catch((err) => {
+        const dialogRef = this.dialog.open(this.dialogTemplate);
         console.log(err);
       });
   }
@@ -134,6 +137,8 @@ export class AccountComponent {
 
   openRegisterDialog(): void {
     const dialogRef = this.dialog.open(RegisterComponent, {
+      height: 'auto',
+      width: '80%',
     });
   
     dialogRef.afterClosed().subscribe(result => {

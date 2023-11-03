@@ -1,23 +1,28 @@
 <div class="login_container flex justify-center text-center">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <h2>Login</h2>
-        <div>
+        <div class="mb-2">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" formControlName="email">
+            <input class="border rounded-lg px-2" type="email" id="email" name="email" formControlName="email">
             <i style="color: tomato"
                 *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">
             </i>
         </div>
-        <div>
+        <div class="mb-4">
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" formControlName="password">
+            <input class="border rounded-lg px-2" type="password" id="password" name="password" formControlName="password">
             <i style="color: tomato"
                 *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">
             </i>
         </div>
         
         <div class="login_submit">
-            <input type="submit" [disabled]="loginForm.invalid">
+            <input type="submit">
+            <ng-template #dialogTemplate class="overflow-hidden">
+                <div class="p-4">
+                    <p>Invalid email or password!</p>
+                </div>
+            </ng-template>
         </div>
     </form>
 </div>

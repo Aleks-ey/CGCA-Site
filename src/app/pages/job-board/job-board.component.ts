@@ -33,7 +33,11 @@ export class JobBoardComponent {
   }
 
   openLoginDialog(): void {
-    this.dialog.open(LoginComponent);
+    this.dialog.open(LoginComponent, {
+        height: 'auto',
+        width: '90%',
+      }
+      );
   }
 
   logout(): void {

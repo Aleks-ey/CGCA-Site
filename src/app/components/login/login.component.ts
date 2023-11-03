@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, TemplateRef, ViewChild } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +12,13 @@ export class LoginComponent {
   loginForm!: FormGroup;
   router: any;
 
+  @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
+
   constructor(
     private supabaseService: SupabaseService, 
     private formBuilder: FormBuilder, 
     private auth: SupabaseService,
+    public dialog: MatDialog,
     public dialogRef: MatDialogRef<LoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -44,6 +47,7 @@ export class LoginComponent {
         }
       })
       .catch((err) => {
+        const dialogRef = this.dialog.open(this.dialogTemplate);
         console.log(err);
       });
   }

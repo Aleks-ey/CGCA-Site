@@ -50,7 +50,9 @@ export class BusinessComponent {
 
   openLoginDialog(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
-      data: { isLoggedIn: this.isLoggedIn }
+      data: { isLoggedIn: this.isLoggedIn },
+      height: 'auto',
+      width: '90%',
     });
 
     dialogRef.afterClosed().subscribe(result => {

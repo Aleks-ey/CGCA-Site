@@ -135,7 +135,7 @@
       </div>
     </div>
 
-    <ng-template #dialogTemplate>
+    <ng-template #dialogTemplate1>
       <h2>Toggle For Hire Aprroval Status for {{currentEmail}}:</h2>
       <form [formGroup]="toggleForm">
         <mat-slide-toggle formControlName="toggleValue" class="w-full h-auto text-black">
@@ -174,7 +174,7 @@
     <div class="mt-12 justify-center text-center">
       <h2>Unapproved Business Accounts:</h2>
     </div>
-    <div class="business_account_listing flex flex-col justify-center" *ngFor="let listing of unapprovedBusinessList" (click)="openApprovalDialog(listing.email)">
+    <div class="business_account_listing flex flex-col justify-center" *ngFor="let listing of unapprovedBusinessList" (click)="openBusinessApprovalDialog(listing.email)">
       <div class="business_account_listing_header flex flex-row justify-center">
           <p>{{ listing.name }}</p>
       </div>
@@ -190,7 +190,7 @@
       </div>
     </div>
     <!-- template for business accounts dialog -->
-    <ng-template #dialogTemplate class="overflow-hidden">
+    <ng-template #dialogTemplate2 class="overflow-hidden">
       <div class="w-full h-32">
         <h3 class="ml-6">Toggle Business Approval Status for {{currentEmail}}:</h3>
         <form [formGroup]="toggleForm">
