@@ -1,30 +1,47 @@
 <div class="register_container flex justify-center text-center">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <h2>Register</h2>
-        <div class="mb-2">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" formControlName="email" class="border-gray-300 border-2">
-            <i style="color: tomato"
-                *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
-                Email is required and must be valid
-            </i>
+        <div class="table mb-4">
+            <div class="table-row mb-2">
+                <label for="name" class="table-cell text-right">Full Name:</label>
+                <input type="text" id="name" name="name" formControlName="name" class="table-cell border-gray-300 border-2">
+                <i style="color: tomato" class="table-row"
+                    *ngIf="registerForm.controls['name'].invalid && (registerForm.controls['name'].dirty || registerForm.controls['name'].touched)">
+                    Name is required
+                </i>
+            </div>
+            <div class="table-row mb-4">
+                <label for="phone_number" class="table-cell text-right">Phone Number:</label>
+                <input type="tel" id="phone_number" name="phone_number" formControlName="phone_number" class="table-cell border-gray-300 border-2">
+                <i style="color: tomato" class="table-row"
+                    *ngIf="registerForm.controls['phone_number'].invalid && (registerForm.controls['phone_number'].dirty || registerForm.controls['phone_number'].touched)">
+                    Phone Number is required and must be valid, 10 digits
+                </i>
+            </div>
+            <div class="table-row mb-2">
+                <label for="email" class="table-cell text-right">Email:</label>
+                <input type="email" id="email" name="email" formControlName="email" class="table-cell border-gray-300 border-2">
+                <i style="color: tomato" class="table-row"
+                    *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
+                    Email is required and must be valid
+                </i>
+            </div>
+            <div class="table-row">
+                <label for="password" class="table-cell text-right">Password:</label>
+                <input type="password" id="password" name="password" formControlName="password" class="table-cell border-gray-300 border-2">
+                <i style="color: tomato" class="table-row"
+                    *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)">
+                    Password Must Be at Least 6 Characters
+                </i>
+            </div>
         </div>
-        <div class="mb-4">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" formControlName="password" class="border-gray-300 border-2">
-            <i style="color: tomato"
-                *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)">
-                Password Must Be at Least 6 Characters
-            </i>
-        </div>
-        
-        <div class="register_submit border-red-400 border-2 p-2 text-red-400 rounded-lg">
-            <input type="submit">
+        <div>
+            <input class="register_submit border-red-400 border-2 p-2 text-red-400 rounded-lg" type="submit">
             <ng-template #dialogTemplate1 class="overflow-hidden">
                 <div class="p-4 text-center">
                     <p>Registration successful!</p>
                     <br/>
-                    <p>You may continue to sign in</p>
+                    <p>Please wait to be redirected</p>
                 </div>
             </ng-template>
             <ng-template #dialogTemplate2 class="overflow-hidden">

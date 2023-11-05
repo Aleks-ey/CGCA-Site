@@ -7,45 +7,40 @@
         Fill out the form below and make a request to get your listing posted on the For Hire page.
     </p>
     </div>
-    <form (ngSubmit)="onSubmit()">
-        <mat-form-field class="">
-            <mat-label>Last Name, First Name:</mat-label>
-            <input matInput [(ngModel)]="forHireEntry.name" name="name">
-        </mat-form-field>
-        <br>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
         <mat-form-field class="">
             <mat-label>Profession:</mat-label>
-            <input matInput [(ngModel)]="forHireEntry.profession" name="profession">
+            <input matInput formControlName="profession">
         </mat-form-field>
         <br>
         <mat-form-field class="">
             <mat-label>About:</mat-label>
-            <textarea matInput [(ngModel)]="forHireEntry.about" name="about"></textarea>
-        </mat-form-field>
-        <br>
-        <mat-form-field class="">
-            <mat-label>Email:</mat-label>
-            <input matInput [(ngModel)]="forHireEntry.email" name="email">
-        </mat-form-field>
-        <br>
-        <mat-form-field class="">
-            <mat-label>Phone Number:</mat-label>
-            <input matInput [(ngModel)]="forHireEntry.phone_number" name="phone_number" type="tel">
-            <mat-hint>Format: 1234567890</mat-hint>
+            <textarea matInput formControlName="about"></textarea>
         </mat-form-field>
         <br>
         <mat-form-field class="">
             <mat-label>Location (City):</mat-label>
-            <input matInput [(ngModel)]="forHireEntry.location" name="location">
+            <input matInput formControlName="location">
         </mat-form-field>
         <br>
         <mat-label>Flexible in job choice?</mat-label>
         <br/>
-        <mat-radio-group [(ngModel)]="forHireEntry.work_outside" name="work_outside">
+        <mat-radio-group formControlName="work_outside">
             <mat-radio-button value="yes">Yes</mat-radio-button>
             <mat-radio-button value="no">No</mat-radio-button>
         </mat-radio-group>
         <br/>
         <button type="submit" class="for_hire_submit">Submit</button>
+        <ng-template #dialogTemplateSuccess class="overflow-hidden">
+            <div class="p-4">
+                <p>Request Submitted Successfully!</p>
+            </div>
+        </ng-template>
+        <ng-template #dialogTemplateFail class="overflow-hidden">
+            <div class="p-4">
+                <p>There was an issue proccessing your request.</p>
+                <p>Please check to make sure all fields are correct and try again.</p>
+            </div>
+        </ng-template>
     </form>
 </div>

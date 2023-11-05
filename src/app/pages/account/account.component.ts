@@ -54,7 +54,7 @@ export class AccountComponent {
 
   async ngOnInit() {
     this.userEmail = await this.supabaseService.fetchUserEmail();
-    this.supabaseService.profile(this.userEmail)?.then(
+    await this.supabaseService.profile(this.userEmail)?.then(
         (res) => { 
           this.userName = res.data?.name 
           this.userPhone = res.data?.phone_number}

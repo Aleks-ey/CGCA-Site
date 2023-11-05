@@ -86,6 +86,36 @@
         width: 90vw;
     }
 }
+
+.hire_listing {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    width: 70vw;
+}
+
+.hire_listing_header > p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.hire_listing_details > p > mat-icon {
+    transform: translateY(7px);
+}
+
+.hire_listing_contact > p > mat-icon {
+    transform: translateY(7px);
+}
+
+.work_outside {
+    width: max-content;
+    padding: 0px 7px 0px 7px;
+    color: white;
+    background-color: #1E293B;
+    opacity: 0.8;
+    border-radius: 10px;
+}
 /* non-business account css for business account registration */
 .business_account_offer {
     width: 70vw;

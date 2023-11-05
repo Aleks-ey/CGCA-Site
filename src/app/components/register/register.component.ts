@@ -24,6 +24,8 @@ export class RegisterComponent {
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
     this.registerForm = this.formBuilder.group({
+      name: formBuilder.control('', [Validators.required, Validators.minLength(2)]),
+      phone_number: formBuilder.control('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
       email: formBuilder.control('', [
         Validators.required,
         Validators.minLength(5),
@@ -43,9 +45,14 @@ export class RegisterComponent {
         console.log(res.data.user.role);
         if (res.data.user.role === 'authenticated') {
           const dialogRef = this.dialog.open(this.dialogTemplate1);
-          // set timeout
+          this.supabaseService.updateProfileName(this.registerForm.value.email, this.registerForm.value.name);
+          this.supabaseService.updateProfilePhone(this.registerForm.value.email, this.registerForm.value.phone_number);
+            
           setTimeout(() => {
-            dialogRef.close();
+            this.auth.signIn(this.registerForm.value.email, this.registerForm.value.password);
+          }, 2000);
+          setTimeout(() => {
+            window.location.reload();
           }, 4000);
         }
       })

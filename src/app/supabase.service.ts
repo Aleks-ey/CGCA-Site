@@ -182,6 +182,7 @@ export class SupabaseService {
     const { data, error } = await this.supabase
       .from('for_hire')
       .select('*')
+      .filter('approved', 'eq', true)
       .eq('email', currentEmail);
     return { data, error };
   }
