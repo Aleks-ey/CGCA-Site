@@ -63,6 +63,8 @@ export class AccountComponent {
     if(this.userEmail != null) {
       this.isLoggedIn = true;
       this.isBusiness = await this.supabaseService.checkBusinessAcc(this.userEmail);
+      this.hasBusinessRequest = await this.supabaseService.checkBusinessRequest(this.userEmail);
+      this.hasForHireRequest = await this.supabaseService.checkForHireRequest(this.userEmail);
 
       if(!this.isBusiness) {
         const result = await this.supabaseService.getUserHires(this.userEmail);
@@ -75,8 +77,6 @@ export class AccountComponent {
             this.hasHireListing = true;
           }
         }
-        this.hasBusinessRequest = await this.supabaseService.checkBusinessRequest(this.userEmail);
-        this.hasForHireRequest = await this.supabaseService.checkForHireRequest(this.userEmail);
       }
       else {
         const result2 = await this.supabaseService.getUserBusiness(this.userEmail);
@@ -111,26 +111,34 @@ export class AccountComponent {
   // ----------------- Login -----------------
 
   public onLoginSubmit() {
-    console.log(this.loginForm.value);
     this.auth
       .signIn(this.loginForm.value.email, this.loginForm.value.password)
       .then((res) => {
-        console.log(res.data.user.role);
         if (res.data.user.role === 'authenticated') {
-          console.log(this.supabaseService.fetchUserEmail());
-          window.location.reload();
-          // this.router.navigate(['/dashboard']);
+          setTimeout(() => {window.location.reload(), 2000});
         }
       })
       .catch((err) => {
         const dialogRef = this.dialog.open(this.dialogTemplate);
-        console.log(err);
       });
   }
 
   async logout() {
     await this.supabaseService.signOut();
     window.location.reload();
+  }
+
+  @ViewChild('dialogResetPassword') dialogResetPassword!: TemplateRef<any>;
+  openPasswordResetDialog(): void {
+    const dialogRef = this.dialog.open(this.dialogResetPassword, {
+      // height: 'auto',
+      // width: '80%',
+    });
+  }
+
+  password_reset_email='';
+  resetPassword(password_reset_email: string) {
+    this.supabaseService.resetPassword(password_reset_email);
   }
 
   // ----------------- Register -----------------
@@ -171,11 +179,19 @@ export class AccountComponent {
     }
   }
 
+  @ViewChild('dialogPasswordUpdateSuccess') dialogPasswordUpdateSuccess!: TemplateRef<any>;
+  @ViewChild('dialogPasswordUpdateFail') dialogPasswordUpdateFail!: TemplateRef<any>;
   newPassword='';
-  updateUserPassword(newPassword: string) {
+  async updateUserPassword(newPassword: string) {
     if(newPassword != '') {
-      this.supabaseService.updateProfilePassword(newPassword);
-      window.location.reload();
+      const check = await this.supabaseService.updateProfilePassword(newPassword);
+      if(check) {
+        const dialogRef = this.dialog.open(this.dialogPasswordUpdateSuccess);
+        setTimeout(() => {window.location.reload(), 4000});
+      }
+      else {
+        const dialogRef = this.dialog.open(this.dialogPasswordUpdateFail);
+      }
     }
   }
 

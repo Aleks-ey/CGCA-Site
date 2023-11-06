@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseService } from 'src/app/supabase.service';
 
@@ -21,24 +22,32 @@ export interface BusinessListing {
   styleUrls: ['./register-business.component.css'],
 })
 export class RegisterBusinessComponent {
-  businessListing: BusinessListing = {
-    company_name: '',
-    type: '',
-    description: '',
-    owner: '',
-    email: '',
-    phone_number: '',
-    location: '',
-    image_url: '',
-  };
-
   constructor(
     private supabaseService: SupabaseService, 
     private formBuilder: FormBuilder,
     private storage: SupabaseService,
+    public dialog: MatDialog,
   ) { }
 
+  @ViewChild('dialogTemplateSuccess') dialogTemplateSuccess!: TemplateRef<any>;
+  @ViewChild('dialogTemplateFail') dialogTemplateFail!: TemplateRef<any>;
+
+  public form: FormGroup = new FormGroup({
+    company_name: this.formBuilder.control(''),
+    type: this.formBuilder.control(''),
+    description: this.formBuilder.control(''),
+    owner: this.formBuilder.control(''),
+    email: this.formBuilder.control(''),
+    phone_number: this.formBuilder.control(''),
+    location: this.formBuilder.control(''),
+    image_url: this.formBuilder.control(''),
+  });
+
   userEmail: any;
+  userName: any;
+  userPhone: any;
+
+  temp_image_url: any;
   selectedFile: File | null = null;
 
   onFileSelected(event: Event): void {
@@ -48,29 +57,39 @@ export class RegisterBusinessComponent {
       }
   }
 
+  async ngOnInit() {
+    this.userEmail = await this.supabaseService.fetchUserEmail();
+    await this.supabaseService.profile(this.userEmail)?.then(
+      (res) => { 
+        this.userName = res.data?.name 
+        this.userPhone = res.data?.phone_number}
+    );
+
+    this.form.patchValue({
+      company_name: '',
+      type: '',
+      description: '',
+      owner: this.userName,
+      email: this.userEmail,
+      phone_number: this.userPhone,
+      location: '',
+      image_url: '',
+    });
+  }
+
   async onSubmit() {
+    // this.temp_image_url = await this.storage.addBusinessImage(this.selectedFile);
+    // console.log(this.temp_image_url);
 
-    this.businessListing.image_url = await this.storage.addBusinessImage(this.selectedFile);
-
-    const result = await this.supabaseService.addBusiness(this.businessListing);
+    const result = await this.supabaseService.addBusiness(this.form.value);
     if (result.error) {
       console.error('Error inserting data:', result.error);
+      const dialogRef = this.dialog.open(this.dialogTemplateFail);
     } else {
       console.log('Request submitted successfully!');
 
-      this.userEmail = await this.supabaseService.fetchUserEmail();
-      this.supabaseService.makeBusinessRequest(this.userEmail);
-
-      this.businessListing = {
-        company_name: '',
-        type: '',
-        description: '',
-        owner: '',
-        email: '',
-        phone_number: '',
-        location: '',
-        image_url: '',
-      };
+      const dialogRef = this.dialog.open(this.dialogTemplateSuccess);
+      setTimeout(() => {window.location.reload(), 3000});
     }
   }
 

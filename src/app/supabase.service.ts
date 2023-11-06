@@ -121,6 +121,12 @@ export class SupabaseService {
     return this.supabase.auth.signOut()
   }
 
+  async resetPassword(email: string) {
+    await this.supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://cgca-site.vercel.app/account',
+    })
+  }
+
   async getAllProfiles() {
     const { data, error } = await this.supabase.from('profile').select('*');
     return { data, error };
@@ -222,7 +228,13 @@ export class SupabaseService {
   }
 
   async updateProfilePassword(new_password:string) {
-    const { data, error } = await this.supabase.auth.updateUser({password: new_password});
+    const { error } = await this.supabase.auth.updateUser({password: new_password});
+    if (error) {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 
   async makeBusinessRequest(currentEmail:string) {

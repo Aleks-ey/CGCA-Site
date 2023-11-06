@@ -27,6 +27,14 @@
                     </ng-template>
                 </div>
             </form>
+            <button class="mt-1 text-gray-600" (click)="openPasswordResetDialog()">Reset Password</button>
+            <ng-template #dialogResetPassword class="overflow-hidden">
+                <form class="p-4" (ngSubmit)="resetPassword(password_reset_email)">
+                    <p>Enter your email to reset your password</p>
+                    <input [(ngModel)]="password_reset_email" class="border rounded-lg px-2" type="email" name="password_reset_email">
+                    <button type="submit" class="reset_password ml-2">Reset</button>
+                </form>
+            </ng-template>
         </div>
 
         <div class="register_container flex flex-col mt-10 justify-center">
@@ -72,8 +80,20 @@
                 <button type="submit" class="update_email_button ml-2">Update</button>
             </form>
             <form class="update_account_password flex flex-row justify-center" (ngSubmit)="updateUserPassword(newPassword)">
-                <input placeholder="********" [(ngModel)]="newPassword" name="newPassword"/>
+                <input placeholder="New Password Here" [(ngModel)]="newPassword" name="newPassword"/>
                 <button type="submit" class="update_password_button ml-2">Update</button>
+                <ng-template #dialogPasswordUpdateSuccess class="overflow-hidden">
+                    <div class="p-4">
+                        <p>Password Updated!</p>
+                    </div>
+                </ng-template>
+                <ng-template #dialogPasswordUpdateFail class="overflow-hidden">
+                    <div class="p-4">
+                        <p>There was an error updating your password</p>
+                        <br/>
+                        <p>Please make sure your password is at least 6 characters long and try again.</p>
+                    </div>
+                </ng-template>
             </form>
             <div class="update_account_button flex flex-row justify-center">
                 <!-- <button class="update_button" (click)="openUpdateDialog()">Update</button> -->
