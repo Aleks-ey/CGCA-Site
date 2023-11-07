@@ -33,6 +33,18 @@
                     <p>Enter your email to reset your password</p>
                     <input [(ngModel)]="password_reset_email" class="border rounded-lg px-2" type="email" name="password_reset_email">
                     <button type="submit" class="reset_password ml-2">Reset</button>
+                    <ng-template #dialogPasswordResetSuccess class="overflow-hidden">
+                        <div class="p-4">
+                            <p>Password reset email sent!</p>
+                        </div>
+                    </ng-template>
+                    <ng-template #dialogPasswordResetFail class="overflow-hidden">
+                        <div class="p-4">
+                            <p>There was an error sending the password reset email</p>
+                            <br/>
+                            <p>Please make sure your email is correct and try again.</p>
+                        </div>
+                    </ng-template>
                 </form>
             </ng-template>
         </div>

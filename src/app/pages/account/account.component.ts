@@ -137,8 +137,19 @@ export class AccountComponent {
   }
 
   password_reset_email='';
-  resetPassword(password_reset_email: string) {
-    this.supabaseService.resetPassword(password_reset_email);
+  password_reset_check = false;
+  @ViewChild('dialogPasswordResetSuccess') dialogPasswordResetSuccess!: TemplateRef<any>;
+  @ViewChild('dialogPasswordResetFail') dialogPasswordResetFail!: TemplateRef<any>;
+  async resetPassword(password_reset_email: string) {
+    this.password_reset_check = await this.supabaseService.resetPassword(password_reset_email);
+
+    if(this.password_reset_check) {
+      const dialogRef = this.dialog.open(this.dialogPasswordResetSuccess);
+      setTimeout(() => {this.dialog.closeAll(), 3000});
+    }
+    else {
+      const dialogRef = this.dialog.open(this.dialogPasswordResetFail);
+    }
   }
 
   // ----------------- Register -----------------

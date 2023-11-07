@@ -122,9 +122,15 @@ export class SupabaseService {
   }
 
   async resetPassword(email: string) {
-    await this.supabase.auth.resetPasswordForEmail(email, {
+    const {error} = await this.supabase.auth.resetPasswordForEmail(email, {
       redirectTo: 'https://cgca-site.vercel.app/account',
     })
+    if (error) {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 
   async getAllProfiles() {
