@@ -17,12 +17,37 @@
     border-radius: 5px;
 }
 
-.job_listing_container {
+.jlisting_container {
     padding: 20px;
 }
 
-.job_listing {
+.jlisting {
     border: 1px solid #e5e7eb;
     border-radius: 10px;
     padding: 10px;
+}
+
+.jlisting_name > h3 {
+    font-size: 24px;
+    font-weight: bold;
+
+    @media screen and (max-width: 768px) {
+        text-decoration: underline;
+        margin: 0;
+    }
+}
+
+.jlisting_name > p {
+    font-size: 18px;
+    font-weight: bold;
+    align-self: center;
+    margin-right: auto;
+}
+
+.jlisting_details > p > mat-icon {
+    transform: translateY(7px);
+}
+
+.jlisting_contact > p > mat-icon {
+    transform: translateY(7px);
 }

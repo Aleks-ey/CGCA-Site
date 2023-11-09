@@ -78,7 +78,7 @@ export class ForHireRequestComponent {
       this.supabaseService.makeForHireRequest(this.userEmail);
 
       const dialogRef = this.dialog.open(this.dialogTemplateSuccess);
-      setTimeout(() => {window.location.reload(), 3000});
+      setTimeout(() => { window.location.reload(), 3000 });
     }
   }
 }

@@ -1,7 +1,7 @@
 <a href="/community">
     <mat-icon class="text-black float-left mt-1.5 ml-2 md:ml-6">keyboard_arrow_left</mat-icon>
 </a>
-<a href="/community" class="float-left mt-2 md:ml-6">Back</a>
+<a href="/community" class="float-left mt-2 md:ml-1">Back</a>
 <button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="flex flex-row float-right mt-2 mr-2 md:mr-6">Login</button>
 <div *ngIf="isLoggedIn" class="flex float-right mt-2 mr-2 md:mr-6 gap-2">
     <a href="/account"> My Account </a>
@@ -29,35 +29,49 @@
     </div>
 
     <!-- Business listings -->
-    <div class="business_listing_container flex flex-col justify-center" >
-        <div class="business_listing flex flex-row justify-center" *ngFor="let listing of businessesList">
-            <div class="flex w-1/3 object-cover">
+    <div class="blisting_container flex flex-col justify-center" >
+        <div class="blisting flex flex-col md:flex-row justify-center" *ngFor="let listing of businessesList">
+            <!-- <div class="flex md:w-1/3 object-cover">
                 <img src="{{ listing.image_url }}" alt="business logo">
-            </div>
-            <div class="flex flex-col w-2/3 ml-4">
-                <div class="business_listing_header flex flex-col md:flex-row">
-                    <p class="hidden md:block">{{ listing.company_name }} -&nbsp;</p>
-                    <p class="block md:hidden">{{ listing.company_name }}</p>
-                    <p> {{ listing.type }}</p>
+            </div> -->
+            <div class="flex flex-col md:w-2/3 ml-4">
+                <div class="blisting_name flex flex-col md:flex-row">
+                    <h3 class="hidden md:block">{{ listing.company_name }} -&nbsp;</h3>
+                    <h3 class="block md:hidden">{{ listing.company_name }}</h3>
+                    <p> {{ listing.type }} </p>
                 </div>
-                <div class="business_listing_description">
+                <div class="blisting_description">
                     <p>{{ listing.description }}</p>
                 </div>
-                <div class="business_listing_details flex flex-row"> 
-                    <p>
+                <div class="blisting_details flex flex-col md:flex-row">
+                    <p class="block md:hidden">
                         <mat-icon class="text-black">map</mat-icon>
                         {{ listing.location }}
                     </p>
-                    <p>
+                    <p class="block md:hidden">
                         <mat-icon class="text-black">phone</mat-icon>
+                        ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
+                    </p> 
+                    <p class="hidden md:block">
+                        <mat-icon class="text-black">map</mat-icon>
+                        {{ listing.location }}
+                        <mat-icon class="text-black ml-2">phone</mat-icon>
                         ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
                     </p>
                 </div>
-                <div class="business_listing_contact flex flex-row gap-6">
-                    <p>
+                <div class="blisting_contact_container flex flex-col md:flex-row md:gap-6">
+                    <p class="blisting_contact_items block md:hidden">
                         <mat-icon class="text-black">person</mat-icon>
                         {{ listing.owner}}
+                    </p>
+                    <p class="blisting_contact_items block md:hidden">
                         <mat-icon class="text-black">email</mat-icon>
+                        {{ listing.email }}
+                    </p>
+                    <p class="blisting_contact_items hidden md:block">
+                        <mat-icon class="text-black">person</mat-icon>
+                        {{ listing.owner}}
+                        <mat-icon class="text-black ml-2">email</mat-icon>
                         {{ listing.email }}
                     </p>
                 </div>

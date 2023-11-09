@@ -89,7 +89,7 @@ export class RegisterBusinessComponent {
       console.log('Request submitted successfully!');
 
       const dialogRef = this.dialog.open(this.dialogTemplateSuccess);
-      setTimeout(() => {window.location.reload(), 3000});
+      setTimeout(() => { window.location.reload(), 3000});
     }
   }
 

@@ -47,13 +47,22 @@
 
     <div class="expanded-menu" *ngIf="isMenuOpen">
         <a routerLink="/" class="header-link" (click)="closeMenu()">Home</a>
-        <!-- <a routerLink="/mission" class="header-link" (click)="closeMenu()">Our Mission</a> -->
         <a routerLink="/meet" class="header-link" (click)="closeMenu()">Meet the Board</a>
-        <a routerLink="/community" class="header-link" (click)="closeMenu()">Community</a>
-        <a routerLink="/account" class="header-link" (click)="closeMenu()">My Account</a>
+        <div class="expanded-community-container">
+            <a routerLink="/community" class="header-link" (click)="closeMenu()">Community</a>
+            <span (click)="toggleCommunityDropdown()" style="cursor:pointer;">
+                <mat-icon class="expand_arrow">{{ isCommunityDropdownOpen ? 'arrow_drop_up' : 'arrow_drop_down' }}</mat-icon>
+            </span>
+        </div>
+        <div class="expanded-dropdown-menu" *ngIf="isCommunityDropdownOpen">
+            <a routerLink="/business" class="dropdown-item" (click)="closeMenu()">Businesses</a>
+            <a routerLink="/job-board" class="dropdown-item" (click)="closeMenu()">Job Board</a>
+            <a routerLink="/for-hire" class="dropdown-item" (click)="closeMenu()">For Hire</a>
+            <a routerLink="/account" class="dropdown-item" (click)="closeMenu()">My Account</a>
+        </div>
         <a routerLink="/events" class="header-link" (click)="closeMenu()">Events</a>
         <a routerLink="/contact" class="header-link" (click)="closeMenu()">Contact</a>
-        <a routerLink="/" class="header_menu_volunteer" (click)="closeMenu()">Volunteer</a>
-        <a routerLink="/" class="header_menu_donate" (click)="closeMenu()">Donate</a>
+        <a routerLink="/" class="header-link" (click)="closeMenu()">Volunteer</a>
+        <a routerLink="/" class="header-link" (click)="closeMenu()">Donate</a>
     </div>
 </mat-toolbar>

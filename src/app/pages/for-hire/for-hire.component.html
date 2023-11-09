@@ -1,7 +1,7 @@
 <a href="/community">
     <mat-icon class="text-black float-left mt-1.5 ml-2 md:ml-6">keyboard_arrow_left</mat-icon>
 </a>
-<a href="/community" class="float-left mt-2 md:ml-6">Back</a>
+<a href="/community" class="float-left mt-2 md:ml-1">Back</a>
 <button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="float-right mt-2 mr-2 md:mr-6">Login</button>
 <div *ngIf="isLoggedIn" class="flex float-right mt-2 mr-2 md:mr-6 gap-2">
     <a href="/account"> My Account </a>
@@ -29,22 +29,22 @@
     </div>
 
     <!-- Job listings -->
-    <div class="hire_listing_container flex flex-col justify-center" >
-        <div class="hire_listing flex flex-col justify-center" *ngFor="let listing of hiresList">
-            <div class="hire_listing_header flex flex-row justify-center">
+    <div class="hlisting_container flex flex-col justify-center" >
+        <div class="hlisting flex flex-col justify-center" *ngFor="let listing of hiresList">
+            <div class="hlisting_header flex flex-row justify-center">
                 <p>{{ listing.name }} -&nbsp;</p> 
                 <p> {{ listing.profession }}</p>
             </div>
-            <div class="hire_listing_description">
+            <div class="hlisting_description">
                 <p>{{ listing.about }}</p>
             </div>
-            <div class="hire_listing_details flex flex-row"> 
+            <div class="hlisting_details flex flex-row"> 
                 <p>
                     <mat-icon class="text-black">map</mat-icon>
                     {{ listing.location }}
                 </p>
             </div>
-            <div class="hire_listing_contact flex flex-row gap-6">
+            <div class="hlisting_contact flex flex-row gap-6">
                 <p>
                     <mat-icon class="text-black">email</mat-icon>
                     {{ listing.email }}

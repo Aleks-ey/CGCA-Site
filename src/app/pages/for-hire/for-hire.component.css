@@ -17,27 +17,27 @@
     border-radius: 5px;
 }
 
-.hire_listing_container {
+.hlisting_container {
     padding: 20px;
 }
 
-.hire_listing {
+.hlisting {
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
 }
 
-.hire_listing_header > p {
+.hlisting_header > p {
     font-size: 20px;
     font-weight: bold;
 }
 
-.hire_listing_details > p > mat-icon {
+.hlisting_details > p > mat-icon {
     transform: translateY(7px);
 }
 
-.hire_listing_contact > p > mat-icon {
+.hlisting_contact > p > mat-icon {
     transform: translateY(7px);
 }
 

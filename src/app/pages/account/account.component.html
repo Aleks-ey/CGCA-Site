@@ -172,6 +172,11 @@
                 </h2>
                 <p>Click the button below to request to have your account changed to a business account.</p>
                 <button class="business_button" (click)="requestBusiness()">Register as a business</button>
+                <ng-template #dialogRegisterBusiness class="overflow-hidden">
+                    <div class="p-4">
+                        <p>Request sent!</p>
+                    </div>
+                </ng-template>
             </div>
             <div *ngIf="hasBusinessRequest" class="business_account_rescind mx-auto text-center">
                 <h2 class="text-center">
@@ -179,6 +184,11 @@
                 </h2>
                 <p>Click the button below to cancel request.</p>
                 <button class="business_button" (click)="cancelRequest()">Cancel Request</button>
+                <ng-template #dialogRescindBusiness class="overflow-hidden">
+                    <div class="p-4">
+                        <p>Request cancelled!</p>
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>
@@ -196,12 +206,12 @@
             <h1 class="business_listing_header">
                 Your Business Listing
             </h1>
-            <div class="business_listing flex flex-row justify-center" *ngFor="let listing of userBusiness">
+            <div class="business_listing flex flex-row justify-center mx-auto" *ngFor="let listing of userBusiness">
                 <div class="flex w-1/3 object-cover">
                     <img src="{{ listing.image_url }}" alt="business logo">
                 </div>
                 <div class="flex flex-col w-2/3 ml-4">
-                    <div class="business_listing_header flex flex-row">
+                    <div class="business_listing_name flex flex-row">
                         <p>{{ listing.company_name }} -&nbsp;</p> 
                         <p> {{ listing.type }}</p>
                     </div>
@@ -214,7 +224,7 @@
                             {{ listing.location }}
                         </p>
                         <p>
-                            <mat-icon class="text-black">phone</mat-icon>
+                            <mat-icon class="text-black ml-2">phone</mat-icon>
                             ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
                         </p>
                     </div>
@@ -222,7 +232,7 @@
                         <p>
                             <mat-icon class="text-black">person</mat-icon>
                             {{ listing.owner}}
-                            <mat-icon class="text-black">email</mat-icon>
+                            <mat-icon class="text-black ml-2">email</mat-icon>
                             {{ listing.email }}
                         </p>
                     </div>

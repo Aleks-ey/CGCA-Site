@@ -206,11 +206,17 @@ export class AccountComponent {
     }
   }
 
+  @ViewChild ('dialogRegisterBusiness') dialogRegisterBusiness!: TemplateRef<any>;
   requestBusiness() {
     this.supabaseService.makeBusinessRequest(this.userEmail);
+    const dialogRef = this.dialog.open(this.dialogRegisterBusiness);
+    setTimeout(() => {window.location.reload(), 3000});
   }
 
+  @ViewChild ('dialogRescindBusiness') dialogRescindBusiness!: TemplateRef<any>;
   cancelRequest() {
     this.supabaseService.cancelBusinessRequest(this.userEmail);
+    const dialogRef = this.dialog.open(this.dialogRescindBusiness);
+    setTimeout(() => {window.location.reload(), 3000});
   }
 }

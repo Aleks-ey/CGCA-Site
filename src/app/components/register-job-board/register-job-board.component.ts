@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { SupabaseService } from 'src/app/supabase.service';
 
 export interface JobBoardListing {
@@ -20,44 +21,60 @@ export interface JobBoardListing {
   styleUrls: ['./register-job-board.component.css'],
 })
 export class RegisterJobBoardComponent {
-  listing: JobBoardListing = {
-    company_name: '',
-    job_title: '',
-    job_description: '',
-    email: '',
-    phone_number: '',
-    pay: '',
-    location: '',
-    approved: false,
-  };
-
   constructor(
     private supabaseService: SupabaseService, 
     private formBuilder: FormBuilder,
     private auth: SupabaseService,
+    public dialog: MatDialog,
   ) { }
 
+  @ViewChild('dialogTemplateSuccess') dialogTemplateSuccess!: TemplateRef<any>;
+  @ViewChild('dialogTemplateFail') dialogTemplateFail!: TemplateRef<any>;
+
+  public form: FormGroup = new FormGroup({
+    company_name: this.formBuilder.control(''),
+    job_title: this.formBuilder.control(''),
+    job_description: this.formBuilder.control(''),
+    email: this.formBuilder.control(''),
+    phone_number: this.formBuilder.control(''),
+    pay: this.formBuilder.control(''),
+    location: this.formBuilder.control(''),
+  });
+
   userEmail: any;
+  userName: any;
+  userPhone: any;
+
+  async ngOnInit() {
+    this.userEmail = await this.supabaseService.fetchUserEmail();
+    await this.supabaseService.profile(this.userEmail)?.then(
+      (res) => { 
+        this.userName = res.data?.name 
+        this.userPhone = res.data?.phone_number}
+    );
+
+    this.form.patchValue({
+      company_name: '',
+      job_title: '',
+      job_description: '',
+      email: this.userEmail,
+      phone_number: this.userPhone,
+      pay: '',
+      location: '',
+    });
+
+  }
 
   async onSubmit() {
-    const result = await this.supabaseService.addJob(this.listing);
+    const result = await this.supabaseService.addJob(this.form.value);
     if (result.error) {
       console.error('Error inserting data:', result.error);
+      const dialogRef = this.dialog.open(this.dialogTemplateFail);
     } else {
       console.log('Request submitted successfully!');
 
-      this.userEmail = await this.supabaseService.fetchUserEmail();
-
-      this.listing = {
-        company_name: '',
-        job_title: '',
-        job_description: '',
-        email: '',
-        phone_number: '',
-        pay: '',
-        location: '',
-        approved: false,
-      };
+      const dialogRef = this.dialog.open(this.dialogTemplateSuccess);
+      setTimeout(() => { window.location.reload(), 3000});
     }
   }
 }

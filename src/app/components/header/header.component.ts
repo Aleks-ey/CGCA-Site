@@ -14,8 +14,14 @@ export class HeaderComponent {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+  isCommunityDropdownOpen = false;
+  toggleCommunityDropdown() {
+    this.isCommunityDropdownOpen = !this.isCommunityDropdownOpen;
+  }
+
   closeMenu() {
     this.isMenuOpen = false;
+    this.isCommunityDropdownOpen = false;
   }
   // function that executes when the window is resized and closes the menu if the window is larger than 1024px
   @HostListener('window:resize', ['$event'])

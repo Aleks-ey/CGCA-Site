@@ -17,36 +17,43 @@
     border-radius: 5px;
 }
 
-.business_listing_container {
+.blisting_container {
     width: 100%;
     padding: 20px;
 }
 
-.business_listing {
+.blisting {
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
 }
 
-.business_listing_header > p {
-    font-size: 20px;
+.blisting_name > h3 {
+    font-size: 24px;
     font-weight: bold;
+
+    @media screen and (max-width: 768px) {
+        text-decoration: underline;
+        margin: 0;
+    }
 }
 
-.business_listing_details > p > mat-icon {
+.blisting_name > p {
+    font-size: 18px;
+    font-weight: bold;
+    align-self: center;
+    margin-right: auto;
+}
+
+.blisting_description > p {
+    word-wrap: break-word;
+}
+
+.blisting_details > p > mat-icon {
     transform: translateY(7px);
 }
 
-.business_listing_contact > p > mat-icon {
+.blisting_contact_items > mat-icon {
     transform: translateY(7px);
 }
-
-/* .work_outside {
-    width: max-content;
-    padding: 0px 7px 0px 7px;
-    color: white;
-    background-color: #1E293B;
-    opacity: 0.8;
-    border-radius: 10px;
-} */

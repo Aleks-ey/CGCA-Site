@@ -95,7 +95,7 @@
     width: 70vw;
 }
 
-.hire_listing_header > p {
+.hire_listing_name > p {
     font-size: 20px;
     font-weight: bold;
 }
@@ -172,6 +172,27 @@
     @media screen and (max-width: 768px) {
         margin-left: 5vw;
     }
+}
+
+.business_listing {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    width: 70vw;
+}
+
+.business_listing_name > p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.business_listing_details > p > mat-icon {
+    transform: translateY(7px);
+}
+
+.business_listing_contact > p > mat-icon {
+    transform: translateY(7px);
 }
 
 /* business account css for job board listings */
