@@ -46,6 +46,7 @@ export class RegisterBusinessComponent {
   userEmail: any;
   userName: any;
   userPhone: any;
+  userBusiness: BusinessListing[] = [];
 
   temp_image_url: any;
   selectedFile: File | null = null;
@@ -65,23 +66,44 @@ export class RegisterBusinessComponent {
         this.userPhone = res.data?.phone_number}
     );
 
-    this.form.patchValue({
-      company_name: '',
-      type: '',
-      description: '',
-      owner: this.userName,
-      email: this.userEmail,
-      phone_number: this.userPhone,
-      location: '',
-      image_url: '',
-    });
+    const result = await this.supabaseService.getUserBusiness(this.userEmail);
+    if (result.error) {
+      console.error('Error fetching events:', result.error);
+    } 
+    else {
+      this.userBusiness = result.data!;
+      if(this.userBusiness.length > 0) {
+        this.form.patchValue({
+          company_name: this.userBusiness[0].company_name,
+          type: this.userBusiness[0].type,
+          description: this.userBusiness[0].description,
+          owner: this.userBusiness[0].owner,
+          email: this.userBusiness[0].email,
+          phone_number: this.userBusiness[0].phone_number,
+          location: this.userBusiness[0].location,
+          image_url: this.userBusiness[0].image_url,
+        });
+      }
+      else {
+        this.form.patchValue({
+          company_name: '',
+          type: '',
+          description: '',
+          owner: this.userName,
+          email: this.userEmail,
+          phone_number: this.userPhone,
+          location: '',
+          image_url: '',
+        });
+      }
+    }
   }
 
   async onSubmit() {
     // this.temp_image_url = await this.storage.addBusinessImage(this.selectedFile);
     // console.log(this.temp_image_url);
 
-    const result = await this.supabaseService.addBusiness(this.form.value);
+    const result = await this.supabaseService.addBusiness(this.form.value, this.userEmail);
     if (result.error) {
       console.error('Error inserting data:', result.error);
       const dialogRef = this.dialog.open(this.dialogTemplateFail);

@@ -318,14 +318,36 @@ export class SupabaseService {
     return { data, error };
   }
 
-  async addBusiness(listing: BusinessListing) {
-    const { data, error } = await this.supabase
-      .from('business')
-      .insert([listing]);
+  userBusiness: BusinessListing[] = [];
+  async addBusiness(listing: BusinessListing, userEmail: string) {
+    const result = await this.getUserBusiness(userEmail);
+    if (result.error) {
+      console.error('Error fetching events:', result.error);
+      return { data: undefined, error: result.error };
+    } 
+    else {
+      this.userBusiness = result.data!;
+      if(this.userBusiness.length > 0) {
+        const { data, error } = await this.supabase
+          .from('business')
+          .update([listing])
+          .eq('email', userEmail);
 
-    return { data: data ? data[0] : undefined,  // Assuming 'data' is an array, return the first element.
-    error };
+        return { data: data ? data[0] : undefined,  // Assuming 'data' is an array, return the first element.
+        error };
+      }
+      else {
+        const { data, error } = await this.supabase
+        .from('business')
+        .insert([listing]);
+
+        return { data: data ? data[0] : undefined,  // Assuming 'data' is an array, return the first element.
+        error };
+      }
+    }
   }
+
+    
 
   async addBusinessImage(selectedFile: any) {
     if (selectedFile) {

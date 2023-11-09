@@ -20,7 +20,7 @@
                 
                 <div class="login_submit">
                     <input class="login_button w-full" type="submit">
-                    <ng-template #dialogTemplate class="overflow-hidden">
+                    <ng-template #dialogLoginFail class="overflow-hidden">
                         <div class="p-4">
                             <p>Invalid email or password!</p>
                         </div>
@@ -195,30 +195,36 @@
 
     <!------------- Is Business ------------->
     <div class="business_container" *ngIf="isBusiness">
-        <div class="no_business_listing_container flex flex-col mt-10 justify-center" *ngIf="hasBusinessListing == false">
-            <h1 class="no_business_listing_header">
+        <div class="no_blisting_container flex flex-col mt-10 justify-center" *ngIf="hasBusinessListing == false">
+            <h1 class="no_blisting_header">
                 Submit a Business Listing
             </h1>
             <app-register-business class="mb-10 mx-auto"></app-register-business>
         </div>
     
-        <div class="business_listing_container flex flex-col mt-10" *ngIf="hasBusinessListing == true">
-            <h1 class="business_listing_header">
+        <div class="blisting_container flex flex-col relative mt-10" *ngIf="hasBusinessListing == true">
+            <h1 class="blisting_header">
                 Your Business Listing
             </h1>
-            <div class="business_listing flex flex-row justify-center mx-auto" *ngFor="let listing of userBusiness">
+            <div class="blisting_edit_container absolute">
+                <button (click)="openEditBusinessDialog()">
+                    <mat-icon class="text-black">edit</mat-icon>
+                    Edit
+                </button>
+            </div>
+            <div class="blisting flex flex-row justify-center mx-auto" *ngFor="let listing of userBusiness">
                 <div class="flex w-1/3 object-cover">
                     <img src="{{ listing.image_url }}" alt="business logo">
                 </div>
                 <div class="flex flex-col w-2/3 ml-4">
-                    <div class="business_listing_name flex flex-row">
+                    <div class="blisting_name flex flex-row">
                         <p>{{ listing.company_name }} -&nbsp;</p> 
                         <p> {{ listing.type }}</p>
                     </div>
-                    <div class="business_listing_description">
+                    <div class="blisting_description">
                         <p>{{ listing.description }}</p>
                     </div>
-                    <div class="business_listing_details flex flex-row"> 
+                    <div class="blisting_details flex flex-row"> 
                         <p>
                             <mat-icon class="text-black">map</mat-icon>
                             {{ listing.location }}
@@ -228,7 +234,7 @@
                             ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
                         </p>
                     </div>
-                    <div class="business_listing_contact flex flex-row gap-6">
+                    <div class="blisting_contact flex flex-row gap-6">
                         <p>
                             <mat-icon class="text-black">person</mat-icon>
                             {{ listing.owner}}

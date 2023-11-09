@@ -3,8 +3,8 @@ import { SupabaseService } from 'src/app/supabase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from 'src/app/components/register/register.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ForHireListing } from 'src/app/components/for-hire-request/for-hire-request.component';
-import { BusinessListing } from 'src/app/components/register-business/register-business.component';
+import { ForHireListing, ForHireRequestComponent } from 'src/app/components/for-hire-request/for-hire-request.component';
+import { BusinessListing, RegisterBusinessComponent } from 'src/app/components/register-business/register-business.component';
 import { JobBoardListing } from 'src/app/components/register-job-board/register-job-board.component';
 
 @Component({
@@ -31,8 +31,6 @@ export class AccountComponent {
   
   userJobBoardListing: JobBoardListing[] = [];
   hasJobBoardListing = false;
-
-  @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
 
   constructor(
     private supabaseService: SupabaseService,
@@ -110,6 +108,7 @@ export class AccountComponent {
 
   // ----------------- Login -----------------
 
+  @ViewChild('dialogLoginFail') dialogLoginFail!: TemplateRef<any>;
   public onLoginSubmit() {
     this.auth
       .signIn(this.loginForm.value.email, this.loginForm.value.password)
@@ -119,7 +118,7 @@ export class AccountComponent {
         }
       })
       .catch((err) => {
-        const dialogRef = this.dialog.open(this.dialogTemplate);
+        const dialogRef = this.dialog.open(this.dialogLoginFail);
       });
   }
 
@@ -218,5 +217,27 @@ export class AccountComponent {
     this.supabaseService.cancelBusinessRequest(this.userEmail);
     const dialogRef = this.dialog.open(this.dialogRescindBusiness);
     setTimeout(() => {window.location.reload(), 3000});
+  }
+
+  // ----------------- Edits -----------------
+
+  openEditHireDialog(): void {
+    const dialogRef = this.dialog.open(ForHireRequestComponent, {
+      height: 'auto',
+      width: '80%',
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  openEditBusinessDialog(): void {
+    const dialogRef = this.dialog.open(RegisterBusinessComponent, {
+      // height: 'auto',
+      // width: '80%',
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

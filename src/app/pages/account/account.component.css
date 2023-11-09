@@ -158,7 +158,7 @@
 }
 
 /* business account css for business listing */
-.no_business_listing_header {
+.no_blisting_header {
     margin-left: 15vw;
 
     @media screen and (max-width: 768px) {
@@ -166,7 +166,7 @@
     }
 }
 
-.business_listing_header {
+.blisting_header {
     margin-left: 15vw;
 
     @media screen and (max-width: 768px) {
@@ -174,7 +174,12 @@
     }
 }
 
-.business_listing {
+.blisting_edit_container {
+    top: 10px;
+    right: 15vw;
+}
+
+.blisting {
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #e5e7eb;
@@ -182,16 +187,16 @@
     width: 70vw;
 }
 
-.business_listing_name > p {
+.blisting_name > p {
     font-size: 20px;
     font-weight: bold;
 }
 
-.business_listing_details > p > mat-icon {
+.blisting_details > p > mat-icon {
     transform: translateY(7px);
 }
 
-.business_listing_contact > p > mat-icon {
+.blisting_contact > p > mat-icon {
     transform: translateY(7px);
 }
 
