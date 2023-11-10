@@ -22,12 +22,20 @@
 .logo {
     /* min-width: 100px; */
     z-index: 30;
+
+    @media screen and (max-width: 1024px) {
+        margin-left: 10px;
+    }
 }
 
 .logo > img {
     aspect-ratio: 1/1;
     width: 76px;
     object-fit: cover;
+
+    @media screen and (max-width: 1024px) {
+        width: 50px;
+    }
 }
 
 .header_title2 {
@@ -40,6 +48,10 @@
     font-weight: 600;
     text-decoration: none;
     color: #1E293B;
+
+    @media screen and (max-width: 1024px) {
+        font-size: 1em;
+    }
 }
 
 .header_title_text2 {
@@ -173,7 +185,7 @@
 }
 
 .header-link {
-    margin: 10px;
+    margin: 10px 0;
     color: white;
     text-decoration: none;
     font-size: 1.5em;
@@ -183,6 +195,10 @@
     transform: translateX(10px);
     color: #dc2626;
     transition: all 0.1s ease-in-out;
+}
+
+.expanded-community-container {
+    margin: 10px 0;
 }
 
 .expanded-community-container:hover {

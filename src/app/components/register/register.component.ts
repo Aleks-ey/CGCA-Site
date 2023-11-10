@@ -12,8 +12,8 @@ export class RegisterComponent {
   registerForm!: FormGroup;
   router: any;
 
-  @ViewChild('dialogTemplate1') dialogTemplate1!: TemplateRef<any>;
-  @ViewChild('dialogTemplate2') dialogTemplate2!: TemplateRef<any>;
+  @ViewChild('dialogRegisterSuccess') dialogRegisterSuccess!: TemplateRef<any>;
+  @ViewChild('dialogRegisterFail') dialogRegisterFail!: TemplateRef<any>;
 
   constructor(
       private supabaseService: SupabaseService, 
@@ -44,7 +44,7 @@ export class RegisterComponent {
       .then((res) => {
         console.log(res.data.user.role);
         if (res.data.user.role === 'authenticated') {
-          const dialogRef = this.dialog.open(this.dialogTemplate1);
+          const dialogRef = this.dialog.open(this.dialogRegisterSuccess);
           this.supabaseService.updateProfileName(this.registerForm.value.email, this.registerForm.value.name);
           this.supabaseService.updateProfilePhone(this.registerForm.value.email, this.registerForm.value.phone_number);
             
@@ -57,7 +57,7 @@ export class RegisterComponent {
         }
       })
       .catch((err) => {
-        const dialogRef = this.dialog.open(this.dialogTemplate2);
+        const dialogRef = this.dialog.open(this.dialogRegisterFail);
         console.log(err);
       });
   }
