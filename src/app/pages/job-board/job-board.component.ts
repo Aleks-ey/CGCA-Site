@@ -40,11 +40,8 @@ export class JobBoardComponent {
       );
   }
 
-  logout(): void {
-    this.supabaseService.signOut();
-    // refresh page with delay to allow for signout to complete
-    setTimeout(() => {
-      window.location.reload();
-    }, 100);
+  async logout() {
+    await this.supabaseService.signOut();
+    window.location.reload();
   }
 }
