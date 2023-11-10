@@ -29,8 +29,33 @@
     margin-top: 10px;
 }
 
+.welcome {
+    @media screen and (max-width: 768px) {
+        padding-top: 20px;
+    }
+}
+
+.welcome > h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
 .logout_button {
     transform: translateY(-30px);
+}
+
+.logout_button:hover {
+    color: #DC2626;
+    text-decoration: underline;
+}
+
+.community_button {
+    transform: translateY(-30px);
+}
+
+.community_button:hover {
+    color: #DC2626;
+    text-decoration: underline;
 }
 /* update account css */
 .update_account_header {
@@ -87,12 +112,46 @@
     }
 }
 
+.hlisting_buttons_container {
+    top: 10px;
+    right: 15vw;
+
+    @media screen and (max-width: 768px) {
+        top: 0px;
+        margin-left: 5vw;
+    }
+}
+
+.hlisting_edit_container > button:hover {
+    color: #DC2626;
+}
+
+.hlisting_delete_container > button:hover {
+    color: #DC2626;
+}
+
+.hlisting_delete_container > button > mat-icon {
+    transform: translateY(5px);
+}
+
+.for_hire_delete_button {
+    color: #DC2626;
+    border: 1px solid #DC2626;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
 .hire_listing {
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
     width: 70vw;
+
+    @media screen and (max-width: 768px) {
+        width: 90vw;
+    }
 }
 
 .hire_listing_name > p {
@@ -174,9 +233,34 @@
     }
 }
 
-.blisting_edit_container {
+.blisting_buttons_container {
     top: 10px;
     right: 15vw;
+
+    @media screen and (max-width: 768px) {
+        top: 0px;
+        margin-left: 5vw;
+    }
+}
+
+.blisting_edit_container > button:hover {
+    color: #DC2626;
+}
+
+.blisting_delete_container > button:hover {
+    color: #DC2626;
+}
+
+.blisting_delete_container > button > mat-icon {
+    transform: translateY(5px);
+}
+
+.business_delete_button {
+    color: #DC2626;
+    border: 1px solid #DC2626;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
 }
 
 .blisting {
@@ -185,11 +269,27 @@
     border: 1px solid #e5e7eb;
     border-radius: 10px;
     width: 70vw;
+
+    @media screen and (max-width: 768px) {
+        width: 90vw;
+    }
+}
+
+.blisting_name > h3 {
+    font-size: 24px;
+    font-weight: bold;
+
+    @media screen and (max-width: 768px) {
+        text-decoration: underline;
+        margin: 0;
+    }
 }
 
 .blisting_name > p {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
+    align-self: center;
+    margin-right: auto;
 }
 
 .blisting_details > p > mat-icon {
@@ -215,4 +315,71 @@
     @media screen and (max-width: 768px) {
         margin-left: 5vw;
     }
+}
+
+.jlisting_buttons_container {
+    top: 10px;
+    right: 15vw;
+
+    @media screen and (max-width: 768px) {
+        top: 0px;
+        margin-left: 5vw;
+    }
+}
+
+.jlisting_edit_container > button:hover {
+    color: #DC2626;
+}
+
+.jlisting_delete_container > button:hover {
+    color: #DC2626;
+}
+
+.jlisting_delete_container > button > mat-icon {
+    transform: translateY(5px);
+}
+
+.job_board_delete_button {
+    color: #DC2626;
+    border: 1px solid #DC2626;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.jlisting {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    width: 70vw;
+
+    @media screen and (max-width: 768px) {
+        width: 90vw;
+    }
+}
+
+.jlisting_name > h3 {
+    font-size: 24px;
+    font-weight: bold;
+
+    @media screen and (max-width: 768px) {
+        text-decoration: underline;
+        margin: 0;
+    }
+}
+
+.jlisting_name > p {
+    font-size: 18px;
+    font-weight: bold;
+    align-self: center;
+    margin-right: auto;
+}
+
+.jlisting_details > p > mat-icon {
+    transform: translateY(7px);
+}
+
+.jlisting_contact > p > mat-icon {
+    transform: translateY(7px);
 }

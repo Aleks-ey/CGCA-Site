@@ -57,8 +57,9 @@
 </div>
 <!-- Logged In -->
 <div class="user_page_container mt-8" *ngIf="isLoggedIn == true">
-    <button class="logout_button absolute right-2" (click)="logout()">Logout</button>
-    <div>
+    <a class="community_button absolute right-16 mt-2" href="/community">Community</a>
+    <button class="logout_button absolute right-2 mt-2" (click)="logout()">Logout</button>
+    <div class="welcome">
         <h2 class="text-center">Welcome {{ userEmail }}</h2>
     </div>
     <!-- Update Account -->
@@ -128,10 +129,43 @@
             </div>
         </div>
         <!-- For Hire Listing -->
-        <div class="hire_listing_container flex flex-col mt-10" *ngIf="hasHireListing">
+        <div class="hire_listing_container flex flex-col relative mt-10" *ngIf="hasHireListing">
             <h1 class="hire_listing_header">
                 Your For Hire Listing
             </h1>
+            <div class="hlisting_buttons_container md:absolute flex flex-row">
+                <div class="hlisting_edit_container mr-2">
+                    <button (click)="openEditHireDialog()">
+                        <mat-icon class="text-black">edit</mat-icon>
+                        Edit
+                    </button>
+                </div>
+                <div class="hlisting_delete_container">
+                    <button (click)="openDeleteForHireDialog()">
+                        <mat-icon class="text-black">delete</mat-icon>
+                        Delete
+                    </button>
+                    <ng-template #dialogDeleteForHire class="overflow-hidden">
+                        <div class="p-4 text-center">
+                            <p>Are you sure you want to delete your For Hire Listing?</p>
+                            <p>This action cannot be undone.</p>
+                            <button class="for_hire_delete_button" (click)="deleteForHire()">Delete</button>
+                        </div>
+                        <ng-template #dialogDeleteForHireSuccess class="overflow-hidden">
+                            <div class="p-4">
+                                <p>For Hire Listing Deleted!</p>
+                            </div>
+                        </ng-template>
+                        <ng-template #dialogDeleteForHireFail class="overflow-hidden">
+                            <div class="p-4">
+                                <p>There was an error deleting your For Hire Listing</p>
+                                <br/>
+                                <p>Please try again.</p>
+                            </div>
+                        </ng-template>
+                    </ng-template>
+                </div>
+            </div>
             <div class="hire_listing flex flex-col justify-center mx-auto" *ngFor="let listing of userHireListing">
                 <div class="hire_listing_name flex flex-row justify-center">
                     <p>{{ listing.name }} -&nbsp;</p> 
@@ -206,36 +240,78 @@
             <h1 class="blisting_header">
                 Your Business Listing
             </h1>
-            <div class="blisting_edit_container absolute">
-                <button (click)="openEditBusinessDialog()">
-                    <mat-icon class="text-black">edit</mat-icon>
-                    Edit
-                </button>
-            </div>
-            <div class="blisting flex flex-row justify-center mx-auto" *ngFor="let listing of userBusiness">
-                <div class="flex w-1/3 object-cover">
-                    <img src="{{ listing.image_url }}" alt="business logo">
+            <div class="blisting_buttons_container md:absolute flex flex-row">
+                <div class="blisting_edit_container mr-2">
+                    <button (click)="openEditBusinessDialog()">
+                        <mat-icon class="text-black">edit</mat-icon>
+                        Edit
+                    </button>
                 </div>
-                <div class="flex flex-col w-2/3 ml-4">
-                    <div class="blisting_name flex flex-row">
-                        <p>{{ listing.company_name }} -&nbsp;</p> 
-                        <p> {{ listing.type }}</p>
+                <div class="blisting_delete_container">
+                    <button (click)="openDeleteBusinessDialog()">
+                        <mat-icon class="text-black">delete</mat-icon>
+                        Delete
+                    </button>
+                    <ng-template #dialogDeleteBusiness class="overflow-hidden">
+                        <div class="p-4 text-center">
+                            <p>Are you sure you want to delete your Business Listing?</p>
+                            <p>This action cannot be undone.</p>
+                            <button class="business_delete_button" (click)="deleteBusiness()">Delete</button>
+                        </div>
+                        <ng-template #dialogDeleteBusinessSuccess class="overflow-hidden">
+                            <div class="p-4">
+                                <p>Business Listing Deleted!</p>
+                            </div>
+                        </ng-template>
+                        <ng-template #dialogDeleteBusinessFail class="overflow-hidden">
+                            <div class="p-4">
+                                <p>There was an error deleting your Business Listing</p>
+                                <br/>
+                                <p>Please try again.</p>
+                            </div>
+                        </ng-template>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="blisting flex flex-col md:flex-row justify-center mx-auto" *ngFor="let listing of userBusiness">
+                <!-- <div class="flex md:w-1/3 object-cover">
+                    <img src="{{ listing.image_url }}" alt="business logo">
+                </div> -->
+                <div class="flex flex-col md:w-2/3 ml-4">
+                    <div class="blisting_name flex flex-col md:flex-row">
+                        <h3 class="hidden md:block">{{ listing.company_name }} -&nbsp;</h3>
+                        <h3 class="block md:hidden">{{ listing.company_name }}</h3>
+                        <p> {{ listing.type }} </p>
                     </div>
                     <div class="blisting_description">
                         <p>{{ listing.description }}</p>
                     </div>
-                    <div class="blisting_details flex flex-row"> 
-                        <p>
+                    <div class="blisting_details flex flex-col md:flex-row">
+                        <p class="block md:hidden">
                             <mat-icon class="text-black">map</mat-icon>
                             {{ listing.location }}
                         </p>
-                        <p>
+                        <p class="block md:hidden">
+                            <mat-icon class="text-black">phone</mat-icon>
+                            ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
+                        </p> 
+                        <p class="hidden md:block">
+                            <mat-icon class="text-black">map</mat-icon>
+                            {{ listing.location }}
                             <mat-icon class="text-black ml-2">phone</mat-icon>
                             ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
                         </p>
                     </div>
-                    <div class="blisting_contact flex flex-row gap-6">
-                        <p>
+                    <div class="blisting_contact_container flex flex-col md:flex-row md:gap-6">
+                        <p class="blisting_contact_items block md:hidden">
+                            <mat-icon class="text-black">person</mat-icon>
+                            {{ listing.owner}}
+                        </p>
+                        <p class="blisting_contact_items block md:hidden">
+                            <mat-icon class="text-black">email</mat-icon>
+                            {{ listing.email }}
+                        </p>
+                        <p class="blisting_contact_items hidden md:block">
                             <mat-icon class="text-black">person</mat-icon>
                             {{ listing.owner}}
                             <mat-icon class="text-black ml-2">email</mat-icon>
@@ -254,32 +330,81 @@
             <app-register-job-board class=" mb-10 mx-auto"></app-register-job-board>
         </div>
     
-        <div class="job_board_listing_container flex flex-col mt-10" *ngIf="hasJobBoardListing == true">
+        <div class="job_board_listing_container flex flex-col relative mt-10" *ngIf="hasJobBoardListing == true">
             <h1 class="job_board_listing_header">
                 Your Job Board Listing
             </h1>
-            <div class="job_board_listing flex flex-col justify-center" *ngFor="let listing of userJobBoardListing">
-                <div class="job_board_listing_name flex flex-row justify-center">
-                    <p>{{ listing.company_name }} -&nbsp;</p> 
-                    <p> {{ listing.job_title }}</p>
+            <div class="jlisting_buttons_container md:absolute flex flex-row">
+                <div class="jlisting_edit_container mr-2">
+                    <button (click)="openEditJobBoardDialog()">
+                        <mat-icon class="text-black">edit</mat-icon>
+                        Edit
+                    </button>
                 </div>
-                <div class="job_board_listing_description">
+                <div class="jlisting_delete_container">
+                    <button (click)="openDeleteJobBoardDialog()">
+                        <mat-icon class="text-black">delete</mat-icon>
+                        Delete
+                    </button>
+                    <ng-template #dialogDeleteJobBoard class="overflow-hidden">
+                        <div class="p-4 text-center">
+                            <p>Are you sure you want to delete your Job Board Listing?</p>
+                            <p>This action cannot be undone.</p>
+                            <button class="job_board_delete_button" (click)="deleteJobBoardListing()">Delete</button>
+                        </div>
+                        <ng-template #dialogDeleteJobBoardSuccess class="overflow-hidden">
+                            <div class="p-4">
+                                <p>Job Board Listing Deleted!</p>
+                            </div>
+                        </ng-template>
+                        <ng-template #dialogDeleteJobBoardFail class="overflow-hidden">
+                            <div class="p-4">
+                                <p>There was an error deleting your Job Board Listing</p>
+                                <br/>
+                                <p>Please try again.</p>
+                            </div>
+                        </ng-template>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="jlisting flex flex-col justify-center mx-auto" *ngFor="let listing of userJobBoardListing">
+                <div class="jlisting_name flex flex-col md:flex-row justify-center">
+                    <h3 class="hidden md:block">{{ listing.job_title }} -&nbsp;</h3>
+                    <h3 class="block md:hidden">{{ listing.job_title }}</h3>
+                    <p> {{ listing.company_name }} </p>
+                </div>
+                <div class="jlisting_description">
                     <p>{{ listing.job_description }}</p>
                 </div>
-                <div class="job_board_listing_details flex flex-row"> 
-                    <p>
+                <div class="jlisting_details flex flex-col md:flex-row">
+                    <p class="block md:hidden">
+                        <mat-icon class="text-black">attach_money</mat-icon>
+                        {{ listing.pay }}
+                    </p> 
+                    <p class="block md:hidden">
                         <mat-icon class="text-black">map</mat-icon>
                         {{ listing.location }}
                     </p>
-                    <p>{{ listing.pay }}</p>
-                </div>
-                <div class="job_board_listing_contact flex flex-row gap-6">
-                    <p>
-                        <mat-icon class="text-black">email</mat-icon>
-                        {{ listing.email }}
+                    <p class="hidden md:block">
+                        <mat-icon class="text-black">attach_money</mat-icon>
+                        {{ listing.pay }}
+                        <mat-icon class="text-black ml-2">map</mat-icon>
+                        {{ listing.location }}
                     </p>
-                    <p>
-                        <mat-icon class="text-black">phone</mat-icon>
+                </div>
+                <div class="jlisting_contact flex flex-col md:flex-row">
+                    <p class="block md:hidden">
+                        <mat-icon class="text-black">person</mat-icon>
+                        {{ listing.email}}
+                    </p>
+                    <p class="block md:hidden">
+                        <mat-icon class="text-black">email</mat-icon>
+                        ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
+                    </p>
+                    <p class="hidden md:block">
+                        <mat-icon class="text-black">person</mat-icon>
+                        {{ listing.email}}
+                        <mat-icon class="text-black ml-2">email</mat-icon>
                         ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
                     </p>
                 </div>

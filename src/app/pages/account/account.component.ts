@@ -5,7 +5,7 @@ import { RegisterComponent } from 'src/app/components/register/register.componen
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ForHireListing, ForHireRequestComponent } from 'src/app/components/for-hire-request/for-hire-request.component';
 import { BusinessListing, RegisterBusinessComponent } from 'src/app/components/register-business/register-business.component';
-import { JobBoardListing } from 'src/app/components/register-job-board/register-job-board.component';
+import { JobBoardListing, RegisterJobBoardComponent } from 'src/app/components/register-job-board/register-job-board.component';
 
 @Component({
   selector: 'app-account',
@@ -122,9 +122,12 @@ export class AccountComponent {
       });
   }
 
-  async logout() {
-    await this.supabaseService.signOut();
-    window.location.reload();
+  logout(): void {
+    this.supabaseService.signOut();
+    // refresh page with delay to allow for signout to complete
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   }
 
   @ViewChild('dialogResetPassword') dialogResetPassword!: TemplateRef<any>;
@@ -223,8 +226,8 @@ export class AccountComponent {
 
   openEditHireDialog(): void {
     const dialogRef = this.dialog.open(ForHireRequestComponent, {
-      height: 'auto',
-      width: '80%',
+      // height: 'auto',
+      // width: '80%',
     });
   
     dialogRef.afterClosed().subscribe(result => {
@@ -239,5 +242,71 @@ export class AccountComponent {
   
     dialogRef.afterClosed().subscribe(result => {
     });
+  }
+
+  openEditJobBoardDialog(): void {
+    const dialogRef = this.dialog.open(RegisterJobBoardComponent, {
+      // height: 'auto',
+      // width: '80%',
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  // ----------------- Delete -----------------
+
+  @ViewChild('dialogDeleteForHire') dialogDeleteForHire!: TemplateRef<any>;
+  openDeleteForHireDialog(): void {
+    const dialogRef = this.dialog.open(this.dialogDeleteForHire);
+  }
+
+  @ViewChild('dialogDeleteForHireSuccess') dialogDeleteForHireSuccess!: TemplateRef<any>;
+  @ViewChild('dialogDeleteForHireFail') dialogDeleteForHireFail!: TemplateRef<any>;
+  async deleteForHire() {
+    const check = await this.supabaseService.deleteForHireListing(this.userEmail);
+    if(check) {
+      const dialogRef = this.dialog.open(this.dialogDeleteForHireSuccess);
+      setTimeout(() => {window.location.reload(), 3000});
+    }
+    else {
+      const dialogRef = this.dialog.open(this.dialogDeleteForHireFail);
+    }
+  }
+
+  @ViewChild('dialogDeleteBusiness') dialogDeleteBusiness!: TemplateRef<any>;
+  openDeleteBusinessDialog(): void {
+    const dialogRef = this.dialog.open(this.dialogDeleteBusiness);
+  }
+
+  @ViewChild('dialogDeleteBusinessSuccess') dialogDeleteBusinessSuccess!: TemplateRef<any>;
+  @ViewChild('dialogDeleteBusinessFail') dialogDeleteBusinessFail!: TemplateRef<any>;
+  async deleteBusiness() {
+    const check = await this.supabaseService.deleteBusiness(this.userEmail);
+    if(check) {
+      const dialogRef = this.dialog.open(this.dialogDeleteBusinessSuccess);
+      setTimeout(() => {window.location.reload(), 3000});
+    }
+    else {
+      const dialogRef = this.dialog.open(this.dialogDeleteBusinessFail);
+    }
+  }
+
+  @ViewChild('dialogDeleteJobBoard') dialogDeleteJobBoard!: TemplateRef<any>;
+  openDeleteJobBoardDialog(): void {
+    const dialogRef = this.dialog.open(this.dialogDeleteJobBoard);
+  }
+
+  @ViewChild('dialogDeleteJobBoardSuccess') dialogDeleteJobBoardSuccess!: TemplateRef<any>;
+  @ViewChild('dialogDeleteJobBoardFail') dialogDeleteJobBoardFail!: TemplateRef<any>;
+  async deleteJobBoardListing() {
+    const check = await this.supabaseService.deleteJobBoardListing(this.userEmail);
+    if(check) {
+      const dialogRef = this.dialog.open(this.dialogDeleteJobBoardSuccess);
+      setTimeout(() => {window.location.reload(), 3000});
+    }
+    else {
+      const dialogRef = this.dialog.open(this.dialogDeleteJobBoardFail);
+    }
   }
 }

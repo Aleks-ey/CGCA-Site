@@ -1,3 +1,8 @@
+.top_links:hover {
+    color: #DC2626;
+    text-decoration: underline;
+}
+
 .hire_header > h1 {
     font-family: Merriweather;
     font-size: 4vw;

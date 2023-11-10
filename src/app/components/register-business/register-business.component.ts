@@ -86,14 +86,9 @@ export class RegisterBusinessComponent {
       }
       else {
         this.form.patchValue({
-          company_name: '',
-          type: '',
-          description: '',
           owner: this.userName,
           email: this.userEmail,
           phone_number: this.userPhone,
-          location: '',
-          image_url: '',
         });
       }
     }

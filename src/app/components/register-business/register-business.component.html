@@ -15,23 +15,23 @@
             <input hidden (change)="onFileSelected($event)" #fileInput type="file">
             <p class="file-name">{{selectedFile?.name}}</p>
         </div> -->
-        <mat-form-field class="mt-4">
+        <mat-form-field class="mt-4 w-3/4">
             <mat-label>Company Name:</mat-label>
             <input matInput  formControlName="company_name">
         </mat-form-field>
         <br/>
-        <mat-form-field class="">
+        <mat-form-field class="w-3/4">
             <mat-label>Type of Business:</mat-label>
             <input matInput formControlName="type">
             <mat-hint>Ex: Restaurant, Retail, etc.</mat-hint>
         </mat-form-field>
         <br/>
-        <mat-form-field class="">
+        <mat-form-field class="w-3/4">
             <mat-label>Description:</mat-label>
             <textarea matInput formControlName="description"></textarea>
         </mat-form-field>
         <br/>
-        <mat-form-field class="">
+        <mat-form-field class="w-3/4">
             <mat-label>Location (City):</mat-label>
             <input matInput formControlName="location">
         </mat-form-field>

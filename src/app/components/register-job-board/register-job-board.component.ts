@@ -2,6 +2,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { SupabaseService } from 'src/app/supabase.service';
+import { BusinessListing } from '../register-business/register-business.component';
 
 export interface JobBoardListing {
   id?: number;
@@ -44,6 +45,8 @@ export class RegisterJobBoardComponent {
   userEmail: any;
   userName: any;
   userPhone: any;
+  userJobBoardListing: JobBoardListing[] = [];
+  userBusiness: BusinessListing[] = [];
 
   async ngOnInit() {
     this.userEmail = await this.supabaseService.fetchUserEmail();
@@ -53,20 +56,39 @@ export class RegisterJobBoardComponent {
         this.userPhone = res.data?.phone_number}
     );
 
-    this.form.patchValue({
-      company_name: '',
-      job_title: '',
-      job_description: '',
-      email: this.userEmail,
-      phone_number: this.userPhone,
-      pay: '',
-      location: '',
-    });
-
+    const result = await this.supabaseService.getUserJobs(this.userEmail);
+    const result2 = await this.supabaseService.getUserBusiness(this.userEmail);
+    this.userJobBoardListing = result.data!;
+    this.userBusiness = result2.data!;
+    if (this.userJobBoardListing.length > 0) {
+      this.form.patchValue({
+        company_name: this.userJobBoardListing[0].company_name,
+        job_title: this.userJobBoardListing[0].job_title,
+        job_description: this.userJobBoardListing[0].job_description,
+        email: this.userJobBoardListing[0].email,
+        phone_number: this.userJobBoardListing[0].phone_number,
+        pay: this.userJobBoardListing[0].pay,
+        location: this.userJobBoardListing[0].location,
+      });
+    }
+    else if(this.userBusiness.length > 0){
+      this.form.patchValue({
+        company_name: this.userBusiness[0].company_name,
+        email: this.userBusiness[0].email,
+        phone_number: this.userBusiness[0].phone_number,
+        location: this.userBusiness[0].location,
+      });
+    }
+    else {
+      this.form.patchValue({
+        email: this.userEmail,
+        phone_number: this.userPhone,
+      });
+    }
   }
 
   async onSubmit() {
-    const result = await this.supabaseService.addJob(this.form.value);
+    const result = await this.supabaseService.addJob(this.form.value, this.userEmail);
     if (result.error) {
       console.error('Error inserting data:', result.error);
       const dialogRef = this.dialog.open(this.dialogTemplateFail);

@@ -190,31 +190,6 @@ export class SupabaseService {
     return data![0].for_hire_request;
   }
 
-  async getUserHires(currentEmail:string) {
-    const { data, error } = await this.supabase
-      .from('for_hire')
-      .select('*')
-      .filter('approved', 'eq', true)
-      .eq('email', currentEmail);
-    return { data, error };
-  }
-
-  async getUserBusiness(currentEmail:string) {
-    const { data, error } = await this.supabase
-      .from('business')
-      .select('*')
-      .eq('email', currentEmail);
-    return { data, error };
-  }
-
-  async getUserJobs(currentEmail:string) {
-    const { data, error } = await this.supabase
-      .from('job_board')
-      .select('*')
-      .eq('email', currentEmail);
-    return { data, error };
-  }
-
   async updateProfileName(currentEmail:string, name:string) {
     const { data, error } = await this.supabase
       .from('profile')
@@ -286,13 +261,55 @@ export class SupabaseService {
     return { data, error };
   }
 
-  async addJob(jobListing: JobBoardListing) {
+  async getUserJobs(currentEmail:string) {
     const { data, error } = await this.supabase
       .from('job_board')
-      .insert([jobListing]);
+      .select('*')
+      .eq('email', currentEmail);
+    return { data, error };
+  }
 
-    return { data: data ? data[0] : undefined,  // Assuming 'data' is an array, return the first element.
-    error };
+  userJobs: JobBoardListing[] = [];
+  async addJob(jobListing: JobBoardListing, userEmail: string) {
+    const result = await this.getUserJobs(userEmail);
+    if (result.error) {
+      console.error('Error fetching events:', result.error);
+      return { data: undefined, error: result.error };
+    } 
+    else {
+      this.userJobs = result.data!;
+      if(this.userJobs.length > 0) {
+        const { data, error } = await this.supabase
+          .from('job_board')
+          .update([jobListing])
+          .eq('email', userEmail);
+
+        return { data: data ? data[0] : undefined,  // Assuming 'data' is an array, return the first element.
+        error };
+      }
+      else {
+        const { data, error } = await this.supabase
+        .from('job_board')
+        .insert([jobListing]);
+
+        return { data: data ? data[0] : undefined,  // Assuming 'data' is an array, return the first element.
+        error };
+      }
+    }
+  }
+
+  async deleteJobBoardListing(userEmail: string) {
+    const { error } = await this.supabase
+      .from('job_board')
+      .delete()
+      .eq('email', userEmail);
+
+    if (error) {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 
   // ------------------ For Hire ------------------
@@ -302,19 +319,70 @@ export class SupabaseService {
     return { data, error };
   }
 
-  async addForHire(forHireEntry: ForHireListing) {
+  async getUserHires(currentEmail:string) {
     const { data, error } = await this.supabase
       .from('for_hire')
-      .insert([forHireEntry]);
+      .select('*')
+      .filter('approved', 'eq', true)
+      .eq('email', currentEmail);
+    return { data, error };
+  }
 
-    return { data: data ? data[0] : undefined,  // Assuming 'data' is an array, return the first element.
-    error };
+  userHires: ForHireListing[] = [];
+  async addForHire(forHireEntry: ForHireListing, userEmail: string) {
+    const result = await this.getUserHires(userEmail);
+    if (result.error) {
+      console.error('Error fetching events:', result.error);
+      return { data: undefined, error: result.error };
+    } 
+    else {
+      this.userHires = result.data!;
+      if(this.userHires.length > 0) {
+        const { data, error } = await this.supabase
+          .from('for_hire')
+          .update([forHireEntry])
+          .eq('email', userEmail);
+
+        return { data: data ? data[0] : undefined,  // Assuming 'data' is an array, return the first element.
+        error };
+      }
+      else {
+        const { data, error } = await this.supabase
+        .from('for_hire')
+        .insert([forHireEntry]);
+
+        return { data: data ? data[0] : undefined,  // Assuming 'data' is an array, return the first element.
+        error };
+      }
+    }
+  }
+
+  async deleteForHireListing(userEmail: string) {
+    const { error } = await this.supabase
+      .from('for_hire')
+      .delete()
+      .eq('email', userEmail);
+
+    if (error) {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 
   // ------------------ Business ------------------
 
   async getAllBusinesses() {
     const { data, error } = await this.supabase.from('business').select('*');
+    return { data, error };
+  }
+
+  async getUserBusiness(currentEmail:string) {
+    const { data, error } = await this.supabase
+      .from('business')
+      .select('*')
+      .eq('email', currentEmail);
     return { data, error };
   }
 
@@ -347,8 +415,6 @@ export class SupabaseService {
     }
   }
 
-    
-
   async addBusinessImage(selectedFile: any) {
     if (selectedFile) {
       const { data, error } = await this.supabase.storage
@@ -368,4 +434,17 @@ export class SupabaseService {
     }
   }
 
+  async deleteBusiness(userEmail: string) {
+    const { error } = await this.supabase
+      .from('business')
+      .delete()
+      .eq('email', userEmail);
+
+    if (error) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
 }

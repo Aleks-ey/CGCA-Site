@@ -32,6 +32,7 @@ export class ForHireRequestComponent {
   userEmail: any;
   userName: any;
   userPhone: any;
+  userHireListing: ForHireListing[] = [];
 
   @ViewChild('dialogTemplateSuccess') dialogTemplateSuccess!: TemplateRef<any>;
   @ViewChild('dialogTemplateFail') dialogTemplateFail!: TemplateRef<any>;
@@ -55,20 +56,42 @@ export class ForHireRequestComponent {
         this.userPhone = res.data?.phone_number}
     );
 
-    this.form.patchValue({
-      name: this.userName,
-      profession: '',
-      about: '',
-      email: this.userEmail,
-      phone_number: this.userPhone,
-      location: '',
-      work_outside: false,
-      approved: false,
-    });
+    const result = await this.supabaseService.getUserHires(this.userEmail);
+    if (result.error) {
+      console.error('Error fetching data:', result.error);
+    } 
+    else {
+      this.userHireListing = result.data!;
+      console.log(this.userHireListing);
+      if (this.userHireListing.length > 0) {
+        this.form.patchValue({
+          name: this.userHireListing[0].name,
+          profession: this.userHireListing[0].profession,
+          about: this.userHireListing[0].about,
+          email: this.userHireListing[0].email,
+          phone_number: this.userHireListing[0].phone_number,
+          location: this.userHireListing[0].location,
+          work_outside: this.userHireListing[0].work_outside,
+          approved: this.userHireListing[0].approved,
+        });
+      }
+      else {
+        this.form.patchValue({
+          name: this.userName,
+          profession: '',
+          about: '',
+          email: this.userEmail,
+          phone_number: this.userPhone,
+          location: '',
+          work_outside: false,
+          approved: false,
+        });
+      }
+    }
   }
 
   async onSubmit() {
-    const result = await this.supabaseService.addForHire(this.form.value);
+    const result = await this.supabaseService.addForHire(this.form.value, this.userEmail);
     if (result.error) {
       console.error('Error inserting data:', result.error);
       const dialogRef = this.dialog.open(this.dialogTemplateFail);

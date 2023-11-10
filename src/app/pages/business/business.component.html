@@ -1,11 +1,11 @@
 <a href="/community">
     <mat-icon class="text-black float-left mt-1.5 ml-2 md:ml-6">keyboard_arrow_left</mat-icon>
 </a>
-<a href="/community" class="float-left mt-2 md:ml-1">Back</a>
+<a href="/community" class="top_links float-left mt-2 md:ml-1">Back</a>
 <button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="flex flex-row float-right mt-2 mr-2 md:mr-6">Login</button>
 <div *ngIf="isLoggedIn" class="flex float-right mt-2 mr-2 md:mr-6 gap-2">
-    <a href="/account"> My Account </a>
-    <button (click)="logout()" class="">Logout</button>
+    <a href="/account" class="top_links"> My Account </a>
+    <button (click)="logout()" class="top_links">Logout</button>
 </div>
 
 <div class="business_header flex mt-16 mb-6 md:my-16 px-4 md:px-0 justify-center text-center">
@@ -59,16 +59,16 @@
                         ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
                     </p>
                 </div>
-                <div class="blisting_contact_container flex flex-col md:flex-row md:gap-6">
-                    <p class="blisting_contact_items block md:hidden">
+                <div class="blisting_contact flex flex-col md:flex-row md:gap-6">
+                    <p class="block md:hidden">
                         <mat-icon class="text-black">person</mat-icon>
                         {{ listing.owner}}
                     </p>
-                    <p class="blisting_contact_items block md:hidden">
+                    <p class="block md:hidden">
                         <mat-icon class="text-black">email</mat-icon>
                         {{ listing.email }}
                     </p>
-                    <p class="blisting_contact_items hidden md:block">
+                    <p class="hidden md:block">
                         <mat-icon class="text-black">person</mat-icon>
                         {{ listing.owner}}
                         <mat-icon class="text-black ml-2">email</mat-icon>
