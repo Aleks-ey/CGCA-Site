@@ -46,6 +46,7 @@ import { ForHireRequestComponent } from './components/for-hire-request/for-hire-
 import { AccountComponent } from './pages/account/account.component';
 import { RegisterBusinessComponent } from './components/register-business/register-business.component';
 import { RegisterJobBoardComponent } from './components/register-job-board/register-job-board.component';
+import { UpdateAccountComponent } from './components/update-account/update-account.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { RegisterJobBoardComponent } from './components/register-job-board/regis
     AccountComponent,
     RegisterBusinessComponent,
     RegisterJobBoardComponent,
+    UpdateAccountComponent,
   ],
   imports: [
     AppRoutingModule,

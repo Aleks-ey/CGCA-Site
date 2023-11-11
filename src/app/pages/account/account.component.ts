@@ -109,7 +109,7 @@ export class AccountComponent {
   // ----------------- Login -----------------
 
   @ViewChild('dialogLoginFail') dialogLoginFail!: TemplateRef<any>;
-  public onLoginSubmit() {
+  async onLoginSubmit() {
     this.auth
       .signIn(this.loginForm.value.email, this.loginForm.value.password)
       .then((res) => {
@@ -166,26 +166,27 @@ export class AccountComponent {
   // ----------------- User Info -----------------
 
   newName='';
-  public updateUserName(newName: string) {
+  async updateUserName(newName: string) {
     if(newName != '') {
       this.supabaseService.updateProfileName(this.userEmail, newName);
-      window.location.reload();
+      setTimeout(() => {window.location.reload(), 3000});
     }
   }
 
   newPhone='';
-  updateUserPhone(newPhone: string) {
+  async updateUserPhone(newPhone: string) {
+    console.log(newPhone);
     if(newPhone.length == 10) {
       this.supabaseService.updateProfilePhone(this.userEmail, newPhone);
-      window.location.reload();
+      setTimeout(() => {window.location.reload(), 3000});
     }
   }
 
   newEmail='';
-  updateUserEmail(newEmail: string) {
+  async updateUserEmail(newEmail: string) {
     if(newEmail != '') {
       this.supabaseService.updateProfileEmail(newEmail);
-      window.location.reload();
+      setTimeout(() => {window.location.reload(), 3000});
     }
   }
 
@@ -206,14 +207,14 @@ export class AccountComponent {
   }
 
   @ViewChild ('dialogRegisterBusiness') dialogRegisterBusiness!: TemplateRef<any>;
-  requestBusiness() {
+  async requestBusiness() {
     this.supabaseService.makeBusinessRequest(this.userEmail);
     const dialogRef = this.dialog.open(this.dialogRegisterBusiness);
     setTimeout(() => {window.location.reload(), 3000});
   }
 
   @ViewChild ('dialogRescindBusiness') dialogRescindBusiness!: TemplateRef<any>;
-  cancelRequest() {
+  async cancelRequest() {
     this.supabaseService.cancelBusinessRequest(this.userEmail);
     const dialogRef = this.dialog.open(this.dialogRescindBusiness);
     setTimeout(() => {window.location.reload(), 3000});

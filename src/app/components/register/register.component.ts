@@ -37,7 +37,7 @@ export class RegisterComponent {
     });
   }
 
-  public registerSubmit() {
+  async registerSubmit() {
     console.log(this.registerForm.value);
     this.auth
       .signUp(this.registerForm.value.email, this.registerForm.value.password)

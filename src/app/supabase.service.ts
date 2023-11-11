@@ -95,7 +95,7 @@ export class SupabaseService {
     return this._session
   }
 
-  authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void) {
+  async authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void) {
     return this.supabase.auth.onAuthStateChange(callback)
   }
 
@@ -105,17 +105,17 @@ export class SupabaseService {
   private _userEmail = new BehaviorSubject<string>('');
   userEmail$ = this._userEmail.asObservable();
 
-  signIn(email: string, password: string): Promise<any> {
+  async signIn(email: string, password: string): Promise<any> {
     this._isLoggedIn.next(true);
     this._userEmail.next(email);
     return this.supabase.auth.signInWithPassword({ email, password })
   }
   
-  signUp(email: string, password: string): Promise<any> {
+  async signUp(email: string, password: string): Promise<any> {
     return this.supabase.auth.signUp({ email, password });
   }
 
-  signOut() {
+  async signOut() {
     // this._isLoggedIn.next(false);
     // this._userEmail.next('');
     return this.supabase.auth.signOut()

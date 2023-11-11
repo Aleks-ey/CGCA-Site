@@ -164,7 +164,7 @@ export class AdminComponent {
     }
   }
 
-  openLoginDialog(): void {
+  async openLoginDialog() {
     const dialogRef = this.dialog.open(LoginComponent, {
       data: { isLoggedIn: this.isLoggedIn },
       height: 'auto',
@@ -180,7 +180,7 @@ export class AdminComponent {
     });
   }
 
-  logout(): void {
+  async logout() {
     this.supabaseService.signOut();
     this.isLoggedIn = false;
     // reload window with small delay to allow signout to complete
@@ -201,7 +201,7 @@ export class AdminComponent {
     this.switchForm = 3;
   }
 
-  openApprovalDialog(email: string): void {
+  async openApprovalDialog(email: string) {
     this.currentEmail = email;
     const dialogRef = this.dialog.open(this.dialogTemplate1, {
         height: 'auto',
@@ -214,7 +214,7 @@ export class AdminComponent {
     });
   }
 
-  submitApproval(email: string): void {
+  async submitApproval(email: string) {
     const toggleValue = this.toggleForm.get('toggleValue')!.value;
     console.log('Toggle value:', toggleValue);
 
@@ -237,7 +237,7 @@ export class AdminComponent {
     this.dialog.closeAll();
   }
 
-  openBusinessApprovalDialog(email: string): void {
+  async openBusinessApprovalDialog(email: string) {
     this.currentEmail = email;
     const dialogRef = this.dialog.open(this.dialogTemplate2, {
         height: 'auto',
@@ -250,7 +250,7 @@ export class AdminComponent {
     });
   }
 
-  submitBusinessApproval(email: string): void {
+  async submitBusinessApproval(email: string) {
     const toggleValue = this.toggleForm.get('toggleValue')!.value;
     console.log('Toggle value:', toggleValue);
 

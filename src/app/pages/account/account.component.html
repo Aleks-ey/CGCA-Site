@@ -57,10 +57,10 @@
 </div>
 <!-- Logged In -->
 <div class="user_page_container mt-8" *ngIf="isLoggedIn == true">
-    <a class="community_button absolute right-16 mt-2" href="/community">Community</a>
+    <!-- <a class="community_button absolute right-16 mt-2" href="/community">Community</a> -->
     <button class="logout_button absolute right-2 mt-2" (click)="logout()">Logout</button>
     <div class="welcome">
-        <h2 class="text-center">Welcome {{ userEmail }}</h2>
+        <h2 class="text-center">Welcome {{ userName }}</h2>
     </div>
     <!-- Update Account -->
     <div class="update_account_container flex flex-col mt-10 justify-center">
@@ -273,7 +273,7 @@
                     </ng-template>
                 </div>
             </div>
-            <div class="blisting flex flex-col md:flex-row justify-center mx-auto" *ngFor="let listing of userBusiness">
+            <div class="blisting flex flex-col md:flex-row mx-auto" *ngFor="let listing of userBusiness">
                 <!-- <div class="flex md:w-1/3 object-cover">
                     <img src="{{ listing.image_url }}" alt="business logo">
                 </div> -->

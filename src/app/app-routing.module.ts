@@ -12,55 +12,56 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { CommunityComponent } from './pages/community/community.component';
 import { AccountComponent } from './pages/account/account.component';
 
-const routes: Routes = [{
-  path: 'home',
-  component: HomeComponent
-},
-{
-  path: '',
-  redirectTo: '/home',
-  pathMatch: 'full'
-},
-{
-  path: 'admin',
-  component: AdminComponent
-},
-{
-  path: 'mission',
-  component: MissionComponent
-},
-{
-  path: 'meet',
-  component: MeetComponent
-},
-{
-  path: 'events',
-  component: EventsComponent
-},
-{
-  path: 'contact',
-  component: ContactComponent
-},
-{
-  path:'community',
-  component: CommunityComponent
-},
-{
-  path: 'business',
-  component: BusinessComponent
-},
-{
-  path: 'job-board',
-  component: JobBoardComponent
-},
-{
-  path: 'for-hire',
-  component: ForHireComponent
-},
-{
-  path: 'account',
-  component: AccountComponent
-},
+const routes: Routes = [
+  {
+    path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'admin',
+    component: AdminComponent
+  },
+  {
+    path: 'mission',
+    component: MissionComponent
+  },
+  {
+    path: 'meet',
+    component: MeetComponent
+  },
+  {
+    path: 'events',
+    component: EventsComponent
+  },
+  {
+    path: 'contact',
+    component: ContactComponent
+  },
+  {
+    path:'community',
+    component: CommunityComponent
+  },
+  {
+    path: 'business',
+    component: BusinessComponent
+  },
+  {
+    path: 'job-board',
+    component: JobBoardComponent
+  },
+  {
+    path: 'for-hire',
+    component: ForHireComponent
+  },
+  {
+    path: 'account',
+    component: AccountComponent
+  },
 ];
 
 @NgModule({
