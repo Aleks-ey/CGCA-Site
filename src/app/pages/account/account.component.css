@@ -29,8 +29,8 @@
     margin-top: 10px;
 }
 
-.welcome {
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .welcome {
         padding-top: 20px;
     }
 }
@@ -60,8 +60,10 @@
 /* update account css */
 .update_account_header {
     margin-left: 15vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .update_account_header {
         margin-left: 5vw;
     }
 }
@@ -69,8 +71,10 @@
 .update_account_buttons_container {
     top: 10px;
     right: 15vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .update_account_buttons_container {
         top: 0px;
         margin-left: 5vw;
     }
@@ -86,8 +90,10 @@
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .account_info_container {
         width: 90vw;
     }
 }
@@ -100,8 +106,10 @@
 /* non-business account css for hire listings */
 .no_hire_listing_header {
     margin-left: 15vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .no_hire_listing_header {
         margin-left: 5vw;
     }
 }
