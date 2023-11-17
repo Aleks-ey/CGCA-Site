@@ -40,12 +40,12 @@ export class RegisterComponent {
   public registerSubmit() {
     this.auth
       .signUp(this.registerForm.value.email, this.registerForm.value.password)
-      .then((res) => {
+      .then(async (res) => {
         console.log(res.data.user.role);
         if (res.data.user.role === 'authenticated') {
           const dialogRef = this.dialog.open(this.dialogRegisterSuccess);
-          this.supabaseService.updateProfileName(this.registerForm.value.email, this.registerForm.value.name);
-          this.supabaseService.updateProfilePhone(this.registerForm.value.email, this.registerForm.value.phone_number);
+          await this.supabaseService.updateProfileName(this.registerForm.value.email, this.registerForm.value.name);
+          await this.supabaseService.updateProfilePhone(this.registerForm.value.email, this.registerForm.value.phone_number);
             
           setTimeout(() => {
             this.auth.signIn(this.registerForm.value.email, this.registerForm.value.password);

@@ -56,14 +56,14 @@ export class AccountComponent {
 
     if(this.userEmail != null) {
       this.isLoggedIn = true;
-      this.userName = this.supabaseService.fetchUserName(this.userEmail);
-      this.userPhone = this.supabaseService.fetchUserPhone(this.userEmail);
-      // await this.supabaseService
-      //   .profile(this.userEmail)
-      //   .then( (res) => { 
-      //     this.userName = res.data?.name 
-      //     this.userPhone = res.data?.phone_number}
-      //   );
+      // this.userName = this.supabaseService.fetchUserName(this.userEmail);
+      // this.userPhone = this.supabaseService.fetchUserPhone(this.userEmail);
+      await this.supabaseService
+        .profile(this.userEmail)
+        .then( (res) => { 
+          this.userName = res.data?.name 
+          this.userPhone = res.data?.phone_number}
+        );
 
       this.isBusiness = await this.supabaseService.checkBusinessAcc(this.userEmail);
       this.hasBusinessRequest = await this.supabaseService.checkBusinessRequest(this.userEmail);
@@ -171,6 +171,14 @@ export class AccountComponent {
   }
 
   // ----------------- User Info -----------------
+  formatPhone(userPhone: any): string {
+    if (typeof userPhone === 'string') {
+      return `(${userPhone.slice(0,3)}) ${userPhone.slice(3,6)}-${userPhone.slice(6,10)}`;
+    } else {
+      return 'Invalid phone number'; // or any other fallback logic you want
+    }
+  }
+  
 
   newName='';
   public updateUserName(newName: string) {

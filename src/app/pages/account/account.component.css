@@ -76,6 +76,10 @@
     }
 }
 
+.account_edit_container > button:hover {
+    color: #DC2626;
+}
+
 .account_info_container {
     width: 70vw;
     border: 1px solid #ccc;
