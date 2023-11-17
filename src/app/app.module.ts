@@ -103,6 +103,6 @@ import { UpdateAccountComponent } from './components/update-account/update-accou
       useClass: CustomHammerConfig
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

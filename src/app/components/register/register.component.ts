@@ -38,7 +38,6 @@ export class RegisterComponent {
   }
 
   public registerSubmit() {
-    console.log(this.registerForm.value);
     this.auth
       .signUp(this.registerForm.value.email, this.registerForm.value.password)
       .then((res) => {

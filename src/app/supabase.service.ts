@@ -191,6 +191,8 @@ export class SupabaseService {
   }
 
   async updateProfileName(currentEmail:string, name:string) {
+    console.log(currentEmail);
+    console.log(name);
     const { data, error } = await this.supabase
       .from('profile')
       .update({ name: name })
@@ -198,6 +200,8 @@ export class SupabaseService {
   }
 
   async updateProfilePhone(currentEmail:string, phone:string) {
+    console.log(currentEmail);
+    console.log(phone);
     const { data, error } = await this.supabase
       .from('profile')
       .update({ phone_number: phone })
@@ -246,6 +250,18 @@ export class SupabaseService {
     const { data, error } = await this.supabase
       .from('profile')
       .update({ for_hire_request: true })
+      .eq('email', currentEmail);
+
+    if (error) {
+      throw error;
+    }
+    return data;
+  }
+
+  async cancelForHireRequest(currentEmail:string) {
+    const { data, error } = await this.supabase
+      .from('profile')
+      .update({ for_hire_request: false })
       .eq('email', currentEmail);
 
     if (error) {
@@ -323,7 +339,6 @@ export class SupabaseService {
     const { data, error } = await this.supabase
       .from('for_hire')
       .select('*')
-      .filter('approved', 'eq', true)
       .eq('email', currentEmail);
     return { data, error };
   }
@@ -347,6 +362,7 @@ export class SupabaseService {
         error };
       }
       else {
+        this.makeForHireRequest(userEmail);
         const { data, error } = await this.supabase
         .from('for_hire')
         .insert([forHireEntry]);
@@ -367,6 +383,7 @@ export class SupabaseService {
       return false;
     }
     else {
+      this.cancelForHireRequest(userEmail);
       return true;
     }
   }

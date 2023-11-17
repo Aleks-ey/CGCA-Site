@@ -39,18 +39,24 @@
                 <p>{{ listing.about }}</p>
             </div>
             <div class="hlisting_details flex flex-row"> 
-                <p>
+                <p *ngIf="listing.location !== ''">
                     <mat-icon class="text-black">map</mat-icon>
                     {{ listing.location }}
                 </p>
             </div>
-            <div class="hlisting_contact flex flex-row gap-6">
-                <p>
-                    <mat-icon class="text-black">email</mat-icon>
-                    {{ listing.email }}
+            <div class="hlisting_contact flex flex-col md:flex-row md:gap-6">
+                <p class="block md:hidden">
+                    <mat-icon class="text-black">person</mat-icon>
+                    {{ listing.email}}
                 </p>
-                <p>
-                    <mat-icon class="text-black">phone</mat-icon>
+                <p class="block md:hidden">
+                    <mat-icon class="text-black">email</mat-icon>
+                    ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
+                </p>
+                <p class="hidden md:block">
+                    <mat-icon class="text-black">person</mat-icon>
+                    {{ listing.email}}
+                    <mat-icon class="text-black ml-2">email</mat-icon>
                     ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
                 </p>
             </div>

@@ -55,3 +55,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-family: TiltPrism;
     src: url(./assets/fonts/TiltPrism-Regular.ttf);
 }
+
+.has-event > .mat-calendar-body-cell-content {
+    border-color: #1E293B !important;
+}

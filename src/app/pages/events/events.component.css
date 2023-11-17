@@ -73,4 +73,10 @@
 .selected_events_card {
     border-width: 1px;
     border-radius: 10px;
+    background-color: gainsboro;
+    min-height: 200px;
+}
+
+.selected_events_card > p {
+    height: 100px;
 }

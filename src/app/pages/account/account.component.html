@@ -63,62 +63,95 @@
         <h2 class="text-center">Welcome {{ userName }}</h2>
     </div>
     <!-- Update Account -->
-    <div class="update_account_container flex flex-col mt-10 justify-center">
+    <div class="update_account_container flex flex-col relative mt-10 justify-center">
         <h1 class="update_account_header">
-            Update Account
+            Account Info
         </h1>
-        <div class="update_account flex flex-col mx-auto justify-center">
-            <form class="update_account_name flex flex-row mb-2 justify-center" (ngSubmit)="updateUserName(newName)">
-                <input *ngIf="userName != null" placeholder="{{ userName }}" [(ngModel)]="newName" name="newName"/>
-                <input *ngIf="userName == null" placeholder="No name provided" [(ngModel)]="newName" name="newName"/>
-                <button type="submit" class="update_name_button ml-2">Update</button>
-            </form>
-            <form class="update_account_phone_number flex flex-row mb-2 justify-center" (ngSubmit)="updateUserPhone(newPhone)">
-                <input 
-                    *ngIf="userPhone != null" 
-                    placeholder="({{ userPhone.slice(0,3) }}) {{ userPhone.slice(3,6) }}-{{ userPhone.slice(6,10) }}"
-                    [(ngModel)]="newPhone"
-                    name="newPhone"
-                />
-                <input 
-                    *ngIf="userPhone == null" 
-                    placeholder="No phone number provided" 
-                    [(ngModel)]="newPhone"
-                    name="newPhone"
-                />
-                <button type="submit" class="update_phone_button ml-2">Update</button>
-            </form>
-            <form class="update_account_email flex flex-row mb-2 justify-center" (ngSubmit)="updateUserEmail(newEmail)">
-                <input placeholder="{{ userEmail }}" [(ngModel)]="newEmail" name="newEmail"/>
-                <button type="submit" class="update_email_button ml-2">Update</button>
-            </form>
-            <form class="update_account_password flex flex-row justify-center" (ngSubmit)="updateUserPassword(newPassword)">
-                <input placeholder="New Password Here" [(ngModel)]="newPassword" name="newPassword"/>
-                <button type="submit" class="update_password_button ml-2">Update</button>
-                <ng-template #dialogPasswordUpdateSuccess class="overflow-hidden">
-                    <div class="p-4">
-                        <p>Password Updated!</p>
+        <div class="update_account_buttons_container md:absolute flex flex-row">
+            <div class="hlisting_edit_container mr-2">
+                <button (click)="openEditAccountDialog()">
+                    <mat-icon class="text-black">edit</mat-icon>
+                    Edit
+                </button>
+            </div>
+        </div>
+        <div class="account_info_container flex flex-col mx-auto justify-center">
+            <div class="account_info_table table w-fit">
+                <div class="account_name_row table-row">
+                    <div class="table-cell text-left">
+                        Name
                     </div>
-                </ng-template>
-                <ng-template #dialogPasswordUpdateFail class="overflow-hidden">
-                    <div class="p-4">
-                        <p>There was an error updating your password</p>
-                        <br/>
-                        <p>Please make sure your password is at least 6 characters long and try again.</p>
+                    <div class="table-cell">
+                        :
                     </div>
-                </ng-template>
-            </form>
-            <div class="update_account_button flex flex-row justify-center">
-                <!-- <button class="update_button" (click)="openUpdateDialog()">Update</button> -->
+                    <div class="table-cell pl-2">
+                        {{ userName }}
+                    </div>
+                </div>
+                <div class="account_phone_row table-row">
+                    <div class="table-cell text-left">
+                        Phone
+                    </div>
+                    <div class="table-cell">
+                        :
+                    </div>
+                    <div class="table-cell pl-2">
+                        ({{ userPhone.slice(0,3) }}) {{ userPhone.slice(3,6) }}-{{ userPhone.slice(6,10) }}
+                    </div>
+                </div>
+                <div class="account_email_row table-row">
+                    <div class="table-cell text-left">
+                        Email
+                    </div>
+                    <div class="table-cell">
+                        :
+                    </div>
+                    <div class="table-cell pl-2">
+                        {{ userEmail }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <!-- Is not Business -->
     <div class="non_business_container flex flex-col justify-center" *ngIf="isBusiness == false">
-        <div class="no_hire_listing_container flex flex-col mt-10 justify-center" *ngIf="!hasHireListing">
+        <div class="no_hire_listing_container flex flex-col relative mt-10 justify-center" *ngIf="!hasHireListing">
             <h1 class="no_hire_listing_header">
                 Submit a For Hire Listing
             </h1>
+            <div class="hlisting_buttons_container md:absolute flex flex-row" *ngIf="hasForHireRequest">
+                <div class="hlisting_edit_container mr-2">
+                    <button (click)="openEditHireDialog()">
+                        <mat-icon class="text-black">edit</mat-icon>
+                        Edit
+                    </button>
+                </div>
+                <div class="hlisting_delete_container">
+                    <button (click)="openDeleteForHireDialog()">
+                        <mat-icon class="text-black">delete</mat-icon>
+                        Delete
+                    </button>
+                    <ng-template #dialogDeleteForHire class="overflow-hidden">
+                        <div class="p-4 text-center">
+                            <p>Are you sure you want to delete your For Hire Listing?</p>
+                            <p>This action cannot be undone.</p>
+                            <button class="for_hire_delete_button" (click)="deleteForHire()">Delete</button>
+                        </div>
+                        <ng-template #dialogDeleteForHireSuccess class="overflow-hidden">
+                            <div class="p-4">
+                                <p>For Hire Listing Deleted!</p>
+                            </div>
+                        </ng-template>
+                        <ng-template #dialogDeleteForHireFail class="overflow-hidden">
+                            <div class="p-4">
+                                <p>There was an error deleting your For Hire Listing</p>
+                                <br/>
+                                <p>Please try again.</p>
+                            </div>
+                        </ng-template>
+                    </ng-template>
+                </div>
+            </div>
             <app-for-hire-request *ngIf="!hasForHireRequest" class="mb-10 mx-auto"></app-for-hire-request>
             <div *ngIf="hasForHireRequest" class="for_hire_pending mx-auto text-center">
                 <h2 class="text-center">

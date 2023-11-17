@@ -1,0 +1,11 @@
+.update_account_container {
+    padding: 20px;
+    width: 70vw;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+
+    @media screen and (max-width: 768px) {
+        width: auto;
+    }
+}

@@ -40,19 +40,23 @@
                 <p>{{ listing.job_description }}</p>
             </div>
             <div class="jlisting_details flex flex-col md:flex-row">
-                <p class="block md:hidden">
+                <p class="block md:hidden" *ngIf="listing.pay !== ''">
                     <mat-icon class="text-black">attach_money</mat-icon>
                     {{ listing.pay }}
                 </p> 
-                <p class="block md:hidden">
+                <p class="block md:hidden" *ngIf="listing.location !== ''">
                     <mat-icon class="text-black">map</mat-icon>
                     {{ listing.location }}
                 </p>
                 <p class="hidden md:block">
-                    <mat-icon class="text-black">attach_money</mat-icon>
-                    {{ listing.pay }}
-                    <mat-icon class="text-black ml-2">map</mat-icon>
-                    {{ listing.location }}
+                    <span *ngIf="listing.pay !== ''">
+                        <mat-icon class="text-black">attach_money</mat-icon>
+                        {{ listing.pay }}
+                    </span>
+                    <span *ngIf="listing.location !== ''">
+                        <mat-icon class="text-black ml-2">map</mat-icon>
+                        {{ listing.location }}
+                    </span>
                 </p>
             </div>
             <div class="jlisting_contact flex flex-col md:flex-row">

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
 // import { CalendarEvent } from './calendarEvent.model';
 import { eventsAnimation } from './events-animation';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 
 export interface CalendarEvent {
   id?: number;
@@ -19,7 +20,7 @@ export interface CalendarEvent {
 })
 
 export class EventsComponent {
-  selected: Date | null | undefined;
+  selected: Date | null = null;
 
   event: CalendarEvent = {
     date: '',
@@ -29,6 +30,7 @@ export class EventsComponent {
   };
 
   eventsList: CalendarEvent[] = [];
+  eventDates: Set<string> = new Set();
   // selectedEventId?: number;
 
   constructor(private supabaseService: SupabaseService) {}
@@ -38,11 +40,20 @@ export class EventsComponent {
     if (result.error) {
       console.error('Error fetching events:', result.error);
     } else {
-      this.eventsList = result.data!;
-      this.formatEventDates();
+      this.eventsList = result.data!.map(event => ({
+        ...event,
+        date: this.formatDate(event.date),
+        time: this.formatTime(event.time) // Apply the time format here
+      }));
+      this.eventDates = new Set(this.eventsList.map(event => event.date));
     }
   }
 
+  myDateClass = (date: Date): MatCalendarCellCssClasses => {
+    const formattedDate = this.formatDate(date.toISOString().split('T')[0]);
+    const hasEvent = this.eventDates.has(formattedDate);
+    return hasEvent ? 'has-event' : '';
+  }
   formatEventDates() {
     this.eventsList = this.eventsList.map(event => {
         event.date = this.formatDate(event.date);
@@ -133,4 +144,18 @@ export class EventsComponent {
     }
     return this.selectedEventsList;
   }
+
+  formatTime(timeString: string): string {
+    // Check if timeString is valid and has the expected format "HH:MM"
+    if (!timeString || !timeString.includes(':')) {
+      return timeString; // or you could return an error or a default value
+    }
+  
+    const [hours, minutes] = timeString.split(':').map(Number);
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const hours12 = hours % 12 || 12; // Convert to 12-hour format and handle midnight
+  
+    return `${hours12}:${minutes.toString().padStart(2, '0')} ${period}`;
+  }
+  
 }

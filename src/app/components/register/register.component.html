@@ -11,7 +11,7 @@
                 </i>
             </div>
             <div class="table-row mb-4">
-                <label for="phone_number" class="table-cell text-right">Phone Number:</label>
+                <label for="phone_number" class="table-cell text-right">Phone #:</label>
                 <input type="tel" id="phone_number" name="phone_number" formControlName="phone_number" class="table-cell border-gray-300 border-2">
                 <i style="color: tomato" class="table-row"
                     *ngIf="registerForm.controls['phone_number'].invalid && (registerForm.controls['phone_number'].dirty || registerForm.controls['phone_number'].touched)">
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div>
-            <input class="register_submit border-red-400 border-2 p-2 text-red-400 rounded-lg" type="submit">
+            <input class="register_submit border-red-400 border-2 p-2 text-red-400 rounded-lg" type="submit" [disabled]="registerForm.invalid">
             <ng-template #dialogRegisterSuccess class="overflow-hidden">
                 <div class="p-4 text-center">
                     <p>Registration successful!</p>

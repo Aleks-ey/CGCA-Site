@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ForHireListing, ForHireRequestComponent } from 'src/app/components/for-hire-request/for-hire-request.component';
 import { BusinessListing, RegisterBusinessComponent } from 'src/app/components/register-business/register-business.component';
 import { JobBoardListing, RegisterJobBoardComponent } from 'src/app/components/register-job-board/register-job-board.component';
+import { UpdateAccountComponent } from 'src/app/components/update-account/update-account.component';
 
 @Component({
   selector: 'app-account',
@@ -16,8 +17,8 @@ export class AccountComponent {
   loginForm!: FormGroup;
 
   userEmail: any;
-  userName: any;
-  userPhone: any;
+  userName: any = '';
+  userPhone: any = '';
   isLoggedIn = false;
   isBusiness = false;
 
@@ -52,14 +53,16 @@ export class AccountComponent {
 
   async ngOnInit() {
     this.userEmail = await this.supabaseService.fetchUserEmail();
-    await this.supabaseService.profile(this.userEmail)?.then(
-        (res) => { 
-          this.userName = res.data?.name 
-          this.userPhone = res.data?.phone_number}
-      );
 
     if(this.userEmail != null) {
       this.isLoggedIn = true;
+      await this.supabaseService
+        .profile(this.userEmail)
+        .then( (res) => { 
+          this.userName = res.data?.name 
+          this.userPhone = res.data?.phone_number}
+        );
+
       this.isBusiness = await this.supabaseService.checkBusinessAcc(this.userEmail);
       this.hasBusinessRequest = await this.supabaseService.checkBusinessRequest(this.userEmail);
       this.hasForHireRequest = await this.supabaseService.checkForHireRequest(this.userEmail);
@@ -72,7 +75,9 @@ export class AccountComponent {
         else {
           this.userHireListing = result.data!;
           if(this.userHireListing.length > 0) {
-            this.hasHireListing = true;
+            if(this.userHireListing[0].approved == true) {
+              this.hasHireListing = true;
+            }
           }
         }
       }
@@ -166,7 +171,7 @@ export class AccountComponent {
   // ----------------- User Info -----------------
 
   newName='';
-  async updateUserName(newName: string) {
+  public updateUserName(newName: string) {
     if(newName != '') {
       this.supabaseService.updateProfileName(this.userEmail, newName);
       setTimeout(() => {window.location.reload(), 3000});
@@ -174,7 +179,7 @@ export class AccountComponent {
   }
 
   newPhone='';
-  async updateUserPhone(newPhone: string) {
+  public updateUserPhone(newPhone: string) {
     console.log(newPhone);
     if(newPhone.length == 10) {
       this.supabaseService.updateProfilePhone(this.userEmail, newPhone);
@@ -183,7 +188,7 @@ export class AccountComponent {
   }
 
   newEmail='';
-  async updateUserEmail(newEmail: string) {
+  public updateUserEmail(newEmail: string) {
     if(newEmail != '') {
       this.supabaseService.updateProfileEmail(newEmail);
       setTimeout(() => {window.location.reload(), 3000});
@@ -207,20 +212,30 @@ export class AccountComponent {
   }
 
   @ViewChild ('dialogRegisterBusiness') dialogRegisterBusiness!: TemplateRef<any>;
-  async requestBusiness() {
+  requestBusiness() {
     this.supabaseService.makeBusinessRequest(this.userEmail);
     const dialogRef = this.dialog.open(this.dialogRegisterBusiness);
     setTimeout(() => {window.location.reload(), 3000});
   }
 
   @ViewChild ('dialogRescindBusiness') dialogRescindBusiness!: TemplateRef<any>;
-  async cancelRequest() {
+  cancelRequest() {
     this.supabaseService.cancelBusinessRequest(this.userEmail);
     const dialogRef = this.dialog.open(this.dialogRescindBusiness);
     setTimeout(() => {window.location.reload(), 3000});
   }
 
   // ----------------- Edits -----------------
+
+  openEditAccountDialog(): void {
+    const dialogRef = this.dialog.open(UpdateAccountComponent, {
+      // height: 'auto',
+      // width: '80%',
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
 
   openEditHireDialog(): void {
     const dialogRef = this.dialog.open(ForHireRequestComponent, {

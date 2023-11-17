@@ -1,4 +1,4 @@
-<div class="hire_request_container flex flex-col justify-center text-center">
+<div class="hire_request_container flex flex-col justify-center text-left mx-auto">
     <div>
     <h2>
         Looking to get hired within the Georgian Community?
@@ -8,29 +8,31 @@
     </p>
     </div>
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
-        <mat-form-field class="w-3/4">
+        <mat-form-field class="w-full">
             <mat-label>Profession:</mat-label>
             <input matInput formControlName="profession">
         </mat-form-field>
         <br>
-        <mat-form-field class="w-3/4">
+        <mat-form-field class="w-full">
             <mat-label>About:</mat-label>
             <textarea matInput formControlName="about"></textarea>
         </mat-form-field>
         <br>
-        <mat-form-field class="w-3/4">
+        <mat-form-field class="w-full">
             <mat-label>Location (City):</mat-label>
             <input matInput formControlName="location">
         </mat-form-field>
         <br>
+        <div class="w-full text-center">
         <mat-label>Flexible in job choice?</mat-label>
         <br/>
-        <mat-radio-group formControlName="work_outside">
-            <mat-radio-button value="yes">Yes</mat-radio-button>
-            <mat-radio-button value="no">No</mat-radio-button>
-        </mat-radio-group>
+            <mat-radio-group formControlName="work_outside">
+                <mat-radio-button value="yes">Yes</mat-radio-button>
+                <mat-radio-button value="no">No</mat-radio-button>
+            </mat-radio-group>
+        </div>
         <br/>
-        <button type="submit" class="for_hire_submit">Submit</button>
+        <button type="submit" class="for_hire_submit w-full">Submit</button>
         <ng-template #dialogTemplateSuccess class="overflow-hidden">
             <div class="p-4">
                 <p>Request Submitted Successfully!</p>
