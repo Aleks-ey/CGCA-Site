@@ -19,16 +19,16 @@
                 </i>
             </div>
             <div class="table-row mb-2">
-                <label for="email" class="table-cell text-right">1:</label>
-                <input autocomplete="off" type="email" formControlName="email" class="table-cell border-gray-300 border-2">
+                <label for="email" class="table-cell text-right">Email:</label>
+                <input autocomplete="off" type="search" formControlName="email" class="table-cell border-gray-300 border-2">
                 <i style="color: tomato" class="table-row"
                     *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
                     Email is required and must be valid
                 </i>
             </div>
             <div class="table-row">
-                <label for="password" class="table-cell text-right">2:</label>
-                <input autocomplete="off" type="password" formControlName="password" class="table-cell border-gray-300 border-2">
+                <label for="password" class="table-cell text-right">Password:</label>
+                <input autocomplete="off" type="search" formControlName="password" class="table-cell border-gray-300 border-2">
                 <i style="color: tomato" class="table-row"
                     *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)">
                     Password Must Be at Least 6 Characters
