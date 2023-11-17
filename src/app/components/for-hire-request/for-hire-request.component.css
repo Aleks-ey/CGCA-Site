@@ -8,7 +8,7 @@
 
 @media screen and (max-width: 768px) {
     .hire_request_container {
-        width: 90vw;
+        width: auto;
     }
 }
 

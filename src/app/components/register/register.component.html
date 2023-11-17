@@ -4,7 +4,7 @@
         <div class="table mb-4">
             <div class="table-row mb-2">
                 <label for="name" class="table-cell text-right">Full Name:</label>
-                <input type="text" id="name" name="name" formControlName="name" class="table-cell border-gray-300 border-2">
+                <input autocomplete="name" type="text" id="name" name="name" formControlName="name" class="table-cell border-gray-300 border-2">
                 <i style="color: tomato" class="table-row"
                     *ngIf="registerForm.controls['name'].invalid && (registerForm.controls['name'].dirty || registerForm.controls['name'].touched)">
                     Name is required
@@ -12,7 +12,7 @@
             </div>
             <div class="table-row mb-4">
                 <label for="phone_number" class="table-cell text-right">Phone #:</label>
-                <input type="tel" id="phone_number" name="phone_number" formControlName="phone_number" class="table-cell border-gray-300 border-2">
+                <input autocomplete="tel" type="tel" id="phone_number" name="phone_number" formControlName="phone_number" class="table-cell border-gray-300 border-2">
                 <i style="color: tomato" class="table-row"
                     *ngIf="registerForm.controls['phone_number'].invalid && (registerForm.controls['phone_number'].dirty || registerForm.controls['phone_number'].touched)">
                     Phone Number is required and must be valid, 10 digits

@@ -383,7 +383,7 @@ export class SupabaseService {
       return false;
     }
     else {
-      this.cancelForHireRequest(userEmail);
+      await this.cancelForHireRequest(userEmail);
       return true;
     }
   }
