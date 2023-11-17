@@ -5,8 +5,10 @@
 
 .home_header_left {
     width: 45%;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .home_header_left {
         width: 100%;
     }
 }
@@ -15,8 +17,10 @@
     font-family: Merriweather;
     font-size: 4vw;
     line-height: 1.1;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .home_header_left > h1 {
         font-size: 8vw;
     }
 }
@@ -82,8 +86,10 @@
     background-size: cover;
     background-attachment: fixed;
     align-items: center;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .unity_div {
         height: 100vw;
         width: 100%;
     }
@@ -95,8 +101,10 @@
     mix-blend-mode: screen;
     background-color: rgb(244, 220, 211);
     font-size: 5vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .unity {
         font-size: 10vw;
     }
 }
@@ -167,9 +175,6 @@
     align-items: center;
     width: 100%;
     position: relative;
-
-    @media screen and (max-width: 768px) {
-    }
 }
 
 .home_about_header > h2 {
@@ -186,8 +191,10 @@
     background-color: white;
     box-shadow: gray 0px 0px 5px;
     border-radius: 10px;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .about_card {
         top: 35vw;
         height: 135vw;
     }
@@ -196,8 +203,10 @@
 .about_card_left {
     margin: 10vh 20px 0 50px;
     width: 50%;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .about_card_left {
         margin: 10vw 30px 0 30px;
         width: auto;
     }
@@ -205,16 +214,15 @@
 
 .about_card_left > h3 {
     font-size: xx-large;
-
-    @media screen and (max-width: 768px) {
-    }
 }
 
 .about_card_left > p {
     font-size: 18px;
     line-height: 1.3;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .about_card_left > p {
         font-size: 16px;
     }
 }
@@ -222,8 +230,10 @@
 .about_card_right {
     margin: 10vh 30px 0 30px;
     width: 50%;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .about_card_right {
         margin: 10vw 30px 0 30px;
         width: auto;
         display: none;
@@ -248,8 +258,10 @@
     /* width: 100%; */
     /* background: #c53636; */
     position: relative;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .home_support {
         height: 130vw;
     }
 }
@@ -258,9 +270,11 @@
     width: 90%;
     height: 100%;
     border-radius: 10px;
-    
-    @media screen and (max-width: 768px) {
-        width: 90%;
+}
+
+@media screen and (max-width: 768px) {
+    .support_box {
+       width: 90%;
     }
 }
 
@@ -271,8 +285,10 @@
     border-radius: 10px;
     background-color: #1E293B;
     box-shadow: black 5px 5px 10px;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .support_box2 {
         width: 100%;
         height: 100%;
     }

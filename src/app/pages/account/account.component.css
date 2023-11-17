@@ -116,8 +116,10 @@
 
 .hire_listing_header {
     margin-left: 15vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {  
+    .hire_listing_header {
         margin-left: 5vw;
     }
 }
@@ -128,8 +130,10 @@
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .for_hire_pending {
         width: 90vw;
     }
 }
@@ -137,8 +141,10 @@
 .hlisting_buttons_container {
     top: 10px;
     right: 15vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .hlisting_buttons_container {
         top: 0px;
         margin-left: 5vw;
     }
@@ -170,8 +176,10 @@
     border: 1px solid #e5e7eb;
     border-radius: 10px;
     width: 70vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .hire_listing {
         width: 90vw;
     }
 }
@@ -204,8 +212,10 @@
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .business_account_offer {
         width: 90vw;
     }
 }
@@ -216,16 +226,20 @@
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .business_account_rescind {
         width: 90vw;
     }
 }
 
 .business_account_offer_header {
     margin-left: 15vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .business_account_offer_header {
         margin-left: 5vw;
     }
 }
@@ -241,16 +255,20 @@
 /* business account css for business listing */
 .no_blisting_header {
     margin-left: 15vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .no_blisting_header {
         margin-left: 5vw;
     }
 }
 
 .blisting_header {
     margin-left: 15vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .blisting_header {
         margin-left: 5vw;
     }
 }
@@ -258,8 +276,10 @@
 .blisting_buttons_container {
     top: 10px;
     right: 15vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .blisting_buttons_container {
         top: 0px;
         margin-left: 5vw;
     }
@@ -291,8 +311,10 @@
     border: 1px solid #e5e7eb;
     border-radius: 10px;
     width: 70vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .blisting {
         width: 90vw;
     }
 }
@@ -300,8 +322,10 @@
 .blisting_name > h3 {
     font-size: 24px;
     font-weight: bold;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .blisting_name > h3 {
         text-decoration: underline;
         margin: 0;
     }
@@ -325,16 +349,20 @@
 /* business account css for job board listings */
 .job_board_listing_header {
     margin-left: 15vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .job_board_listing_header {
         margin-left: 5vw;
     }
 }
 
 .no_job_board_listing_header {
     margin-left: 15vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .no_job_board_listing_header {
         margin-left: 5vw;
     }
 }
@@ -342,8 +370,10 @@
 .jlisting_buttons_container {
     top: 10px;
     right: 15vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .jlisting_buttons_container {
         top: 0px;
         margin-left: 5vw;
     }
@@ -375,8 +405,10 @@
     border: 1px solid #e5e7eb;
     border-radius: 10px;
     width: 70vw;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .jlisting {
         width: 90vw;
     }
 }
@@ -384,8 +416,10 @@
 .jlisting_name > h3 {
     font-size: 24px;
     font-weight: bold;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .jlisting_name > h3 {
         text-decoration: underline;
         margin: 0;
     }

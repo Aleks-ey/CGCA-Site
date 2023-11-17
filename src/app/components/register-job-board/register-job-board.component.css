@@ -4,9 +4,11 @@
     height: auto;
     border: 1px solid #ccc;
     border-radius: 10px;
+}
 
-    @media screen and (max-width: 768px) {
-        width: auto;
+@media screen and (max-width: 768px) {
+    .register_job_board_container {
+        width: 90vw;
     }
 }
 

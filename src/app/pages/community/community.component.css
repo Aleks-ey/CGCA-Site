@@ -24,8 +24,12 @@
     color: white;
     text-align: center;
     align-items: center;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .community_business_container,
+    .community_job_board_container,
+    .community_for_hire {
         width: 100%;
         height: 200px;
         margin-bottom: 20px;
