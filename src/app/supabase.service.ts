@@ -146,13 +146,41 @@ export class SupabaseService {
     return user?.email
   }
 
-  async profile(currentEmail:string) {
-    return this.supabase
+  async fetchUserName(currentEmail:string) {
+    const { data, error } = await this.supabase
       .from('profile')
-      .select(`name, phone_number`)
-      .eq('email', currentEmail)
-      .single()
+      .select(`name`)
+      .eq('email', currentEmail);
+
+    if (error) {
+      throw error;
+    }
+    return data![0].name;
   }
+
+  async fetchUserPhone(currentEmail:string) {
+    const { data, error } = await this.supabase
+      .from('profile')
+      .select(`phone_number`)
+      .eq('email', currentEmail);
+
+    if (error) {
+      throw error;
+    }
+    return data![0].phone_number;
+  }
+
+  // async profile(currentEmail:string) {
+  //   const { data, error } = await this.supabase
+  //     .from('profile')
+  //     .select(`name`)
+  //     .eq('email', currentEmail);
+     
+  //   if (error) {
+  //     throw error;
+  //   }
+  //   return data![0].name;
+  // }
 
   async checkBusinessAcc(currentEmail:string) {
     const { data, error } = await this.supabase

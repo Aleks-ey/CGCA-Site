@@ -43,7 +43,7 @@ export class EventsComponent {
       this.eventsList = result.data!.map(event => ({
         ...event,
         date: this.formatDate(event.date),
-        time: this.formatTime(event.time) // Apply the time format here
+        time: this.formatTime(event.time)
       }));
       this.eventDates = new Set(this.eventsList.map(event => event.date));
     }
@@ -77,7 +77,6 @@ export class EventsComponent {
   onPrevious() {
     const previousEvent = this.currentEvent - 1;
     this.currentEvent = previousEvent < 0 ? this.eventsList.length - 1 : previousEvent;
-    console.log(this.currentEvent);
 
     if(this.cardx != 0) {
       this.x += 360;
@@ -88,7 +87,6 @@ export class EventsComponent {
   onNext() {
     const nextEvent = this.currentEvent + 1;
     this.currentEvent = nextEvent === this.eventsList.length ? 0 : nextEvent;
-    console.log(this.currentEvent);
 
 
     if(window.innerWidth > 768) {

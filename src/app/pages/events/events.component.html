@@ -54,7 +54,7 @@
             <p>Selected date: {{onSelect(selected)}}</p>
         </div>
         <div class="selected_events md:w-2/3">
-            <div class="selected_events_card md:ml-10 p-6" *ngFor="let selectedEvent of selectedEventsList">
+            <div class="selected_events_card md:ml-10 mb-4 p-6" *ngFor="let selectedEvent of selectedEventsList">
                 <h2>{{ selectedEvent.title }}</h2>
                 <p class="overflow-y-auto">{{ selectedEvent.description }}</p>
                 <div class="flex flex-row">

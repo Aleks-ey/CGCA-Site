@@ -50,11 +50,13 @@ export class RegisterJobBoardComponent {
 
   async ngOnInit() {
     this.userEmail = await this.supabaseService.fetchUserEmail();
-    await this.supabaseService.profile(this.userEmail)?.then(
-      (res) => { 
-        this.userName = res.data?.name 
-        this.userPhone = res.data?.phone_number}
-    );
+    this.userName = this.supabaseService.fetchUserName(this.userEmail);
+      this.userPhone = this.supabaseService.fetchUserPhone(this.userEmail);
+    // await this.supabaseService.profile(this.userEmail)?.then(
+    //   (res) => { 
+    //     this.userName = res.data?.name 
+    //     this.userPhone = res.data?.phone_number}
+    // );
 
     const result = await this.supabaseService.getUserJobs(this.userEmail);
     const result2 = await this.supabaseService.getUserBusiness(this.userEmail);

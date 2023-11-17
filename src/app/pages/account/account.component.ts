@@ -56,12 +56,14 @@ export class AccountComponent {
 
     if(this.userEmail != null) {
       this.isLoggedIn = true;
-      await this.supabaseService
-        .profile(this.userEmail)
-        .then( (res) => { 
-          this.userName = res.data?.name 
-          this.userPhone = res.data?.phone_number}
-        );
+      this.userName = this.supabaseService.fetchUserName(this.userEmail);
+      this.userPhone = this.supabaseService.fetchUserPhone(this.userEmail);
+      // await this.supabaseService
+      //   .profile(this.userEmail)
+      //   .then( (res) => { 
+      //     this.userName = res.data?.name 
+      //     this.userPhone = res.data?.phone_number}
+      //   );
 
       this.isBusiness = await this.supabaseService.checkBusinessAcc(this.userEmail);
       this.hasBusinessRequest = await this.supabaseService.checkBusinessRequest(this.userEmail);

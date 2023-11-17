@@ -50,11 +50,13 @@ export class ForHireRequestComponent {
 
   async ngOnInit() {
     this.userEmail = await this.supabaseService.fetchUserEmail();
-    await this.supabaseService.profile(this.userEmail)?.then(
-      (res) => { 
-        this.userName = res.data?.name 
-        this.userPhone = res.data?.phone_number}
-    );
+    this.userName = this.supabaseService.fetchUserName(this.userEmail);
+      this.userPhone = this.supabaseService.fetchUserPhone(this.userEmail);
+    // await this.supabaseService.profile(this.userEmail)?.then(
+    //   (res) => { 
+    //     this.userName = res.data?.name 
+    //     this.userPhone = res.data?.phone_number}
+    // );
 
     const result = await this.supabaseService.getUserHires(this.userEmail);
     if (result.error) {
