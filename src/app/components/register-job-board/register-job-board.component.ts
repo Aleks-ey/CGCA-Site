@@ -54,9 +54,9 @@ export class RegisterJobBoardComponent {
     const userId = await this.supabaseService.fetchUserId();
     if (userId) {
       profileData = await this.supabaseService.getProfile(userId);
-      this.userEmail = profileData.email;
-      this.userName = profileData.name;
-      this.userPhone = profileData.phone_number;
+      this.userEmail = profileData.data?.email;
+      this.userName = profileData.data?.name;
+      this.userPhone = profileData.data?.phone_number;
     }
 
     const userJobs = await this.supabaseService.getUserJobs(this.userEmail);

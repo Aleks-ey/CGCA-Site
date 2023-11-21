@@ -54,9 +54,9 @@ export class ForHireRequestComponent {
     const userId = await this.supabaseService.fetchUserId();
     if (userId) {
       profileData = await this.supabaseService.getProfile(userId);
-      this.userEmail = profileData.email;
-      this.userName = profileData.name;
-      this.userPhone = profileData.phone_number;
+      this.userEmail = profileData.data?.email;
+      this.userName = profileData.data?.name;
+      this.userPhone = profileData.data?.phone_number;
     }
 
     const userHires = await this.supabaseService.getUserHires(this.userEmail);
@@ -93,9 +93,9 @@ export class ForHireRequestComponent {
   }
 
   async onSubmit() {
-    const result = await this.supabaseService.addForHire(this.form.value, this.userEmail);
-    if (result.error) {
-      console.error('Error inserting data:', result.error);
+    const addHireData = await this.supabaseService.addForHire(this.form.value, this.userEmail);
+    if (addHireData.error) {
+      console.error('Error inserting data:', addHireData.error);
       const dialogRef = this.dialog.open(this.dialogTemplateFail);
     } else {
       console.log('Request submitted successfully!');

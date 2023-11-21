@@ -59,8 +59,8 @@ export class RegisterComponent {
             this.auth.signIn(this.registerForm.value.email, this.registerForm.value.password);
           }, 2000);
           setTimeout(() => {
-            this.dialogRef.close();
             this.router.navigate(['/account']);
+            this.dialog.closeAll();
           }, 4000);
         }
       })
