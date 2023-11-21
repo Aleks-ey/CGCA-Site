@@ -41,8 +41,6 @@ export class LoginComponent {
       .then((res) => {
         console.log(res.data.user.role);
         if (res.data.user.role === 'authenticated') {
-          console.log(this.supabaseService.fetchUserEmail());
-          // this.router.navigate(['/dashboard']);
           this.dialogRef.close(true);
         }
       })

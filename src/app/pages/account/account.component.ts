@@ -7,6 +7,7 @@ import { ForHireListing, ForHireRequestComponent } from 'src/app/components/for-
 import { BusinessListing, RegisterBusinessComponent } from 'src/app/components/register-business/register-business.component';
 import { JobBoardListing, RegisterJobBoardComponent } from 'src/app/components/register-job-board/register-job-board.component';
 import { UpdateAccountComponent } from 'src/app/components/update-account/update-account.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -38,6 +39,7 @@ export class AccountComponent {
     public dialog: MatDialog,
     private auth: SupabaseService,
     private formBuilder: FormBuilder,
+    private router: Router,
     ) {
       this.loginForm = this.formBuilder.group({
         email: formBuilder.control('', [
@@ -52,122 +54,69 @@ export class AccountComponent {
     }
 
   async ngOnInit() {
-    this.userEmail = await this.supabaseService.fetchUserEmail();
-
-    if(this.userEmail != null) {
-      this.isLoggedIn = true;
-      // this.userName = this.supabaseService.fetchUserName(this.userEmail);
-      // this.userPhone = this.supabaseService.fetchUserPhone(this.userEmail);
-      await this.supabaseService
-        .profile(this.userEmail)
-        .then( (res) => { 
-          this.userName = res.data?.name 
-          this.userPhone = res.data?.phone_number}
-        );
-
-      this.isBusiness = await this.supabaseService.checkBusinessAcc(this.userEmail);
-      this.hasBusinessRequest = await this.supabaseService.checkBusinessRequest(this.userEmail);
-      this.hasForHireRequest = await this.supabaseService.checkForHireRequest(this.userEmail);
-
-      if(!this.isBusiness) {
-        const result = await this.supabaseService.getUserHires(this.userEmail);
-        if (result.error) {
-          console.error('Error fetching events:', result.error);
-        } 
-        else {
-          this.userHireListing = result.data!;
-          if(this.userHireListing.length > 0) {
-            if(this.userHireListing[0].approved == true) {
-              this.hasHireListing = true;
-            }
-          }
-        }
-      }
+    // Initialize user profile data.
+    let profileData: any;
+    const userId = await this.supabaseService.fetchUserId();
+    if (userId) {
+      // If userId is not null, then fetch the profile.
+      profileData = await this.supabaseService.getProfile(userId);
+    } else {
+      // Handle the case when there is no user logged in.
+      console.error('No user is logged in.');
+    }
+    this.userName = profileData.data?.name;
+    this.userPhone = profileData.data?.phone_number;
+    this.userEmail = profileData.data?.email;
+    // check if user has a business account
+    this.isBusiness = profileData.data?.business_acc;
+    // check if user has requested a business account
+    this.hasBusinessRequest = profileData.data?.business_request;
+    // check if user has requested a for hire listing
+    this.hasForHireRequest = profileData.data?.for_hire_request;
+    // if user is not a business, check if they have a for hire listing thast been approved
+    if(!this.isBusiness) {
+      const userHiresData = await this.supabaseService.getUserHires(this.userEmail);
+      if (userHiresData.error) {
+        console.error('Error fetching events:', userHiresData.error);
+      } 
       else {
-        const result2 = await this.supabaseService.getUserBusiness(this.userEmail);
-        if (result2.error) {
-          console.error('Error fetching events:', result2.error);
-        } 
-        else {
-          this.userBusiness = result2.data!;
-          if(this.userBusiness.length > 0) {
-            this.hasBusinessListing = true;
-          }
-        }
-
-        const result3 = await this.supabaseService.getUserJobs(this.userEmail);
-        if (result3.error) {
-          console.error('Error fetching events:', result3.error);
-        } 
-        else {
-          this.userJobBoardListing = result3.data!;
-          if(this.userJobBoardListing.length > 0) {
-            this.hasJobBoardListing = true;
+        this.userHireListing = userHiresData.data!;
+        if(this.userHireListing.length > 0) {
+          if(this.userHireListing[0].approved == true) {
+            this.hasHireListing = true;
           }
         }
       }
-
     }
+    // if user is a business, check if they have a business listing and job board listing 
     else {
-      this.isLoggedIn = false;
+      const userBusinessData = await this.supabaseService.getUserBusiness(this.userEmail);
+      if (userBusinessData.error) {
+        console.error('Error fetching events:', userBusinessData.error);
+      } 
+      else {
+        this.userBusiness = userBusinessData.data!;
+        if(this.userBusiness.length > 0) {
+          this.hasBusinessListing = true;
+        }
+      }
+      const userJobsData = await this.supabaseService.getUserJobs(this.userEmail);
+      if (userJobsData.error) {
+        console.error('Error fetching events:', userJobsData.error);
+      } 
+      else {
+        this.userJobBoardListing = userJobsData.data!;
+        if(this.userJobBoardListing.length > 0) {
+          this.hasJobBoardListing = true;
+        }
+      }
     }
   }
 
-  // ----------------- Login -----------------
-
-  @ViewChild('dialogLoginFail') dialogLoginFail!: TemplateRef<any>;
-  async onLoginSubmit() {
-    this.auth
-      .signIn(this.loginForm.value.email, this.loginForm.value.password)
-      .then((res) => {
-        if (res.data.user.role === 'authenticated') {
-          setTimeout(() => {window.location.reload(), 2000});
-        }
-      })
-      .catch((err) => {
-        const dialogRef = this.dialog.open(this.dialogLoginFail);
-      });
-  }
-
+  // ----------------- Logout -----------------
   async logout() {
     await this.supabaseService.signOut();
-    window.location.reload();
-  }
-
-  @ViewChild('dialogResetPassword') dialogResetPassword!: TemplateRef<any>;
-  openPasswordResetDialog(): void {
-    const dialogRef = this.dialog.open(this.dialogResetPassword, {
-      // height: 'auto',
-      // width: '80%',
-    });
-  }
-
-  password_reset_email='';
-  password_reset_check = false;
-  @ViewChild('dialogPasswordResetSuccess') dialogPasswordResetSuccess!: TemplateRef<any>;
-  @ViewChild('dialogPasswordResetFail') dialogPasswordResetFail!: TemplateRef<any>;
-  async resetPassword(password_reset_email: string) {
-    this.password_reset_check = await this.supabaseService.resetPassword(password_reset_email);
-
-    if(this.password_reset_check) {
-      const dialogRef = this.dialog.open(this.dialogPasswordResetSuccess);
-      setTimeout(() => {this.dialog.closeAll(), 3000});
-    }
-    else {
-      const dialogRef = this.dialog.open(this.dialogPasswordResetFail);
-    }
-  }
-
-  // ----------------- Register -----------------
-
-  openRegisterDialog(): void {
-    const dialogRef = this.dialog.open(RegisterComponent, {
-      height: 'auto',
-      width: '80%',
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-    });
+    setTimeout (() => {this.router.navigate(['/account-login']), 1000});
   }
 
   // ----------------- User Info -----------------
@@ -178,7 +127,6 @@ export class AccountComponent {
       return 'Invalid phone number'; // or any other fallback logic you want
     }
   }
-  
 
   newName='';
   public updateUserName(newName: string) {
@@ -239,8 +187,6 @@ export class AccountComponent {
 
   openEditAccountDialog(): void {
     const dialogRef = this.dialog.open(UpdateAccountComponent, {
-      // height: 'auto',
-      // width: '80%',
     });
   
     dialogRef.afterClosed().subscribe(result => {
@@ -249,8 +195,6 @@ export class AccountComponent {
 
   openEditHireDialog(): void {
     const dialogRef = this.dialog.open(ForHireRequestComponent, {
-      // height: 'auto',
-      // width: '80%',
     });
   
     dialogRef.afterClosed().subscribe(result => {
@@ -259,8 +203,6 @@ export class AccountComponent {
 
   openEditBusinessDialog(): void {
     const dialogRef = this.dialog.open(RegisterBusinessComponent, {
-      // height: 'auto',
-      // width: '80%',
     });
   
     dialogRef.afterClosed().subscribe(result => {

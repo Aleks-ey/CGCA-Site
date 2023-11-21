@@ -81,30 +81,29 @@ export class AdminComponent {
   }
 
   async ngOnInit() {
-    // check if user is logged in
-    this.userEmail = await this.supabaseService.fetchUserEmail();
-    if(this.userEmail != null) {
-      this.isLoggedIn = true;
+    // Initialize user profile data.
+    let profileData: any;
+    const userId = await this.supabaseService.fetchUserId();
+    if (userId) {
+      profileData = await this.supabaseService.getProfile(userId);
+      this.userEmail = profileData.email;
       if (this.userEmail == 'admin@admin.com') {
         this.isAdmin = true;
       }
     }
-    else {
-      this.isLoggedIn = false;
-    }
     // fetch events
-    const result = await this.supabaseService.getAllEvents();
-    if (result.error) {
-      console.error('Error fetching events:', result.error);
+    const allEventsData = await this.supabaseService.getAllEvents();
+    if (allEventsData.error) {
+      console.error('Error fetching events:', allEventsData.error);
     } else {
-      this.eventsList = result.data!;
+      this.eventsList = allEventsData.data!;
     }
     // fetch hires
-    const result2 = await this.supabaseService.getAllHires();
-    if (result2.error) {
-      console.error('Error fetching events:', result2.error);
+    const allHiresData = await this.supabaseService.getAllHires();
+    if (allHiresData.error) {
+      console.error('Error fetching events:', allHiresData.error);
     } else {
-      this.tempHiresList = result2.data!;
+      this.tempHiresList = allHiresData.data!;
       for(let i = 0; i < this.tempHiresList.length; i++) {
         if(this.tempHiresList[i].approved == true) {
           this.approvedHiresList.push(this.tempHiresList[i]);
@@ -115,11 +114,11 @@ export class AdminComponent {
       }
     }
     // fetch business accounts
-    const result3 = await this.supabaseService.getAllProfiles();
-    if (result3.error) {
-      console.error('Error fetching events:', result3.error);
+    const allProfilesData = await this.supabaseService.getAllProfiles();
+    if (allProfilesData.error) {
+      console.error('Error fetching events:', allProfilesData.error);
     } else {
-      this.tempBusinessList = result3.data!;
+      this.tempBusinessList = allProfilesData.data!;
       for(let i = 0; i < this.tempBusinessList.length; i++) {
         if(this.tempBusinessList[i].business_acc == true) {
           this.approvedBusinessList.push(this.tempBusinessList[i]);
@@ -144,10 +143,6 @@ export class AdminComponent {
     }
   }
 
-  // ngOnDestroy(): void {
-  //   this.sub.unsubscribe();
-  // }
-
   async deleteEvent() {
     if (this.selectedEventId) {
       const result = await this.supabaseService.deleteEvent(
@@ -166,15 +161,11 @@ export class AdminComponent {
 
   async openLoginDialog() {
     const dialogRef = this.dialog.open(LoginComponent, {
-      data: { isLoggedIn: this.isLoggedIn },
-      height: 'auto',
-      width: '90%',
     });
   
     dialogRef.afterClosed().subscribe(result => {
       this.isLoggedIn = result;
       if(this.isLoggedIn == true) {
-        this.userEmail = this.supabaseService.fetchUserEmail();
         window.location.reload();
       }
     });

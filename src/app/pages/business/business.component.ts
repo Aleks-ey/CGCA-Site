@@ -27,40 +27,35 @@ export class BusinessComponent {
   userEmail: any;
   isLoggedIn = false;
 
-  constructor(private supabaseService: SupabaseService, public dialog: MatDialog) {}
+  constructor(
+    private supabaseService: SupabaseService,
+    public dialog: MatDialog
+    ) {}
 
   async ngOnInit() {
-    const result = await this.supabaseService.getAllBusinesses();
-    if (result.error) {
-      console.error('Error fetching events:', result.error);
+    await this.supabaseService.isLoggedIn()
+    .then (res => {
+      if (res === true) {
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
+    });
+
+    // fetch all businesses
+    const allBusinesses = await this.supabaseService.getAllBusinesses();
+    if (allBusinesses.error) {
+      console.error('Error fetching events:', allBusinesses.error);
     } else {
-      this.businessesList = result.data!;
-    }
-
-    this.userEmail = await this.supabaseService.fetchUserEmail();
-
-    if(this.userEmail != null) {
-      this.isLoggedIn = true;
+      this.businessesList = allBusinesses.data!;
     }
   }
 
-  // ngOnDestroy(): void {
-  //   this.sub.unsubscribe();
-  // }
-
   openLoginDialog(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
-      data: { isLoggedIn: this.isLoggedIn },
-      height: 'auto',
-      width: '90%',
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.isLoggedIn = result;
-      if(this.isLoggedIn == true) {
-        this.userEmail = this.supabaseService.fetchUserEmail();
-        window.location.reload();
-      }
     });
   }
 

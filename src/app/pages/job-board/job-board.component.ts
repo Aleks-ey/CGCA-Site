@@ -3,6 +3,7 @@ import { SupabaseService } from 'src/app/supabase.service';
 import { JobBoardListing } from 'src/app/components/register-job-board/register-job-board.component';
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-job-board',
@@ -15,29 +16,35 @@ export class JobBoardComponent {
   userEmail: any;
   isLoggedIn = false;
 
-  constructor(private supabaseService: SupabaseService, public dialog: MatDialog) {}
+  constructor(
+    private supabaseService: SupabaseService,
+    public dialog: MatDialog,
+    private router: Router,
+    ) {}
 
   async ngOnInit() {
-    const result = await this.supabaseService.getAllJobs();
-    if (result.error) {
-      console.error('Error fetching events:', result.error);
+    await this.supabaseService.isLoggedIn()
+    .then (res => {
+      if (res === true) {
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
+    });
+
+    // fetch all jobs
+    const allJobsData = await this.supabaseService.getAllJobs();
+    if (allJobsData.error) {
+      console.error('Error fetching events:', allJobsData.error);
     } else {
-      this.jobsList = result.data!;
-    }
-
-    this.userEmail = await this.supabaseService.fetchUserEmail();
-
-    if(this.userEmail != null) {
-      this.isLoggedIn = true;
+      this.jobsList = allJobsData.data!;
     }
   }
 
   openLoginDialog(): void {
     this.dialog.open(LoginComponent, {
-        height: 'auto',
-        width: '90%',
       }
-      );
+    );
   }
 
   async logout() {

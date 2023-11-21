@@ -222,12 +222,13 @@
     position: absolute;
     display: flex;
     padding: 10px;
+    background-color: white;
     border: 1px solid;
     border-image: linear-gradient(to bottom, white, black) 1;
     border-top: 0;
-    border-radius: 0px 0px 10px 10px;
+    /* border-radius: 0px 0px 10px 10px; */
     flex-direction: column;
-    backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(10px); */
     transform: translateX(-13px);
 }
 

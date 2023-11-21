@@ -92,6 +92,8 @@
     .unity_div {
         height: 100vw;
         width: 100%;
+        background-size: 200%;
+        background-attachment: local;
     }
 }
 
@@ -193,10 +195,34 @@
     border-radius: 10px;
 }
 
+.about_card_2 {
+    top: 11vw !important;
+}
+
+.about_card_3 {
+    top: 12vw !important;
+}
+
+.about_card_4 {
+    top: 13vw !important;
+}
+
 @media screen and (max-width: 768px) {
     .about_card {
         top: 35vw;
         height: 135vw;
+    }
+
+    .about_card_2 {
+        top: 36vw !important;
+    }
+    
+    .about_card_3 {
+        top: 37vw !important;
+    }
+    
+    .about_card_4 {
+        top: 38vw !important;
     }
 }
 

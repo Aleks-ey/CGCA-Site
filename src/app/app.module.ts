@@ -47,6 +47,7 @@ import { AccountComponent } from './pages/account/account.component';
 import { RegisterBusinessComponent } from './components/register-business/register-business.component';
 import { RegisterJobBoardComponent } from './components/register-job-board/register-job-board.component';
 import { UpdateAccountComponent } from './components/update-account/update-account.component';
+import { AccountLoginComponent } from './pages/account-login/account-login.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { UpdateAccountComponent } from './components/update-account/update-accou
     RegisterBusinessComponent,
     RegisterJobBoardComponent,
     UpdateAccountComponent,
+    AccountLoginComponent,
   ],
   imports: [
     AppRoutingModule,

@@ -59,3 +59,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .has-event > .mat-calendar-body-cell-content {
     border-color: #1E293B !important;
 }
+
+.cdk-overlay-pane {
+    max-width: none !important;
+}

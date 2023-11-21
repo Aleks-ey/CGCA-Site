@@ -49,19 +49,20 @@ export class RegisterJobBoardComponent {
   userBusiness: BusinessListing[] = [];
 
   async ngOnInit() {
-    this.userEmail = await this.supabaseService.fetchUserEmail();
-    // this.userName = this.supabaseService.fetchUserName(this.userEmail);
-    // this.userPhone = this.supabaseService.fetchUserPhone(this.userEmail);
-    await this.supabaseService.profile(this.userEmail)?.then(
-      (res) => { 
-        this.userName = res.data?.name 
-        this.userPhone = res.data?.phone_number}
-    );
+    // Initialize user profile data.
+    let profileData: any;
+    const userId = await this.supabaseService.fetchUserId();
+    if (userId) {
+      profileData = await this.supabaseService.getProfile(userId);
+      this.userEmail = profileData.email;
+      this.userName = profileData.name;
+      this.userPhone = profileData.phone_number;
+    }
 
-    const result = await this.supabaseService.getUserJobs(this.userEmail);
-    const result2 = await this.supabaseService.getUserBusiness(this.userEmail);
-    this.userJobBoardListing = result.data!;
-    this.userBusiness = result2.data!;
+    const userJobs = await this.supabaseService.getUserJobs(this.userEmail);
+    const userBusiness = await this.supabaseService.getUserBusiness(this.userEmail);
+    this.userJobBoardListing = userJobs.data!;
+    this.userBusiness = userBusiness.data!;
     if (this.userJobBoardListing.length > 0) {
       this.form.patchValue({
         company_name: this.userJobBoardListing[0].company_name,

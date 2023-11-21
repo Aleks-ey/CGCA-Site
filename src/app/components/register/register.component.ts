@@ -2,6 +2,7 @@ import { Component, Inject, TemplateRef, ViewChild } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +11,6 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 })
 export class RegisterComponent {
   registerForm!: FormGroup;
-  router: any;
 
   @ViewChild('dialogRegisterSuccess') dialogRegisterSuccess!: TemplateRef<any>;
   @ViewChild('dialogRegisterFail') dialogRegisterFail!: TemplateRef<any>;
@@ -19,6 +19,7 @@ export class RegisterComponent {
       private supabaseService: SupabaseService, 
       private formBuilder: FormBuilder, 
       private auth: SupabaseService,
+      private router: Router,
       public dialog: MatDialog,
       public dialogRef: MatDialogRef<RegisterComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any
@@ -41,17 +42,25 @@ export class RegisterComponent {
     this.auth
       .signUp(this.registerForm.value.email, this.registerForm.value.password)
       .then(async (res) => {
-        console.log(res.data.user.role);
         if (res.data.user.role === 'authenticated') {
           const dialogRef = this.dialog.open(this.dialogRegisterSuccess);
-          await this.supabaseService.updateProfileName(this.registerForm.value.email, this.registerForm.value.name);
-          await this.supabaseService.updateProfilePhone(this.registerForm.value.email, this.registerForm.value.phone_number);
+          let profileData: any;
+          const userId = await this.supabaseService.fetchUserId();
+          if (userId) {
+            // If userId is not null, update name and phone number.
+            await this.supabaseService.updateProfileName(userId, this.registerForm.value.name);
+            await this.supabaseService.updateProfilePhone(userId, this.registerForm.value.phone_number);
+          } else {
+            // Handle the case when there is no user logged in.
+            console.error('No user is logged in.');
+          }
             
           setTimeout(() => {
             this.auth.signIn(this.registerForm.value.email, this.registerForm.value.password);
           }, 2000);
           setTimeout(() => {
-            window.location.reload();
+            this.dialogRef.close();
+            this.router.navigate(['/account']);
           }, 4000);
         }
       })

@@ -30,7 +30,7 @@
               <a routerLink="/business">Businesses</a>
               <a routerLink="/job-board">Job Board</a>
               <a routerLink="/for-hire">For Hire</a>
-              <a routerLink="/account">My Account</a>
+              <a class="hover:cursor-pointer" (click)="navigateToAccount()">My Account</a>
             </div>
           </div>
         <a routerLink="/events" class="header_link">Events</a>
@@ -58,7 +58,7 @@
             <a routerLink="/business" class="dropdown-item" (click)="closeMenu()">Businesses</a>
             <a routerLink="/job-board" class="dropdown-item" (click)="closeMenu()">Job Board</a>
             <a routerLink="/for-hire" class="dropdown-item" (click)="closeMenu()">For Hire</a>
-            <a routerLink="/account" class="dropdown-item" (click)="closeMenu()">My Account</a>
+            <a class="dropdown-item hover:cursor-pointer" (click)="navigateToAccount()" (click)="closeMenu()">My Account</a>
         </div>
         <a routerLink="/events" class="header-link" (click)="closeMenu()">Events</a>
         <a routerLink="/contact" class="header-link" (click)="closeMenu()">Contact</a>

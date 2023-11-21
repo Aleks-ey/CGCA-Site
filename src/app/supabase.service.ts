@@ -29,64 +29,11 @@ export interface Profile {
 })
 export class SupabaseService {
   private supabase: SupabaseClient
-
-  // supabase: SupabaseClient = createClient(environment.supabaseUrl, environment.supabaseKey)
+  _session: AuthSession | null = null
 
   constructor() {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
   }
-
-  // ------------------ Admin ------------------
-  async addEvent(event: CalendarEvent) {
-    const { data, error } = await this.supabase
-      .from('events')
-      .insert([event]);
-
-    return { data: data ? data[0] : undefined,  // Assuming 'data' is an array, return the first element.
-    error };
-  }
-
-  async getAllEvents() {
-    const { data, error } = await this.supabase.from('events').select('*');
-    return { data, error };
-  }
-
-  async deleteEvent(eventId: number) {
-    const { data, error } = await this.supabase
-      .from('events')
-      .delete()
-      .match({ id: eventId });
-
-    return { data, error };
-  }
-
-  async updateHiresApprovedRow(currentEmail:string, toggleValue: boolean) {
-    const { data, error } = await this.supabase
-      .from('for_hire')
-      .update({ approved: toggleValue })
-      .eq('email', currentEmail);
-
-    if (error) {
-      throw error;
-    }
-    return data;
-  }
-
-  async updateBusinessApprovedRow(currentEmail:string, toggleValue: boolean) {
-    const { data, error } = await this.supabase
-      .from('profile')
-      .update({ business_acc: toggleValue })
-      .eq('email', currentEmail);
-
-    if (error) {
-      throw error;
-    }
-    return data;
-  }
-
-  // ------------------ Profile ------------------
-
-  _session: AuthSession | null = null
 
   get session() {
     this.supabase.auth.getSession().then(({ data }) => {
@@ -105,6 +52,23 @@ export class SupabaseService {
   private _userEmail = new BehaviorSubject<string>('');
   userEmail$ = this._userEmail.asObservable();
 
+  // check if user is logged in
+  async isLoggedIn() {
+    const {data, error} = await this.supabase.auth.getUser();
+    if (!error) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  signOut() {
+    return this.supabase.auth.signOut()
+  }
+
+  // ------------------ Login/Register ------------------
+
   signIn(email: string, password: string): Promise<any> {
     this._isLoggedIn.next(true);
     this._userEmail.next(email);
@@ -113,12 +77,6 @@ export class SupabaseService {
   
   signUp(email: string, password: string): Promise<any> {
     return this.supabase.auth.signUp({ email, password });
-  }
-
-  signOut() {
-    // this._isLoggedIn.next(false);
-    // this._userEmail.next('');
-    return this.supabase.auth.signOut()
   }
 
   async resetPassword(email: string) {
@@ -133,79 +91,41 @@ export class SupabaseService {
     }
   }
 
+  // ------------------ Profile ------------------
+
   async getAllProfiles() {
     const { data, error } = await this.supabase.from('profile').select('*');
     return { data, error };
   }
 
-  async fetchUserEmail() {
+  async fetchUserId(): Promise<string | null> {
     const {
       data: { user },
     } = await this.supabase.auth.getUser();
-    // let metadata = user!.user_metadata
-    return user?.email
-  }
+    return user ? user!.id : null;
+  }  
 
-  async profile(currentEmail:string) {
-    return this.supabase
-      .from('profile')
-      .select(`name, phone_number`)
-      .eq('email', currentEmail)
-      .single()
-  }
-
-  async checkBusinessAcc(currentEmail:string) {
+  async getProfile(uuid: string) {
     const { data, error } = await this.supabase
       .from('profile')
-      .select('business_acc')
-      .eq('email', currentEmail);
-
-    if (error) {
-      throw error;
-    }
-    return data![0].business_acc;
+      .select('*')
+      .eq('id', uuid)
+      .single();
+    return { data, error };
   }
 
-  async checkBusinessRequest(currentEmail:string) {
-    const { data, error } = await this.supabase
-      .from('profile')
-      .select('business_request')
-      .eq('email', currentEmail);
-
-    if (error) {
-      throw error;
-    }
-    return data![0].business_request;
-  }
-
-  async checkForHireRequest(currentEmail:string) {
-    const { data, error } = await this.supabase
-      .from('profile')
-      .select('for_hire_request')
-      .eq('email', currentEmail);
-
-    if (error) {
-      throw error;
-    }
-    return data![0].for_hire_request;
-  }
-
-  async updateProfileName(currentEmail:string, name:string) {
-    console.log(currentEmail);
-    console.log(name);
+  async updateProfileName(uuid: string, name:string) {
     const { data, error } = await this.supabase
       .from('profile')
       .update({ name: name })
-      .eq('email', currentEmail);
+      .eq('id', uuid);
   }
 
-  async updateProfilePhone(currentEmail:string, phone:string) {
-    console.log(currentEmail);
-    console.log(phone);
+  async updateProfilePhone(uuid: string, phone:string) {
     const { data, error } = await this.supabase
       .from('profile')
       .update({ phone_number: phone })
-      .eq('email', currentEmail);
+      .eq('id', uuid);
   }
 
   async updateProfileEmail(new_email:string) {
@@ -463,5 +383,53 @@ export class SupabaseService {
     else {
       return true;
     }
+  }
+
+  // ------------------ Admin ------------------
+  async addEvent(event: CalendarEvent) {
+    const { data, error } = await this.supabase
+      .from('events')
+      .insert([event]);
+
+    return { data: data ? data[0] : undefined,  // Assuming 'data' is an array, return the first element.
+    error };
+  }
+
+  async getAllEvents() {
+    const { data, error } = await this.supabase.from('events').select('*');
+    return { data, error };
+  }
+
+  async deleteEvent(eventId: number) {
+    const { data, error } = await this.supabase
+      .from('events')
+      .delete()
+      .match({ id: eventId });
+
+    return { data, error };
+  }
+
+  async updateHiresApprovedRow(currentEmail:string, toggleValue: boolean) {
+    const { data, error } = await this.supabase
+      .from('for_hire')
+      .update({ approved: toggleValue })
+      .eq('email', currentEmail);
+
+    if (error) {
+      throw error;
+    }
+    return data;
+  }
+
+  async updateBusinessApprovedRow(currentEmail:string, toggleValue: boolean) {
+    const { data, error } = await this.supabase
+      .from('profile')
+      .update({ business_acc: toggleValue })
+      .eq('email', currentEmail);
+
+    if (error) {
+      throw error;
+    }
+    return data;
   }
 }

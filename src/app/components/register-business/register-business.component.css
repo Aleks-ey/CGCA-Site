@@ -8,7 +8,7 @@
 
 @media screen and (max-width: 768px) {
     .register_business_container {
-        width: auto;
+        width: 90vw;
     }
     
 }

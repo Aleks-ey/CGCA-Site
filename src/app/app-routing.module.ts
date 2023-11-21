@@ -11,6 +11,7 @@ import { EventsComponent } from './pages/events/events.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { CommunityComponent } from './pages/community/community.component';
 import { AccountComponent } from './pages/account/account.component';
+import { AccountLoginComponent } from './pages/account-login/account-login.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,10 @@ const routes: Routes = [
   {
     path: 'account',
     component: AccountComponent
+  },
+  {
+    path: 'account-login',
+    component: AccountLoginComponent
   },
 ];
 

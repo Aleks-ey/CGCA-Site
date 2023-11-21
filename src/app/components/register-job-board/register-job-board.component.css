@@ -8,7 +8,7 @@
 
 @media screen and (max-width: 768px) {
     .register_job_board_container {
-        width: auto;
+        width: 90vw;
     }
 }
 

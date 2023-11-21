@@ -49,22 +49,22 @@ export class ForHireRequestComponent {
   });
 
   async ngOnInit() {
-    this.userEmail = await this.supabaseService.fetchUserEmail();
-    // this.userName = this.supabaseService.fetchUserName(this.userEmail);
-    // this.userPhone = this.supabaseService.fetchUserPhone(this.userEmail);
-    await this.supabaseService.profile(this.userEmail)?.then(
-      (res) => { 
-        this.userName = res.data?.name 
-        this.userPhone = res.data?.phone_number}
-    );
+    // Initialize user profile data.
+    let profileData: any;
+    const userId = await this.supabaseService.fetchUserId();
+    if (userId) {
+      profileData = await this.supabaseService.getProfile(userId);
+      this.userEmail = profileData.email;
+      this.userName = profileData.name;
+      this.userPhone = profileData.phone_number;
+    }
 
-    const result = await this.supabaseService.getUserHires(this.userEmail);
-    if (result.error) {
-      console.error('Error fetching data:', result.error);
+    const userHires = await this.supabaseService.getUserHires(this.userEmail);
+    if (userHires.error) {
+      console.error('Error fetching data:', userHires.error);
     } 
     else {
-      this.userHireListing = result.data!;
-      console.log(this.userHireListing);
+      this.userHireListing = userHires.data!;
       if (this.userHireListing.length > 0) {
         this.form.patchValue({
           name: this.userHireListing[0].name,

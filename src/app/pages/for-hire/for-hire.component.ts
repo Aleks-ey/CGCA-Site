@@ -23,22 +23,26 @@ export class ForHireComponent {
   constructor(private supabaseService: SupabaseService, public dialog: MatDialog) {}
 
   async ngOnInit() {
-    const result = await this.supabaseService.getAllHires();
-    if (result.error) {
-      console.error('Error fetching events:', result.error);
+    await this.supabaseService.isLoggedIn()
+    .then (res => {
+      if (res === true) {
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
+    });
+
+    // fetch all hires
+    const allHiresData = await this.supabaseService.getAllHires();
+    if (allHiresData.error) {
+      console.error('Error fetching events:', allHiresData.error);
     } else {
-      this.tempHiresList = result.data!;
+      this.tempHiresList = allHiresData.data!;
       for(let i = 0; i < this.tempHiresList.length; i++) {
         if(this.tempHiresList[i].approved == true) {
           this.hiresList.push(this.tempHiresList[i]);
         }
       }
-    }
-
-    this.userEmail = await this.supabaseService.fetchUserEmail();
-
-    if(this.userEmail != null) {
-      this.isLoggedIn = true;
     }
   }
 
@@ -48,8 +52,6 @@ export class ForHireComponent {
 
   openLoginDialog(): void {
     this.dialog.open(LoginComponent, {
-      height: 'auto',
-      width: '90%',
     }
       );
   }

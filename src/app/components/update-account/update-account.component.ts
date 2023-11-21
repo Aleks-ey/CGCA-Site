@@ -31,14 +31,15 @@ export class UpdateAccountComponent {
   userPhone: any;
 
   async ngOnInit() {
-    this.userEmail = await this.supabaseService.fetchUserEmail();
-    // this.userName = this.supabaseService.fetchUserName(this.userEmail);
-    // this.userPhone = this.supabaseService.fetchUserPhone(this.userEmail);
-    await this.supabaseService.profile(this.userEmail)?.then(
-      (res) => { 
-        this.userName = res.data?.name 
-        this.userPhone = res.data?.phone_number}
-    );
+    // Initialize user profile data.
+    let profileData: any;
+    const userId = await this.supabaseService.fetchUserId();
+    if (userId) {
+      profileData = await this.supabaseService.getProfile(userId);
+      this.userEmail = profileData.email;
+      this.userName = profileData.name;
+      this.userPhone = profileData.phone_number;
+    }
 
     this.form.patchValue({
       name: this.userName,

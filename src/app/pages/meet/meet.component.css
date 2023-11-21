@@ -203,46 +203,46 @@
     position: relative;
     cursor: pointer;
     overflow: hidden;
-  }
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .card {
         width: 60%;
         margin: auto auto 40px auto;
     }
-  }
+}
   
-  .image-container {
+.image-container {
     position: relative;
     /* height: 250px; */
     transition: transform 0.3s;
-  }
+}
 
-  .image-container > img {
-    object-fit: cover;
-    height: 250px;
-    width: 100%;
-  }
+.image-container > img {
+object-fit: cover;
+height: 250px;
+width: 100%;
+}
 
-  .tea_img {
+.tea_img {
     object-position: 50% 30%;
-  }
-  
-  .card:hover .image-container {
+}
+
+.card:hover .image-container {
     transform: translateY(50px);
-  }
-  
-  .text-container {
+}
+
+.text-container {
     height: 50px;
     text-align: center;
     /* padding: 1rem; */
-  }
+}
 
-  .text-container > h2 {
+.text-container > h2 {
     margin-bottom: 0px !important;
-  }
-  
-  .about-button {
+}
+
+.about-button {
     position: absolute;
     top: 0; /* Moved it to top */
     width: 100%;
@@ -255,16 +255,16 @@
     transition: 0.3s;
     opacity: 0; /* Initially hide the button */
     pointer-events: none; /* Ensure the button is not clickable when hidden */
-  }
-  
-  .card:hover .about-button {
+}
+
+.card:hover .about-button {
     top: 0; /* Bring the button down on hover */
     opacity: 1; /* Make the button visible on hover */
     pointer-events: auto; /* Make the button clickable on hover */
-  }
-  
-  /* Popup Styles */
-  .popup {
+}
+
+/* Popup Styles */
+.popup {
     position: fixed;
     top: 5%;
     left: 0;
@@ -275,24 +275,31 @@
     justify-content: center;
     align-items: center;
     z-index: 30;
-  }
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .popup {
         top: 20px;
     }
-  }
-  
-  .popup-content {
+}
+
+.popup-content {
     background-color: #fff;
     padding: 2rem;
     width: 70%;
     height: 70%;
     border-radius: 10px;
-  }
+}
 
-  .popup_text {
+@media screen and (max-width: 768px) {
+    .popup-content {
+        width: 90%;
+        height: 80%;
+    }
+}
+
+.popup_text {
     height: 80%;
-    overflow: scroll;
-  }
+    overflow-y: auto
+}
   

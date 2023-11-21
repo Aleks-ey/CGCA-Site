@@ -1,4 +1,6 @@
 import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { SupabaseService } from 'src/app/supabase.service';
 
 @Component({
   selector: 'app-header',
@@ -7,6 +9,7 @@ import { Component, HostListener } from '@angular/core';
 })
 
 export class HeaderComponent {
+  constructor(private supabaseService: SupabaseService, private router: Router) {}
 
   isMenuOpen: boolean = false;
   
@@ -58,5 +61,17 @@ export class HeaderComponent {
     this.timeout = setTimeout(() => {
       this.showDropdown = false;
     }, 50); // A delay of 200ms, adjust as necessary
+  }
+
+  // ------------------ MyAccount Navigation ------------------
+  async navigateToAccount() {
+    await this.supabaseService.isLoggedIn() 
+    .then (res => {
+      if (res === true) {
+        this.router.navigate(['/account']);
+      } else {
+        this.router.navigate(['/account-login']);
+      }
+    });
   }
 }
