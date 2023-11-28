@@ -1,3 +1,7 @@
+.account_button:hover {
+    color: #DC2626;
+}
+
 .community_header {
     text-align: center;
 }
@@ -15,7 +19,7 @@
 .community_business_container,
 .community_job_board_container,
 .community_for_hire {
-    width: 30%;
+    width: 32%;
     height: 260px;
     background-size: cover;
     background-position: center;
@@ -24,6 +28,14 @@
     color: white;
     text-align: center;
     align-items: center;
+    transition: 0.15s;
+}
+
+.community_business_container:hover > h2,
+.community_job_board_container:hover > h2,
+.community_for_hire:hover > h2 {
+    transform: scale(1.1);
+    transition: 0.15s;
 }
 
 @media screen and (max-width: 768px) {

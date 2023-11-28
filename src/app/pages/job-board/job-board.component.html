@@ -2,7 +2,7 @@
     <mat-icon class="text-black float-left mt-1.5 ml-2 md:ml-6">keyboard_arrow_left</mat-icon>
 </a>
 <a href="/community" class="top_links float-left mt-2 md:ml-1">Back</a>
-<button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="float-right mt-2 mr-2 md:mr-6">Login</button>
+<button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="top_links float-right mt-2 mr-2 md:mr-6">Login</button>
 <div *ngIf="isLoggedIn" class="flex float-right mt-2 mr-2 md:mr-6 gap-2">
     <a href="/account" class="top_links"> My Account </a>
     <button (click)="logout()" class="top_links">Logout</button>
@@ -12,25 +12,27 @@
     <h1>Find a Position at a Local Company, Owned by Members of the Georgian Community</h1>
 </div>
 
-<div class="job_board_container flex flex-row">
-    <div class="job_filter_container hidden md:flex flex-col">
+<div class="job_board_container flex flex-col md:flex-row min-h-screen">
+    <div class="job_filter_container flex flex-col w-full md:w-1/4">
         <!-- Search bar -->
         <div class="job_filter_search">
-            <input type="text" placeholder="Search...">
-            <button>Search</button>
+            <input class="w-full pl-3 pr-10" type="text" [(ngModel)]="searchQuery" (input)="onSearchChange()" placeholder="Search...">
+            <button class="search-btn" (click)="onSearchChange()">
+                <mat-icon>search</mat-icon>
+            </button>     
         </div>
         <!-- Filter checkboxes -->
-        <div class="job_filter_type">
+        <!-- <div class="job_filter_type">
             <h3>Filter by Job Type:</h3>
             <label><input type="checkbox" name="job-type" value="full-time">Full Time</label>
             <label><input type="checkbox" name="job-type" value="part-time">Part Time</label>
             <label><input type="checkbox" name="job-type" value="internship">Internship</label>
-        </div>    
+        </div>     -->
     </div>
 
     <!-- Job listings -->
-    <div class="jlisting_container flex flex-col justify-center">
-        <div class="jlisting flex flex-col justify-center" *ngFor="let listing of jobsList">
+    <div class="jlisting_container flex flex-col w-full md:w-3/4">
+        <div class="jlisting flex flex-col justify-center" *ngFor="let listing of displayedJobsList">
             <div class="jlisting_name flex flex-col md:flex-row justify-center">
                 <h3 class="hidden md:block">{{ listing.job_title }} -&nbsp;</h3>
                 <h3 class="block md:hidden">{{ listing.job_title }}</h3>
@@ -40,20 +42,20 @@
                 <p>{{ listing.job_description }}</p>
             </div>
             <div class="jlisting_details flex flex-col md:flex-row">
-                <p class="block md:hidden" *ngIf="listing.pay !== ''">
+                <p class="block md:hidden" *ngIf="listing.pay !== null || listing.pay !== ''">
                     <mat-icon class="text-black">attach_money</mat-icon>
                     {{ listing.pay }}
                 </p> 
-                <p class="block md:hidden" *ngIf="listing.location !== ''">
+                <p class="block md:hidden" *ngIf="listing.location !== null || listing.location !== ''">
                     <mat-icon class="text-black">map</mat-icon>
                     {{ listing.location }}
                 </p>
                 <p class="hidden md:block">
-                    <span *ngIf="listing.pay !== ''">
+                    <span *ngIf="listing.pay !== null || listing.pay !== ''">
                         <mat-icon class="text-black">attach_money</mat-icon>
                         {{ listing.pay }}
                     </span>
-                    <span *ngIf="listing.location !== ''">
+                    <span *ngIf="listing.location !== null || listing.location !== ''">
                         <mat-icon class="text-black ml-2">map</mat-icon>
                         {{ listing.location }}
                     </span>
@@ -80,11 +82,13 @@
 </div>
 <!-- Pagination buttons -->
 <div class="pagination_container flex flex-row justify-center">
-    <div class="flex justify-between gap-2">
-        <button>Previous</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>Next</button>
+    <div class="flex justify-between gap-4">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+        <button *ngFor="let pageNumber of pageNumbers" 
+            (click)="goToPage(pageNumber)" 
+            [class.active]="pageNumber === currentPage">
+            {{ pageNumber }}
+        </button>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages()">Next</button>
     </div> 
 </div>

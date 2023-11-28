@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatInput } from '@angular/material/input';
@@ -19,6 +19,11 @@ export class ForHireComponent {
   userEmail: any;
   isLoggedIn = false;
   // private sub!: Subscription;
+
+  searchQuery = '';
+  currentPage = 1;
+  pageSize = 10; // Number of hires per page
+  totalHires = 0; // Total number of filtered hires
 
   constructor(private supabaseService: SupabaseService, public dialog: MatDialog) {}
 
@@ -44,11 +49,69 @@ export class ForHireComponent {
         }
       }
     }
+
+    this.totalHires = this.hiresList.length;
+    this.updateDisplayedHires();
   }
 
-  // ngOnDestroy(): void {
-  //   this.sub.unsubscribe();
-  // }
+  updateDisplayedHires() {
+    // Filter the hires based on the search query
+    let filteredHires = this.searchQuery
+      ? this.hiresList.filter((hire) => hire.name.toLowerCase().includes(this.searchQuery.toLowerCase()) || hire.profession.toLowerCase().includes(this.searchQuery.toLowerCase()))
+      : this.hiresList;
+
+    // Update total hires
+    this.totalHires = filteredHires.length;
+
+    // Calculate the slice of hires to be displayed
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    this.tempHiresList = filteredHires.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  onSearchChange() {
+    this.currentPage = 1; // Reset to first page
+    this.updateDisplayedHires();
+  }
+
+  get currentPageList(): ForHireListing[] {
+    // Calculate start and end index
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    // Return a slice of businessesList for the current page
+    return this.hiresList.slice(startIndex, endIndex);
+  }
+
+  get pageNumbers(): number[] {
+    const totalPages = this.totalPages();
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  } 
+
+  totalPages() {
+    return Math.ceil(this.totalHires / this.pageSize);
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+    this.updateDisplayedHires();
+    // scroll to top of page
+    window.scrollTo(0, 0);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages()) {
+      this.currentPage++;
+      this.updateDisplayedHires();
+      window.scrollTo(0, 0);
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updateDisplayedHires();
+      window.scrollTo(0, 0);
+    }
+  }
 
   openLoginDialog(): void {
     this.dialog.open(LoginComponent, {

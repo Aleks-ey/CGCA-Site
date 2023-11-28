@@ -19,9 +19,31 @@
     padding: 20px;
 }
 
+.business_filter_search {
+    position: relative;
+    width: 100%;
+}
+
 .business_filter_search > input {
     border: 1px solid #e5e7eb;
     border-radius: 5px;
+}
+
+.business_filter_search > button > mat-icon {
+    padding-right: 2rem !important; 
+}
+
+.search-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.search-btn mat-icon {
+    pointer-events: none; /* prevents the icon from capturing the click event */
 }
 
 .blisting_container {
@@ -63,6 +85,15 @@
     transform: translateY(7px);
 }
 
+.blisting_details > p > span > mat-icon {
+    transform: translateY(7px);
+}
+
 .blisting_contact > p > mat-icon {
     transform: translateY(7px);
+}
+
+.active {
+    font-weight: bold;
+    text-decoration: underline;
 }

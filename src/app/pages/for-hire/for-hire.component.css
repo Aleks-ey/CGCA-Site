@@ -19,9 +19,31 @@
     padding: 20px;
 }
 
+.hire_filter_search {
+    position: relative;
+    width: 100%;
+}
+
 .hire_filter_search > input {
     border: 1px solid #e5e7eb;
     border-radius: 5px;
+}
+
+.hire_filter_search > button > mat-icon {
+    padding-right: 2rem !important; 
+}
+
+.search-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.search-btn mat-icon {
+    pointer-events: none; /* prevents the icon from capturing the click event */
 }
 
 .hlisting_container {
@@ -55,4 +77,9 @@
     background-color: #1E293B;
     opacity: 0.8;
     border-radius: 10px;
+}
+
+.active {
+    font-weight: bold;
+    text-decoration: underline;
 }

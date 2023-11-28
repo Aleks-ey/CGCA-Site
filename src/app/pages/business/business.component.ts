@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BusinessListing } from 'src/app/components/register-business/register-business.component';
@@ -10,7 +10,7 @@ import { LoginComponent } from 'src/app/components/login/login.component';
   templateUrl: './business.component.html',
   styleUrls: ['./business.component.css'],
 })
-export class BusinessComponent {
+export class BusinessComponent implements OnInit {
   listing: BusinessListing = {
     company_name: '',
     type: '',
@@ -22,10 +22,16 @@ export class BusinessComponent {
     image_url: '',
   };
 
-  businessesList: BusinessListing[] = [];
-  workOutside: boolean = false;
-  userEmail: any;
-  isLoggedIn = false;
+  businessesList: BusinessListing[] = []; // Holds all businesses
+  userEmail: any; // Holds the user's email
+  isLoggedIn = false; // Is the user logged in?
+
+  allBusinessesList: BusinessListing[] = [];
+  displayedBusinessesList: BusinessListing[] = [];
+  searchQuery = ''; // Holds the search query
+  currentPage = 1; // Current page index
+  pageSize = 10; // Number of businesses per page
+  totalBusinesses = 0; // Total number of businesses
 
   constructor(
     private supabaseService: SupabaseService,
@@ -49,6 +55,68 @@ export class BusinessComponent {
     } else {
       this.businessesList = allBusinesses.data!;
     }
+
+    this.allBusinessesList = [...this.businessesList];
+    this.totalBusinesses = this.allBusinessesList.length;
+    this.updateDisplayedBusinesses();
+  }
+
+  updateDisplayedBusinesses() {
+    let filteredBusinesses = this.allBusinessesList;
+    
+    if (this.searchQuery) {
+      filteredBusinesses = filteredBusinesses.filter((business) =>
+        business.company_name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    }
+
+    this.totalBusinesses = filteredBusinesses.length;
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    this.displayedBusinessesList = filteredBusinesses.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  onSearchChange() {
+    this.currentPage = 1; // Reset to the first page when search changes
+    this.updateDisplayedBusinesses();
+  }
+
+  get currentPageList(): BusinessListing[] {
+    // Calculate start and end index
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    // Return a slice of businessesList for the current page
+    return this.businessesList.slice(startIndex, endIndex);
+  }
+
+  get pageNumbers(): number[] {
+    const totalPages = this.totalPages();
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  } 
+  
+  goToPage(page: number) {
+    this.currentPage = page;
+    this.updateDisplayedBusinesses();
+    window.scrollTo(0, 0);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages()) {
+      this.currentPage++;
+      this.updateDisplayedBusinesses();
+      window.scrollTo(0, 0);
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updateDisplayedBusinesses();
+      window.scrollTo(0, 0);
+    }
+  }
+
+  totalPages() {
+    return Math.ceil(this.totalBusinesses / this.pageSize);
   }
 
   openLoginDialog(): void {
