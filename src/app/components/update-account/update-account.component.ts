@@ -36,11 +36,10 @@ export class UpdateAccountComponent {
     const userId = await this.supabaseService.fetchUserId();
     if (userId) {
       profileData = await this.supabaseService.getProfile(userId);
-      this.userEmail = profileData.email;
-      this.userName = profileData.name;
-      this.userPhone = profileData.phone_number;
+      this.userEmail = profileData.data?.email;
+      this.userName = profileData.data?.name;
+      this.userPhone = profileData.data?.phone_number;
     }
-
     this.form.patchValue({
       name: this.userName,
       email: this.userEmail,
@@ -49,6 +48,44 @@ export class UpdateAccountComponent {
   }
 
   async onSubmit() {
-    
+    const userId = await this.supabaseService.fetchUserId();
+
+    if (!userId) {
+      this.dialog.open(this.dialogTemplateFail);
+      return;
+    }
+
+    const formValue = this.form.value;
+
+    try {
+      // Update name
+      if (formValue.name !== this.userName) {
+        await this.supabaseService.updateProfileName(userId, formValue.name);
+      }
+
+      // Update phone number
+      if (formValue.phone_number !== this.userPhone) {
+        await this.supabaseService.updateProfilePhone(userId, formValue.phone_number);
+      }
+
+      // Update email
+      if (formValue.email !== this.userEmail) {
+        await this.supabaseService.updateProfileEmail(formValue.email);
+      }
+
+      // Update password
+      if (formValue.password) {
+        const passwordUpdateResult = await this.supabaseService.updateProfilePassword(formValue.password);
+        if (!passwordUpdateResult) {
+          throw new Error('Password update failed');
+        }
+      }
+
+      // If everything is successful, show success dialog
+      this.dialog.open(this.dialogTemplateSuccess);
+    } catch (error) {
+      console.error('Update failed:', error);
+      this.dialog.open(this.dialogTemplateFail);
+    }
   }
 }

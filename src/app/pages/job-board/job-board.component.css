@@ -17,6 +17,7 @@
 
 .job_filter_container {
     padding: 20px;
+    padding-right: 0px;
 }
 
 .job_filter_search {

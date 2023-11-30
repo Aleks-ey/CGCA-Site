@@ -16,7 +16,8 @@
 }
 
 .business_filter_container {
-    padding: 20px;
+    padding: 20px;  
+    padding-right: 0px;
 }
 
 .business_filter_search {

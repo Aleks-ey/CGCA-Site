@@ -13,7 +13,7 @@
 </div>
 
 <div class="for_hire_container flex flex-col md:flex-row min-h-screen">
-    <div class="hire_filter_container flex flex-col w-full md:w-1/4">
+    <div class="hire_filter_container flex flex-col w-full md:w-1/5">
         <!-- Search bar -->
         <div class="hire_filter_search">
             <input class="w-full pl-3 pr-10" type="text" [(ngModel)]="searchQuery" (input)="onSearchChange()" placeholder="Search...">
@@ -31,7 +31,7 @@
     </div>
 
     <!-- Job listings -->
-    <div class="hlisting_container flex flex-col w-full md:w-3/4" >
+    <div class="hlisting_container flex flex-col w-full md:w-4/5" >
         <div *ngIf="tempHiresList.length === 0 && !searchPerformed" class="no-listings">
             There are currently no members of the Georgian community looking for work.
         </div>
