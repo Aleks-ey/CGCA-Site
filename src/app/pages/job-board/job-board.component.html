@@ -32,6 +32,15 @@
 
     <!-- Job listings -->
     <div class="jlisting_container flex flex-col w-full md:w-3/4">
+        <div *ngIf="displayedJobsList.length === 0 && !searchPerformed" class="no-listings">
+            There are currently no job listings.
+        </div>
+        <div *ngIf="displayedJobsList.length === 0 && !searchPerformed" class="no-listings">
+            You could be the first! Go to <a class="hover:cursor-pointer underline text-blue-700" (click)="navigateToAccount()">My Account</a> to register, requets a business account, and post a job listing.
+        </div>
+        <div *ngIf="displayedJobsList.length === 0 && searchPerformed" class="no-listings">
+            No job listings match your search criteria.
+        </div>          
         <div class="jlisting flex flex-col justify-center" *ngFor="let listing of displayedJobsList">
             <div class="jlisting_name flex flex-col md:flex-row justify-center">
                 <h3 class="hidden md:block">{{ listing.job_title }} -&nbsp;</h3>
@@ -42,20 +51,20 @@
                 <p>{{ listing.job_description }}</p>
             </div>
             <div class="jlisting_details flex flex-col md:flex-row">
-                <p class="block md:hidden" *ngIf="listing.pay !== null || listing.pay !== ''">
+                <p class="block md:hidden" *ngIf="listing.pay !== null && listing.pay !== ''">
                     <mat-icon class="text-black">attach_money</mat-icon>
                     {{ listing.pay }}
                 </p> 
-                <p class="block md:hidden" *ngIf="listing.location !== null || listing.location !== ''">
+                <p class="block md:hidden" *ngIf="listing.location !== null && listing.location !== ''">
                     <mat-icon class="text-black">map</mat-icon>
                     {{ listing.location }}
                 </p>
                 <p class="hidden md:block">
-                    <span *ngIf="listing.pay !== null || listing.pay !== ''">
+                    <span *ngIf="listing.pay !== null && listing.pay !== ''">
                         <mat-icon class="text-black">attach_money</mat-icon>
                         {{ listing.pay }}
                     </span>
-                    <span *ngIf="listing.location !== null || listing.location !== ''">
+                    <span *ngIf="listing.location !== null && listing.location !== ''">
                         <mat-icon class="text-black ml-2">map</mat-icon>
                         {{ listing.location }}
                     </span>
@@ -77,6 +86,9 @@
                     ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
                 </p>
             </div>
+        </div>
+        <div *ngIf="displayedJobsList.length > 0" class="jlisting text-center">
+            Want to add a job to the list? Go to <a class="hover:cursor-pointer underline text-blue-700" (click)="navigateToAccount()">My Account</a> and request a business account.
         </div>
     </div>
 </div>

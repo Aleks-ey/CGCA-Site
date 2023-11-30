@@ -32,6 +32,15 @@
 
     <!-- Job listings -->
     <div class="hlisting_container flex flex-col w-full md:w-3/4" >
+        <div *ngIf="tempHiresList.length === 0 && !searchPerformed" class="no-listings">
+            There are currently no members of the Georgian community looking for work.
+        </div>
+        <div *ngIf="tempHiresList.length === 0 && !searchPerformed" class="no-listings">
+            You could be the first! Go to <a class="hover:cursor-pointer underline text-blue-700" (click)="navigateToAccount()">My Account</a> to register and get yourself hired.
+        </div>
+        <div *ngIf="tempHiresList.length === 0 && searchPerformed" class="no-listings">
+            No matches found for your search.
+        </div>
         <div class="hlisting flex flex-col justify-center" *ngFor="let listing of tempHiresList">
             <div class="hlisting_header flex flex-row justify-center">
                 <p>{{ listing.name }} -&nbsp;</p> 
@@ -65,6 +74,9 @@
             <div class="work_outside" *ngIf=(listing.work_outside)>
                 Willing to work outside of profession
             </div>
+        </div>
+        <div *ngIf="tempHiresList.length > 0" class="hlisting text-center">
+            Want to put yourself on this list? Go to <a class="hover:cursor-pointer underline text-blue-700" (click)="navigateToAccount()">My Account</a> and make a listing.
         </div>
     </div>
 </div>

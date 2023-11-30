@@ -3,6 +3,7 @@ import { SupabaseService } from 'src/app/supabase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BusinessListing } from 'src/app/components/register-business/register-business.component';
 import { LoginComponent } from 'src/app/components/login/login.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -32,10 +33,12 @@ export class BusinessComponent implements OnInit {
   currentPage = 1; // Current page index
   pageSize = 10; // Number of businesses per page
   totalBusinesses = 0; // Total number of businesses
+  searchPerformed = false; // Has the user performed a search?
 
   constructor(
     private supabaseService: SupabaseService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
     ) {}
 
   async ngOnInit() {
@@ -70,6 +73,10 @@ export class BusinessComponent implements OnInit {
       );
     }
 
+    if (this.searchQuery == '') {
+      this.searchPerformed = false;
+    }
+
     this.totalBusinesses = filteredBusinesses.length;
     const startIndex = (this.currentPage - 1) * this.pageSize;
     this.displayedBusinessesList = filteredBusinesses.slice(startIndex, startIndex + this.pageSize);
@@ -77,6 +84,7 @@ export class BusinessComponent implements OnInit {
 
   onSearchChange() {
     this.currentPage = 1; // Reset to the first page when search changes
+    this.searchPerformed = true;
     this.updateDisplayedBusinesses();
   }
 
@@ -130,5 +138,16 @@ export class BusinessComponent implements OnInit {
   async logout() {
     await this.supabaseService.signOut();
     window.location.reload();
+  }
+
+  async navigateToAccount() {
+    await this.supabaseService.isLoggedIn() 
+    .then (res => {
+      if (res === true) {
+        this.router.navigate(['/account']);
+      } else {
+        this.router.navigate(['/account-login']);
+      }
+    });
   }
 }

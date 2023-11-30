@@ -83,3 +83,10 @@
     font-weight: bold;
     text-decoration: underline;
 }
+
+.no-listings {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+}
+  

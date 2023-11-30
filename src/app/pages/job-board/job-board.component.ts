@@ -21,6 +21,7 @@ export class JobBoardComponent {
   currentPage = 1;
   pageSize = 10; // Number of jobs per page
   totalJobs = 0; // Total number of filtered jobs
+  searchPerformed = false; // Has the user performed a search?
 
   constructor(
     private supabaseService: SupabaseService,
@@ -57,6 +58,10 @@ export class JobBoardComponent {
       job.company_name.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
 
+    if (this.searchQuery == '') {
+      this.searchPerformed = false;
+    }
+
     // Update total jobs with the length of filtered jobs
     this.totalJobs = filteredJobs.length;
 
@@ -67,6 +72,7 @@ export class JobBoardComponent {
 
   onSearchChange() {
     this.currentPage = 1; // Reset to first page on search
+    this.searchPerformed = true;
     this.updateDisplayedJobs();
   }
 
@@ -118,5 +124,16 @@ export class JobBoardComponent {
   async logout() {
     await this.supabaseService.signOut();
     window.location.reload();
+  }
+
+  async navigateToAccount() {
+    await this.supabaseService.isLoggedIn() 
+    .then (res => {
+      if (res === true) {
+        this.router.navigate(['/account']);
+      } else {
+        this.router.navigate(['/account-login']);
+      }
+    });
   }
 }

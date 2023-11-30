@@ -5,6 +5,7 @@ import { MatInput } from '@angular/material/input';
 import { ForHireRequestComponent } from 'src/app/components/for-hire-request/for-hire-request.component';
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { ForHireListing } from 'src/app/components/for-hire-request/for-hire-request.component'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-for-hire',
@@ -24,8 +25,13 @@ export class ForHireComponent {
   currentPage = 1;
   pageSize = 10; // Number of hires per page
   totalHires = 0; // Total number of filtered hires
+  searchPerformed = false; // Has the user performed a search?
 
-  constructor(private supabaseService: SupabaseService, public dialog: MatDialog) {}
+  constructor(
+    private supabaseService: SupabaseService, 
+    public dialog: MatDialog,
+    private router: Router,
+    ) {}
 
   async ngOnInit() {
     await this.supabaseService.isLoggedIn()
@@ -60,6 +66,10 @@ export class ForHireComponent {
       ? this.hiresList.filter((hire) => hire.name.toLowerCase().includes(this.searchQuery.toLowerCase()) || hire.profession.toLowerCase().includes(this.searchQuery.toLowerCase()))
       : this.hiresList;
 
+    if (this.searchQuery == '') {
+      this.searchPerformed = false;
+    }
+
     // Update total hires
     this.totalHires = filteredHires.length;
 
@@ -70,6 +80,7 @@ export class ForHireComponent {
 
   onSearchChange() {
     this.currentPage = 1; // Reset to first page
+    this.searchPerformed = true;
     this.updateDisplayedHires();
   }
 
@@ -122,5 +133,16 @@ export class ForHireComponent {
   async logout() {
     await this.supabaseService.signOut();
     window.location.reload();
+  }
+
+  async navigateToAccount() {
+    await this.supabaseService.isLoggedIn() 
+    .then (res => {
+      if (res === true) {
+        this.router.navigate(['/account']);
+      } else {
+        this.router.navigate(['/account-login']);
+      }
+    });
   }
 }
