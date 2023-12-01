@@ -207,6 +207,10 @@
     top: 13vw !important;
 }
 
+.about_card_5 {
+    top: 14vw !important;
+}
+
 @media screen and (max-width: 768px) {
     .about_card {
         top: 35vw;
@@ -223,6 +227,10 @@
     
     .about_card_4 {
         top: 38vw !important;
+    }
+
+    .about_card_5 {
+        top: 39vw !important;
     }
 }
 
