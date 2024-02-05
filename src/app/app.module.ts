@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -51,33 +52,34 @@ import { AccountLoginComponent } from './pages/account-login/account-login.compo
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
-    HomeComponent,
-    MissionComponent,
-    MeetComponent,
-    EventsComponent,
-    ContactComponent,
-    FooterComponent,
-    ScrollToTopComponent,
+    AccountComponent,
+    AccountLoginComponent,
     AdminComponent,
-    CommunityComponent,
-    RegisterComponent,
-    LoginComponent,
+    AppComponent,
     BusinessComponent,
-    JobBoardComponent,
+    CommunityComponent,
+    ContactComponent,
+    EventsComponent,
+    FooterComponent,
     ForHireComponent,
     ForHireRequestComponent,
-    AccountComponent,
+    HeaderComponent,
+    HomeComponent,
+    JobBoardComponent,
+    LoginComponent,
+    MeetComponent,
+    MissionComponent,
     RegisterBusinessComponent,
+    RegisterComponent,
     RegisterJobBoardComponent,
+    ScrollToTopComponent,
     UpdateAccountComponent,
-    AccountLoginComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
+    CommonModule,
     FormsModule,
     HammerModule,
     MatButtonModule,

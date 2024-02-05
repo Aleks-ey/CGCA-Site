@@ -94,10 +94,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Georgian-Website:build:production"
+              "browserTarget": "Georgian-Website:build:production"
             },
             "development": {
-              "buildTarget": "Georgian-Website:build:development"
+              "browserTarget": "Georgian-Website:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -105,7 +105,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "Georgian-Website:build"
+            "browserTarget": "Georgian-Website:build"
           }
         }
       }
