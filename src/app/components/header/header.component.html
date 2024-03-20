@@ -36,8 +36,10 @@
         <a routerLink="/events" class="header_link">Events</a>
         <a routerLink="/contact" class="header_link">Contact</a>
         <span class="header_spacer"></span>
-        <a routerLink="/" class="header_volunteer_link">Volunteer</a>
-        <button class="header_donate px-4 py-2">Donate</button>
+        <a href="https://signup.com/go/AAXcrWH" class="header_volunteer_link">Volunteer</a>
+        <a class="header_donate px-4 py-2" href="https://square.link/u/20SYlc1k">
+                Donate
+        </a>
     </div>
 
     <button mat-button class="hamburger" (click)="toggleMenu()" >
@@ -50,7 +52,7 @@
         <a routerLink="/meet" class="header-link" (click)="closeMenu()">Meet the Board</a>
         <div class="expanded-community-container">
             <a routerLink="/community" class="header-link" (click)="closeMenu()">Community</a>
-            <span (click)="toggleCommunityDropdown()" style="cursor:pointer;">
+            <span (click)="toggleCommunityDropdown()">
                 <mat-icon class="expand_arrow">{{ isCommunityDropdownOpen ? 'arrow_drop_up' : 'arrow_drop_down' }}</mat-icon>
             </span>
         </div>
@@ -62,7 +64,7 @@
         </div>
         <a routerLink="/events" class="header-link" (click)="closeMenu()">Events</a>
         <a routerLink="/contact" class="header-link" (click)="closeMenu()">Contact</a>
-        <a routerLink="/" class="header-link" (click)="closeMenu()">Volunteer</a>
-        <a routerLink="/" class="header-link" (click)="closeMenu()">Donate</a>
+        <a href="https://signup.com/go/AAXcrWH" class="header-link" (click)="closeMenu()">Volunteer</a>
+        <a href="https://square.link/u/20SYlc1k" class="header-link" (click)="closeMenu()">Donate</a>
     </div>
 </mat-toolbar>
