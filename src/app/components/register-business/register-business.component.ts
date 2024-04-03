@@ -6,6 +6,7 @@ import { SupabaseService } from 'src/app/supabase.service';
 
 export interface BusinessListing {
   id?: number;
+  profile_id: string;
   company_name: string;
   type: string;
   description: string;
@@ -14,6 +15,7 @@ export interface BusinessListing {
   phone_number: string;
   location: string;
   image_url: string;
+  approved: boolean;
 }
 
 @Component({
@@ -41,6 +43,7 @@ export class RegisterBusinessComponent {
     phone_number: this.formBuilder.control(''),
     location: this.formBuilder.control(''),
     image_url: this.formBuilder.control(''),
+    approved: this.formBuilder.control(''),
   });
 
   userEmail: any;
@@ -67,49 +70,59 @@ export class RegisterBusinessComponent {
       this.userEmail = profileData.data?.email;
       this.userName = profileData.data?.name;
       this.userPhone = profileData.data?.phone_number;
-    }
 
-    const userBusiness = await this.supabaseService.getUserBusiness(this.userEmail);
-    if (userBusiness.error) {
-      console.error('Error fetching events:', userBusiness.error);
-    } 
-    else {
-      this.userBusiness = userBusiness.data!;
-      if(this.userBusiness.length > 0) {
-        this.form.patchValue({
-          company_name: this.userBusiness[0].company_name,
-          type: this.userBusiness[0].type,
-          description: this.userBusiness[0].description,
-          owner: this.userBusiness[0].owner,
-          email: this.userBusiness[0].email,
-          phone_number: this.userBusiness[0].phone_number,
-          location: this.userBusiness[0].location,
-          image_url: this.userBusiness[0].image_url,
-        });
-      }
+      const userBusiness = await this.supabaseService.getUserBusiness(userId);
+      if (userBusiness.error) {
+        console.error('Error fetching events:', userBusiness.error);
+      } 
       else {
-        this.form.patchValue({
-          owner: this.userName,
-          email: this.userEmail,
-          phone_number: this.userPhone,
-        });
+        this.userBusiness = userBusiness.data!;
+        if(this.userBusiness.length > 0) {
+          this.form.patchValue({
+            company_name: this.userBusiness[0].company_name,
+            type: this.userBusiness[0].type,
+            description: this.userBusiness[0].description,
+            owner: this.userBusiness[0].owner,
+            email: this.userBusiness[0].email,
+            phone_number: this.userBusiness[0].phone_number,
+            location: this.userBusiness[0].location,
+            image_url: this.userBusiness[0].image_url,
+            approved: this.userBusiness[0].approved,
+          });
+        }
+        else {
+          this.form.patchValue({
+            owner: this.userName,
+            email: this.userEmail,
+            phone_number: this.userPhone,
+            approved: false,
+          });
+        }
       }
+    }
+    else {
+      console.error('User ID is null.');
     }
   }
 
   async onSubmit() {
     // this.temp_image_url = await this.storage.addBusinessImage(this.selectedFile);
     // console.log(this.temp_image_url);
+    const userId = await this.supabaseService.fetchUserId();
+    if (userId) {
+      const result = await this.supabaseService.addBusiness(this.form.value, userId);
+      if (result.error) {
+        console.error('Error inserting data:', result.error);
+        const dialogRef = this.dialog.open(this.dialogTemplateFail);
+      } else {
+        console.log('Request submitted successfully!');
 
-    const result = await this.supabaseService.addBusiness(this.form.value, this.userEmail);
-    if (result.error) {
-      console.error('Error inserting data:', result.error);
-      const dialogRef = this.dialog.open(this.dialogTemplateFail);
-    } else {
-      console.log('Request submitted successfully!');
-
-      const dialogRef = this.dialog.open(this.dialogTemplateSuccess);
-      setTimeout(() => { window.location.reload(), 3000});
+        const dialogRef = this.dialog.open(this.dialogTemplateSuccess);
+        setTimeout(() => { window.location.reload(), 3000});
+      }
+    }
+    else {
+      console.error('User ID is null.');
     }
   }
 

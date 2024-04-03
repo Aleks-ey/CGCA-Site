@@ -40,7 +40,7 @@ export class AccountLoginComponent {
   openRegisterDialog(): void {
     const dialogRef = this.dialog.open(RegisterComponent, {
       height: 'auto',
-      width: '80%',
+      width: '90%',
     });
   
     dialogRef.afterClosed().subscribe(result => {

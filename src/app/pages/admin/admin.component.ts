@@ -86,8 +86,8 @@ export class AdminComponent {
     const userId = await this.supabaseService.fetchUserId();
     if (userId) {
       profileData = await this.supabaseService.getProfile(userId);
-      this.userEmail = profileData.email;
-      if (this.userEmail == 'admin@admin.com') {
+      this.userEmail = profileData.data?.email;
+      if (this.userEmail == 'akhukhua@yahoo.com') {
         this.isAdmin = true;
       }
     }
@@ -130,6 +130,14 @@ export class AdminComponent {
         }
       }
     }
+    // fetch job board listings
+    const allJobsData = await this.supabaseService.getAllJobs();
+    if (allJobsData.error) {
+      console.error('Error fetching events:', allJobsData.error);
+    } else {
+      console.log(allJobsData.data);
+    }
+
 
     if (sessionStorage.getItem('callSwitchToApproveHires') === 'true') {
       this.switchToApproveHires();

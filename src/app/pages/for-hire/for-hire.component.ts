@@ -3,7 +3,7 @@ import { SupabaseService } from 'src/app/supabase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatInput } from '@angular/material/input';
 import { ForHireRequestComponent } from 'src/app/components/for-hire-request/for-hire-request.component';
-import { LoginComponent } from 'src/app/components/login/login.component';
+// import { LoginComponent } from 'src/app/components/login/login.component';
 import { ForHireListing } from 'src/app/components/for-hire-request/for-hire-request.component'
 import { Router } from '@angular/router';
 
@@ -124,11 +124,11 @@ export class ForHireComponent {
     }
   }
 
-  openLoginDialog(): void {
-    this.dialog.open(LoginComponent, {
-    }
-      );
-  }
+  // openLoginDialog(): void {
+  //   this.dialog.open(LoginComponent, {
+  //   }
+  //     );
+  // }
 
   async logout() {
     await this.supabaseService.signOut();

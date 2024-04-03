@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
 import { JobBoardListing } from 'src/app/components/register-job-board/register-job-board.component';
-import { LoginComponent } from 'src/app/components/login/login.component';
+// import { LoginComponent } from 'src/app/components/login/login.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -115,11 +115,11 @@ export class JobBoardComponent {
     }
   }
 
-  openLoginDialog(): void {
-    this.dialog.open(LoginComponent, {
-      }
-    );
-  }
+  // openLoginDialog(): void {
+  //   this.dialog.open(LoginComponent, {
+  //     }
+  //   );
+  // }
 
   async logout() {
     await this.supabaseService.signOut();

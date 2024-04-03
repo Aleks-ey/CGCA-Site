@@ -10,17 +10,17 @@
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
         <mat-form-field class="w-full">
             <mat-label>Profession:</mat-label>
-            <input matInput formControlName="profession">
+            <input title="profession" matInput formControlName="profession">
         </mat-form-field>
         <br>
         <mat-form-field class="w-full">
             <mat-label>About:</mat-label>
-            <textarea matInput formControlName="about"></textarea>
+            <textarea title="about" matInput formControlName="about"></textarea>
         </mat-form-field>
         <br>
         <mat-form-field class="w-full">
             <mat-label>Location (City):</mat-label>
-            <input matInput formControlName="location">
+            <input title="location" matInput formControlName="location">
         </mat-form-field>
         <br>
         <div class="w-full text-center">

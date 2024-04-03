@@ -131,8 +131,8 @@
     /* background: linear-gradient(to right, #dc2626 50%, black 50%); */
     background-color: black;
     background-size: 200%;
-    background-clip: text;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -301,7 +301,7 @@
 }
 
 .support_box {
-    width: 90%;
+    width: 98%;
     height: 100%;
     border-radius: 10px;
 }

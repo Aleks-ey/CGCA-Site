@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BusinessListing } from 'src/app/components/register-business/register-business.component';
-import { LoginComponent } from 'src/app/components/login/login.component';
+// import { LoginComponent } from 'src/app/components/login/login.component';
 import { Router } from '@angular/router';
 
 
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class BusinessComponent implements OnInit {
   listing: BusinessListing = {
+    profile_id: '',
     company_name: '',
     type: '',
     description: '',
@@ -21,6 +22,7 @@ export class BusinessComponent implements OnInit {
     phone_number: '',
     location: '',
     image_url: '',
+    approved: false,
   };
 
   businessesList: BusinessListing[] = []; // Holds all businesses
@@ -52,7 +54,7 @@ export class BusinessComponent implements OnInit {
     });
 
     // fetch all businesses
-    const allBusinesses = await this.supabaseService.getAllBusinesses();
+    const allBusinesses = await this.supabaseService.getAllBusiness();
     if (allBusinesses.error) {
       console.error('Error fetching events:', allBusinesses.error);
     } else {
@@ -127,13 +129,13 @@ export class BusinessComponent implements OnInit {
     return Math.ceil(this.totalBusinesses / this.pageSize);
   }
 
-  openLoginDialog(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
-    });
+  // openLoginDialog(): void {
+  //   const dialogRef = this.dialog.open(LoginComponent, {
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(result => {
+  //   });
+  // }
 
   async logout() {
     await this.supabaseService.signOut();
