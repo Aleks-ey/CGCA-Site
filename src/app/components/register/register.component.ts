@@ -1,6 +1,6 @@
 import { Component, Inject, TemplateRef, ViewChild } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -25,17 +25,24 @@ export class RegisterComponent {
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
     this.registerForm = this.formBuilder.group({
-      name: formBuilder.control('', [Validators.required, Validators.minLength(2)]),
-      phone_number: formBuilder.control('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
-      email: formBuilder.control('', [
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      phone_number: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      email: ['', [
         Validators.required,
         Validators.minLength(5),
         Validators.pattern(
           /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         ),
-      ]),
-      password: formBuilder.control('', [Validators.required, Validators.minLength(6)]),
-    });
+      ]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required]
+    }, { validator: this.checkPasswords });
+  }
+
+  checkPasswords(group: AbstractControl): { [key: string]: any } | null {
+    let pass = group.get('password')?.value;
+    let confirmPass = group.get('confirmPassword')?.value;
+    return pass === confirmPass ? null : { notSame: true };
   }
 
   public registerSubmit() {
@@ -44,14 +51,11 @@ export class RegisterComponent {
       .then(async (res) => {
         if (res.data.user.role === 'authenticated') {
           const dialogRef = this.dialog.open(this.dialogRegisterSuccess);
-          let profileData: any;
           const userId = await this.supabaseService.fetchUserId();
           if (userId) {
-            // If userId is not null, update name and phone number.
             await this.supabaseService.updateProfileName(userId, this.registerForm.value.name);
             await this.supabaseService.updateProfilePhone(userId, this.registerForm.value.phone_number);
           } else {
-            // Handle the case when there is no user logged in.
             console.error('No user is logged in.');
           }
             
@@ -70,3 +74,4 @@ export class RegisterComponent {
       });
   }
 }
+

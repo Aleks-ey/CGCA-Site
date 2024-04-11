@@ -335,7 +335,7 @@
     border-width: 1px;
     color: white;
     font-size: clamp(0.875rem, 0.875rem + ((1vw - 0.48rem) * 0.481), 1.125rem);
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1;
     padding-top: 1.188rem;
     padding-right: 2.5rem;

@@ -74,7 +74,7 @@ export class ForHireRequestComponent {
             phone_number: this.userHireListing[0].phone_number,
             location: this.userHireListing[0].location,
             work_outside: this.userHireListing[0].work_outside,
-            approved: this.userHireListing[0].approved,
+            approved: false,
           });
         }
         else {
@@ -105,7 +105,6 @@ export class ForHireRequestComponent {
         const dialogRef = this.dialog.open(this.dialogTemplateFail);
       } else {
         console.log('Request submitted successfully!');
-
         const dialogRef = this.dialog.open(this.dialogTemplateSuccess);
         setTimeout(() => { window.location.reload(), 3000 });
       }

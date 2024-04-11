@@ -4,9 +4,10 @@ import { CalendarEvent } from './calendarEvent.model';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { Subscription } from 'rxjs';
-import { ForHireListing } from 'src/app/components/for-hire-request/for-hire-request.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ForHireListing } from 'src/app/components/for-hire-request/for-hire-request.component';
 import { BusinessListing } from 'src/app/components/register-business/register-business.component';
+import { JobBoardListing } from 'src/app/components/register-job-board/register-job-board.component';
 
 @Component({
   selector: 'app-admin',
@@ -27,67 +28,54 @@ export class AdminComponent {
   isLoggedIn = false;
   userEmail: any;
   isAdmin = false;
+  userId = '';
   // private sub!: Subscription;
 
   switchForm: number = 0;
+  hireSwitchForm: number = 0;
+  businessSwitchForm: number = 0;
+  jobSwitchForm: number = 0;
+  // hire lists
   tempHiresList: ForHireListing[] = [];
-  unapprovedHiresList: ForHireListing[] = [];
   approvedHiresList: ForHireListing[] = [];
-  currentEmail: string = '';
+  unapprovedHiresList: ForHireListing[] = [];
+  editHiresList: ForHireListing[] = [];
+  // business lists
+  tempBusinessList: BusinessListing[] = [];
+  approvedBusinessList: BusinessListing[] = [];
+  unapprovedBusinessList: BusinessListing[] = [];
+  editBusinessList: BusinessListing[] = [];
+  // job board lists
+  tempJobsList: JobBoardListing[] = [];
+  approvedJobsList: JobBoardListing[] = [];
+  unapprovedJobsList: JobBoardListing[] = [];
+  editJobsList: JobBoardListing[] = [];
 
-  tempBusinessList: Profile[] = [];
-  approvedBusinessList: Profile[] = [];
-  unapprovedBusinessList: Profile[] = [];
-
-  @ViewChild('dialogTemplate1') dialogTemplate1!: TemplateRef<any>;
-  @ViewChild('dialogTemplate2') dialogTemplate2!: TemplateRef<any>;
+  @ViewChild('dialogNewHires') dialogNewHires!: TemplateRef<any>;
+  @ViewChild('dialogNewBusiness') dialogNewBusiness!: TemplateRef<any>;
+  @ViewChild('dialogNewJobs') dialogNewJobs!: TemplateRef<any>;
   toggleForm: FormGroup;
 
   constructor(
     private supabaseService: SupabaseService, 
     public dialog: MatDialog, 
-    private fb: FormBuilder) 
-    {
-      this.toggleForm = this.fb.group({
-        toggleValue: [false] // default value
-      });
-    }
-
-  async onSubmit() {
-    const result = await this.supabaseService.addEvent(this.event);
-    if (result.error) {
-      console.error('Error inserting data:', result.error);
-    } else {
-      console.log('Event added successfully!');
-
-      await this.fetchEvents();
-
-      this.event = {
-        date: '',
-        description: '',
-        time: '',
-        title: ''
-      };
-    }
-  }
-
-  async fetchEvents() {
-    const { data, error } = await this.supabaseService.getAllEvents();
-    if (error) {
-      console.error('Error fetching events:', error);
-    } else {
-      this.eventsList = data || [];
-    }
+    private fb: FormBuilder
+  ) 
+  {
+    this.toggleForm = this.fb.group({
+      toggleValue: [false] // default value
+    });
   }
 
   async ngOnInit() {
     // Initialize user profile data.
     let profileData: any;
-    const userId = await this.supabaseService.fetchUserId();
-    if (userId) {
-      profileData = await this.supabaseService.getProfile(userId);
+    this.userId = await this.supabaseService.fetchUserId() as string;
+    if (this.userId) {
+      this.isLoggedIn = true;
+      profileData = await this.supabaseService.getProfile(this.userId);
       this.userEmail = profileData.data?.email;
-      if (this.userEmail == 'akhukhua@yahoo.com') {
+      if (this.userEmail == 'admin@admin.com') {
         this.isAdmin = true;
       }
     }
@@ -102,30 +90,30 @@ export class AdminComponent {
     const allHiresData = await this.supabaseService.getAllHires();
     if (allHiresData.error) {
       console.error('Error fetching events:', allHiresData.error);
-    } else {
+    } 
+    else {
       this.tempHiresList = allHiresData.data!;
       for(let i = 0; i < this.tempHiresList.length; i++) {
         if(this.tempHiresList[i].approved == true) {
           this.approvedHiresList.push(this.tempHiresList[i]);
         }
-        if(this.tempHiresList[i].approved == false) {
+        else {
           this.unapprovedHiresList.push(this.tempHiresList[i]);
         }
       }
     }
-    // fetch business accounts
-    const allProfilesData = await this.supabaseService.getAllProfiles();
-    if (allProfilesData.error) {
-      console.error('Error fetching events:', allProfilesData.error);
-    } else {
-      this.tempBusinessList = allProfilesData.data!;
+    // fetch business listings
+    const allBusinessData = await this.supabaseService.getAllBusiness();
+    if (allBusinessData.error) {
+      console.error('Error fetching events:', allBusinessData.error);
+    } 
+    else {
+      this.tempBusinessList = allBusinessData.data!;
       for(let i = 0; i < this.tempBusinessList.length; i++) {
-        if(this.tempBusinessList[i].business_acc == true) {
+        if(this.tempBusinessList[i].approved == true) {
           this.approvedBusinessList.push(this.tempBusinessList[i]);
         }
-      }
-      for(let i = 0; i < this.tempBusinessList.length; i++) {
-        if(this.tempBusinessList[i].business_request == true && this.tempBusinessList[i].business_acc == false) {
+        else {
           this.unapprovedBusinessList.push(this.tempBusinessList[i]);
         }
       }
@@ -134,28 +122,73 @@ export class AdminComponent {
     const allJobsData = await this.supabaseService.getAllJobs();
     if (allJobsData.error) {
       console.error('Error fetching events:', allJobsData.error);
-    } else {
-      console.log(allJobsData.data);
     }
-
-
-    if (sessionStorage.getItem('callSwitchToApproveHires') === 'true') {
-      this.switchToApproveHires();
-      // Remove the flag from session storage
-      sessionStorage.removeItem('callSwitchToApproveHires');
+    else {
+      this.tempJobsList = allJobsData.data!;
+      for(let i = 0; i < this.tempJobsList.length; i++) {
+        if(this.tempJobsList[i].approved == true) {
+          this.approvedJobsList.push(this.tempJobsList[i]);
+        }
+        else {
+          this.unapprovedJobsList.push(this.tempJobsList[i]);
+        }
+      }
     }
-    if (sessionStorage.getItem('callSwitchToApproveBusinessAccounts') === 'true') {
-      this.switchToApproveBusinessAccounts();
+    // fetch all for hire edit listings
+    const allEditHiresData = await this.supabaseService.getAllHireEdits();
+    if (allEditHiresData.error) { console.error('Error fetching events:', allEditHiresData.error); }
+    else { this.editHiresList = allEditHiresData.data!; }
+    // fetch all business edit listings
+    const allEditBusinessData = await this.supabaseService.getAllBusinessEdits();
+    if (allEditBusinessData.error) { console.error('Error fetching events:', allEditBusinessData.error); }
+    else { this.editBusinessList = allEditBusinessData.data!; }
+    // fetch all job board edit listings
+    const allEditJobsData = await this.supabaseService.getAllJobEdits();
+    if (allEditJobsData.error) { console.error('Error fetching events:', allEditJobsData.error); }
+    else { this.editJobsList = allEditJobsData.data!; }
+    // Check if there are any flags set in session storage to switch to a specific form
+    if (sessionStorage.getItem('callSwitchToHires') === 'true') {
+      this.switchToHires();
       // Remove the flag from session storage
-      sessionStorage.removeItem('callSwitchToApproveBusinessAccounts');
+      sessionStorage.removeItem('callSwitchToHires');
+    }
+    if (sessionStorage.getItem('callSwitchToBusinesses') === 'true') {
+      this.switchToBusinesses();
+      // Remove the flag from session storage
+      sessionStorage.removeItem('callSwitchToBusinesses');
+    }
+    if (sessionStorage.getItem('callSwitchToJobBoard') === 'true') {
+      this.switchToJobBoard();
+      // Remove the flag from session storage
+      sessionStorage.removeItem('callSwitchToJobBoard');
     }
   }
-
+  // Add event
+  async submitEvent() {
+    const result = await this.supabaseService.addEvent(this.event);
+    if (result.error) {
+      console.error('Error inserting data:', result.error);
+    } else {
+      console.log('Event added successfully!');
+      await this.fetchEvents();
+      this.event = {
+        date: '',
+        description: '',
+        time: '',
+        title: ''
+      };
+    }
+  }
+  // Fetch events
+  async fetchEvents() {
+    const { data, error } = await this.supabaseService.getAllEvents();
+    if (error) { console.error('Error fetching events:', error); } 
+    else { this.eventsList = data || []; }
+  }
+  // Delete event
   async deleteEvent() {
     if (this.selectedEventId) {
-      const result = await this.supabaseService.deleteEvent(
-        this.selectedEventId
-      );
+      const result = await this.supabaseService.deleteEvent( this.selectedEventId );
       if (result.error) {
         console.error('Error deleting event:', result.error);
       } else {
@@ -166,104 +199,225 @@ export class AdminComponent {
       }
     }
   }
-
+  // Open login dialog
   async openLoginDialog() {
-    const dialogRef = this.dialog.open(LoginComponent, {
-    });
-  
+    const dialogRef = this.dialog.open(LoginComponent, { });
     dialogRef.afterClosed().subscribe(result => {
       this.isLoggedIn = result;
-      if(this.isLoggedIn == true) {
-        window.location.reload();
-      }
+      if(this.isLoggedIn == true) { window.location.reload(); }
     });
   }
-
+  // Logout function
   async logout() {
     this.supabaseService.signOut();
     this.isLoggedIn = false;
     // reload window with small delay to allow signout to complete
-    setTimeout(() => {
-      window.location.reload();
-    }, 100);
+    setTimeout(() => { window.location.reload(); }, 100);
   }
-
+  // ------------------------------- SWITCH FORMS -------------------------------
   switchToEvents(): void {
     this.switchForm = 1;
   }
-
-  switchToApproveHires(): void {
+  // Hire Switches
+  switchToHires(): void {
     this.switchForm = 2;
   }
-
-  switchToApproveBusinessAccounts(): void {
+  switchToApprovedHires(): void {
+    this.hireSwitchForm = 1;
+  }
+  switchToNewHires(): void {
+    this.hireSwitchForm = 2;
+  }
+  switchToEditHires(): void {
+    this.hireSwitchForm = 3;
+  }
+  // Business Switches
+  switchToBusinesses(): void {
     this.switchForm = 3;
   }
-
-  async openApprovalDialog(email: string) {
-    this.currentEmail = email;
-    const dialogRef = this.dialog.open(this.dialogTemplate1, {
+  switchToApprovedBusinesses(): void {
+    this.businessSwitchForm = 1;
+  }
+  switchToNewBusiness(): void {
+    this.businessSwitchForm = 2;
+  }
+  switchToEditBusiness(): void {
+    this.businessSwitchForm = 3;
+  }
+  // Job Board Switches
+  switchToJobBoard(): void {
+    this.switchForm = 4;
+  }
+  switchToApprovedJobs(): void {
+    this.jobSwitchForm = 1;
+  }
+  switchToNewJobs(): void {
+    this.jobSwitchForm = 2;
+  }
+  switchToEditJobs(): void {
+    this.jobSwitchForm = 3;
+  }
+  // ------------------------------- OPEN DIALOGS AND SUBMITS -------------------------------
+  
+  // Open new hire approval dialog
+  async openHiresApproval(uuid : string, email: string) {
+    this.userId = uuid;
+    this.userEmail = email;
+    // Determine if the hire is approved
+    const isApproved = this.approvedHiresList.some(hire => hire.profile_id === uuid);
+    // Set the toggle value based on approval status
+    this.toggleForm.get('toggleValue')?.setValue(isApproved);
+    const dialogRef = this.dialog.open(this.dialogNewHires, {
         height: 'auto',
         width: '80%',
       }
     );
-
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
-
-  async submitApproval(email: string) {
+  // Submit new hire approval
+  async submitHiresApproval(uuid: string) {
     const toggleValue = this.toggleForm.get('toggleValue')!.value;
-    console.log('Toggle value:', toggleValue);
-
     // Call your backend service to update the row in your table
-    this.supabaseService.updateHiresApprovedRow(email,toggleValue) // Replace with your actual method name and adjust as needed
+    this.supabaseService.updateHiresApproved(uuid,toggleValue) // Replace with your actual method name and adjust as needed
       .then(response => {
         console.log('Updated successfully:', response);
         this.closeDialog();
-        
-        sessionStorage.setItem('callSwitchToApproveHires', 'true');
-
+        // Set a flag in session storage to switch to the hires form after the page reloads
+        sessionStorage.setItem('callSwitchToHires', 'true');
         window.location.reload();
       })
       .catch(error => {
         console.error('Error updating:', error);
       });
   }
-
+  // submit hire edit
+  async submitHireEdit(uuid: string) {
+    this.supabaseService.updateHiresEditApproved(uuid)
+      .then(response => {
+        this.supabaseService.replaceForHire(uuid)
+          .then(response => {
+            console.log('Updated successfully:', response);
+            this.closeDialog();
+            // Set a flag in session storage to switch to the hires form after the page reloads
+            sessionStorage.setItem('callSwitchToHires', 'true');
+            window.location.reload();
+          })
+          .catch(error => {
+            console.error('Error updating:', error);
+          });
+      })
+      .catch(error => {
+        console.error('Error updating:', error);
+      });
+  }
+  // Open new business approval dialog
+  async openBusinessesApproval(uuid: string, email: string) {
+    this.userId = uuid;
+    this.userEmail = email;
+    // Determine if the business is approved
+    const isApproved = this.approvedBusinessList.some(business => business.profile_id === uuid);
+    // Set the toggle value based on approval status
+    this.toggleForm.get('toggleValue')?.setValue(isApproved);
+    const dialogRef = this.dialog.open(this.dialogNewBusiness, {
+        height: 'auto',
+        width: '80%',
+      }
+    );
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  // Submit business approval
+  async submitBusinessesApproval(uuid: string) {
+    const toggleValue = this.toggleForm.get('toggleValue')!.value;
+    this.supabaseService.updateBusinessApproved(uuid,toggleValue)
+      .then(response => {
+        console.log('Updated successfully:', response);
+        this.closeDialog();
+        // Set a flag in session storage to switch to the businesses form after the page reloads
+        sessionStorage.setItem('callSwitchToBusinesses', 'true');
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error('Error updating:', error);
+      });
+  }
+  // submit business edit
+  async submitBusinessEdit(uuid: string) {
+    this.supabaseService.updateBusinessEditApproved(uuid)
+      .then(response => {
+        this.supabaseService.replaceBusiness(uuid)
+          .then(response => {
+            console.log('Updated successfully:', response);
+            this.closeDialog();
+            // Set a flag in session storage to switch to the businesses form after the page reloads
+            sessionStorage.setItem('callSwitchToBusinesses', 'true');
+            window.location.reload();
+          })
+          .catch(error => {
+            console.error('Error updating:', error);
+          });
+      })
+      .catch(error => {
+        console.error('Error updating:', error);
+      });
+  }
+  // Open new job approval dialog
+  async openJobsApproval(uuid: string, email: string) {
+    this.userId = uuid;
+    this.userEmail = email;
+    // Determine if the job is approved
+    const isApproved = this.approvedJobsList.some(job => job.profile_id === uuid);
+    // Set the toggle value based on approval status
+    this.toggleForm.get('toggleValue')?.setValue(isApproved);
+    const dialogRef = this.dialog.open(this.dialogNewJobs, {
+        height: 'auto',
+        width: '80%',
+      }
+    );
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  // Submit job approval
+  async submitJobsApproval(uuid: string) {
+    const toggleValue = this.toggleForm.get('toggleValue')!.value;
+    this.supabaseService.updateJobBoardApproved(uuid,toggleValue)
+      .then(response => {
+        console.log('Updated successfully:', response);
+        this.closeDialog();
+        // Set a flag in session storage to switch to the job board form after the page reloads
+        sessionStorage.setItem('callSwitchToJobBoard', 'true');
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error('Error updating:', error);
+      });
+  }
+  // submit job edit
+  async submitJobEdit(uuid: string) {
+    this.supabaseService.updateJobBoardEditApproved(uuid)
+      .then(response => {
+        this.supabaseService.replaceJobBoard(uuid)
+          .then(response => {
+            console.log('Updated successfully:', response);
+            this.closeDialog();
+            // Set a flag in session storage to switch to the job board form after the page reloads
+            sessionStorage.setItem('callSwitchToJobBoard', 'true');
+            window.location.reload();
+          })
+          .catch(error => {
+            console.error('Error updating:', error);
+          });
+      })
+      .catch(error => {
+        console.error('Error updating:', error);
+      });
+  }
+  // close function that works for all dialogs
   closeDialog() {
     this.dialog.closeAll();
-  }
-
-  async openBusinessApprovalDialog(email: string) {
-    this.currentEmail = email;
-    const dialogRef = this.dialog.open(this.dialogTemplate2, {
-        height: 'auto',
-        width: '80%',
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-
-  async submitBusinessApproval(email: string) {
-    const toggleValue = this.toggleForm.get('toggleValue')!.value;
-    console.log('Toggle value:', toggleValue);
-
-    this.supabaseService.updateBusinessApprovedRow(email,toggleValue)
-      .then(response => {
-        console.log('Updated successfully:', response);
-        this.closeDialog();
-        
-        sessionStorage.setItem('callSwitchToApproveBusinessAccounts', 'true');
-
-        window.location.reload();
-      })
-      .catch(error => {
-        console.error('Error updating:', error);
-      });
   }
 }
