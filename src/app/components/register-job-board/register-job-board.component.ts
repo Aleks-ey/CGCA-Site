@@ -6,6 +6,7 @@ import { BusinessListing } from '../register-business/register-business.componen
 
 export interface JobBoardListing {
   id?: number;
+  profile_id: string;
   company_name: string;
   job_title: string;
   job_description: string;
@@ -57,49 +58,57 @@ export class RegisterJobBoardComponent {
       this.userEmail = profileData.data?.email;
       this.userName = profileData.data?.name;
       this.userPhone = profileData.data?.phone_number;
-    }
 
-    const userJobs = await this.supabaseService.getUserJobs(this.userEmail);
-    const userBusiness = await this.supabaseService.getUserBusiness(this.userEmail);
-    this.userJobBoardListing = userJobs.data!;
-    this.userBusiness = userBusiness.data!;
-    if (this.userJobBoardListing.length > 0) {
-      this.form.patchValue({
-        company_name: this.userJobBoardListing[0].company_name,
-        job_title: this.userJobBoardListing[0].job_title,
-        job_description: this.userJobBoardListing[0].job_description,
-        email: this.userJobBoardListing[0].email,
-        phone_number: this.userJobBoardListing[0].phone_number,
-        pay: this.userJobBoardListing[0].pay,
-        location: this.userJobBoardListing[0].location,
-      });
-    }
-    else if(this.userBusiness.length > 0){
-      this.form.patchValue({
-        company_name: this.userBusiness[0].company_name,
-        email: this.userBusiness[0].email,
-        phone_number: this.userBusiness[0].phone_number,
-        location: this.userBusiness[0].location,
-      });
+      const userJobs = await this.supabaseService.getUserJobs(userId);
+      const userBusiness = await this.supabaseService.getUserBusiness(userId);
+      this.userJobBoardListing = userJobs.data!;
+      this.userBusiness = userBusiness.data!;
+      if (this.userJobBoardListing.length > 0) {
+        this.form.patchValue({
+          company_name: this.userJobBoardListing[0].company_name,
+          job_title: this.userJobBoardListing[0].job_title,
+          job_description: this.userJobBoardListing[0].job_description,
+          email: this.userJobBoardListing[0].email,
+          phone_number: this.userJobBoardListing[0].phone_number,
+          pay: this.userJobBoardListing[0].pay,
+          location: this.userJobBoardListing[0].location,
+        });
+      }
+      else if(this.userBusiness.length > 0){
+        this.form.patchValue({
+          company_name: this.userBusiness[0].company_name,
+          email: this.userBusiness[0].email,
+          phone_number: this.userBusiness[0].phone_number,
+          location: this.userBusiness[0].location,
+        });
+      }
+      else {
+        this.form.patchValue({
+          email: this.userEmail,
+          phone_number: this.userPhone,
+        });
+      }
     }
     else {
-      this.form.patchValue({
-        email: this.userEmail,
-        phone_number: this.userPhone,
-      });
+      console.error('User ID is null.');
     }
   }
 
   async onSubmit() {
-    const result = await this.supabaseService.addJob(this.form.value, this.userEmail);
-    if (result.error) {
-      console.error('Error inserting data:', result.error);
-      const dialogRef = this.dialog.open(this.dialogTemplateFail);
-    } else {
-      console.log('Request submitted successfully!');
+    const userId = await this.supabaseService.fetchUserId();
+    if (userId) {
+      const result = await this.supabaseService.addJobBoard(this.form.value, userId);
+      if (result.error) {
+        console.error('Error inserting data:', result.error);
+        const dialogRef = this.dialog.open(this.dialogTemplateFail);
+      } else {
+        console.log('Request submitted successfully!');
 
-      const dialogRef = this.dialog.open(this.dialogTemplateSuccess);
-      setTimeout(() => { window.location.reload(), 3000});
+        const dialogRef = this.dialog.open(this.dialogTemplateSuccess);
+        setTimeout(() => { window.location.reload(), 3000});
+      }
+    } else {
+      console.error('User ID is null.');
     }
   }
 }

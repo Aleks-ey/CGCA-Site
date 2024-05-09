@@ -19,7 +19,7 @@
     </ul>
 </div>
 
-<div class="meet_container flex flex-row mt-28 mx-6 md:mt-12 justify-center text-center">
+<div class="meet_container flex flex-row mt-40 mx-6 md:mt-12 justify-center text-center">
     <h2>Meet the Board <br/> Dedicated to Carrying Out Our Mission</h2>
 </div>
 <div class="meet_cards_container flex flex-col md:flex-row mt-8 justify-center">
@@ -83,7 +83,7 @@
     <div class="card">
         <button class="about-button" (click)="togglePopup3()">About</button>
         <div class="image-container">
-            <img class="tea_img" src='assets/images/TeaHeadshot.jpg' alt="">
+            <img class="resize_large_img" src='assets/images/TeaHeadshot.jpg' alt="">
         </div>
         <div class="text-container">
             <h2>Tea Todua</h2>
@@ -152,6 +152,35 @@
             <div class="popup_text"> 
                 <p>
                     My first visit to Tbilisi, Georgia was in 2008 to visit a possible business opportunity. This resulted in me living in Tbilisi for five months in 2010. Falling in love with Georgia, like many who have been fortunate enough to visit, I returned to Georgia each year before meeting my lovely wife, Tea Todua. Now we have three little Georgian/American daughters. I am excited to help the Colorado Georgian Community Association become a reality.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- Lasha Card -->
+    <div class="card">
+        <button class="about-button" (click)="togglePopup6()">About</button>
+        <div class="image-container">
+            <img class="resize_large_img" src='assets/images/LashaHeadshot.jpeg' alt="">
+        </div>
+        <div class="text-container">
+            <h2>Lasha Abashidze</h2>
+            <p>Director of Events</p>
+        </div>
+        </div>
+        <!-- Lasha Popup -->
+        <div *ngIf="showPopup6" class="popup" (click)="togglePopup6()">
+        <div class="popup-content">
+            <h3 class="text-xl">Lasha Abashid</h3>
+            <p class="text-lg">Director of Events</p>
+            <div class="popup_text">
+                <p>
+                    Lasha was born and raised in Tbilisi, Georgia. He pursued a career in Information Technologies and gained valuable experience working at the National Agency of Public Registry.
+                    <br/><br/>
+                    In 2015, Lasha relocated to the United States but missed the close-knit Georgian community back home. Determined to bring Georgians together, he initiated gatherings and provided support to those in need in Georgia. Additionally, Lasha recognized the importance of preserving Georgian culture and language for future generations, leading to the establishment of a Georgian language Sunday school. 
+                    <br/><br/>
+                    Through his efforts, Lasha aims to unite Georgians living abroad and foster a strong sense of cultural identity and pride. His commitment to his homeland and community exemplifies the values our organization stands for.
+                    <br/><br/>
+                    "I believe it's important for Georgians living away from home to support our people and preserve our culture," says Lasha.
                 </p>
             </div>
         </div>

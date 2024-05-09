@@ -56,13 +56,14 @@
             </div>
         </div>
     </div>
-    <!-- Is not Business -->
-    <div class="non_business_container flex flex-col justify-center" *ngIf="!isBusiness">
-        <div class="no_hire_listing_container flex flex-col relative mt-10 justify-center" *ngIf="!hasHireListing">
+
+    <div class="forms_container flex flex-col justify-center">
+        <!------------- For Hire Listing Submit ------------->
+        <div *ngIf="!hasHireListing" class="no_hire_listing_container flex flex-col relative mt-10 justify-center">
             <h1 class="no_hire_listing_header">
                 Submit a For Hire Listing
             </h1>
-            <div class="hlisting_buttons_container md:absolute flex flex-row" *ngIf="hasForHireRequest">
+            <div *ngIf="hasForHireRequest" class="hlisting_buttons_container md:absolute flex flex-row">
                 <div class="hlisting_edit_container mr-2">
                     <button (click)="openEditHireDialog()">
                         <mat-icon class="text-black">edit</mat-icon>
@@ -100,12 +101,12 @@
                 <h2 class="text-center">
                     Request has been made! Please wait for approval.
                 </h2>
-                <p>If there are any issues, or if you would like to follow up, please contact us by email at: CGCA.Ertoba@gmail.com</p>
+                <p>If there are any issues, or if you would like to follow up, please contact us by email at: Ertoba.CGCA&#64;gmail.com</p>
                 <p>Thank you.</p>
             </div>
         </div>
-        <!-- For Hire Listing -->
-        <div class="hire_listing_container flex flex-col relative mt-10" *ngIf="hasHireListing">
+        <!-- For Hire Listing Edit & Delete -->
+        <div *ngIf="hasHireListing" class="hire_listing_container flex flex-col relative mt-10">
             <h1 class="hire_listing_header">
                 Your For Hire Listing
             </h1>
@@ -142,7 +143,8 @@
                     </ng-template>
                 </div>
             </div>
-            <div class="hire_listing flex flex-col justify-center mx-auto" *ngFor="let listing of userHireListing">
+            <!------------- For Hire Listing ------------->
+            <div *ngFor="let listing of userHireListing" class="hire_listing flex flex-col justify-center mx-auto">
                 <div class="hire_listing_name flex flex-row">
                     <p>{{ listing.name }} -&nbsp;</p> 
                     <p> {{ listing.profession }}</p>
@@ -171,48 +173,55 @@
                 </div>
               </div>
         </div>
-        <!-- Business Account request button -->
-        <div class="business_account_offer_container mt-10">
-            <h1 class="business_account_offer_header">
-                Change to Business Account
-            </h1>
-            <div *ngIf="!hasBusinessRequest" class="business_account_offer mx-auto text-center">
-                <h2 class="text-center">
-                    Interested in promoting your business and finding potential hires?
-                </h2>
-                <p>Click the button below to request to have your account changed to a business account.</p>
-                <button class="business_button" (click)="requestBusiness()">Register as a business</button>
-                <ng-template #dialogRegisterBusiness class="overflow-hidden">
-                    <div class="p-4">
-                        <p>Request sent!</p>
-                    </div>
-                </ng-template>
-            </div>
-            <div *ngIf="hasBusinessRequest" class="business_account_rescind mx-auto text-center">
-                <h2 class="text-center">
-                    Request has been made! Please wait for approval.
-                </h2>
-                <p>Click the button below to cancel request.</p>
-                <button class="business_button" (click)="cancelRequest()">Cancel Request</button>
-                <ng-template #dialogRescindBusiness class="overflow-hidden">
-                    <div class="p-4">
-                        <p>Request cancelled!</p>
-                    </div>
-                </ng-template>
-            </div>
-        </div>
-    </div>
-
-    <!------------- Is Business ------------->
-    <div class="business_container" *ngIf="isBusiness">
-        <div class="no_blisting_container flex flex-col mt-10 justify-center" *ngIf="hasBusinessListing == false">
+        <!------------- Business Listing Submit ------------->
+        <div *ngIf="!hasBusinessListing" class="no_blisting_container flex flex-col relative mt-10 justify-center">
             <h1 class="no_blisting_header">
                 Submit a Business Listing
             </h1>
-            <app-register-business class="mb-10 mx-auto"></app-register-business>
+            <div *ngIf="hasBusinessRequest" class="blisting_buttons_container md:absolute flex flex-row">
+                <div class="blisting_edit_container mr-2">
+                    <button (click)="openEditBusinessDialog()">
+                        <mat-icon class="text-black">edit</mat-icon>
+                        Edit
+                    </button>
+                </div>
+                <div class="blisting_delete_container">
+                    <button (click)="openDeleteBusinessDialog()">
+                        <mat-icon class="text-black">delete</mat-icon>
+                        Delete
+                    </button>
+                    <ng-template #dialogDeleteBusiness class="overflow-hidden">
+                        <div class="p-4 text-center">
+                            <p>Are you sure you want to delete your Business Listing?</p>
+                            <p>This action cannot be undone.</p>
+                            <button class="business_delete_button" (click)="deleteBusiness()">Delete</button>
+                        </div>
+                        <ng-template #dialogDeleteBusinessSuccess class="overflow-hidden">
+                            <div class="p-4">
+                                <p>Business Listing Deleted!</p>
+                            </div>
+                        </ng-template>
+                        <ng-template #dialogDeleteBusinessFail class="overflow-hidden">
+                            <div class="p-4">
+                                <p>There was an error deleting your Business Listing</p>
+                                <br/>
+                                <p>Please try again.</p>
+                            </div>
+                        </ng-template>
+                    </ng-template>
+                </div>
+            </div>
+            <app-register-business *ngIf="!hasBusinessRequest" class="mb-10 mx-auto"></app-register-business>
+            <div *ngIf="hasBusinessRequest" class="for_hire_pending mx-auto text-center">
+                <h2 class="text-center">
+                    Request has been made! Please wait for approval.
+                </h2>
+                <p>If there are any issues, or if you would like to follow up, please contact us by email at: Ertoba.CGCA&#64;gmail.com</p>
+                <p>Thank you.</p>
+            </div>
         </div>
-    
-        <div class="blisting_container flex flex-col relative mt-10" *ngIf="hasBusinessListing == true">
+        <!------------- Business Listing Edit & Delete ------------->
+        <div *ngIf="hasBusinessListing" class="blisting_container flex flex-col relative mt-10">
             <h1 class="blisting_header">
                 Your Business Listing
             </h1>
@@ -249,7 +258,8 @@
                     </ng-template>
                 </div>
             </div>
-            <div class="blisting flex flex-col md:flex-row mx-auto" *ngFor="let listing of userBusiness">
+            <!------------- Business Listing ------------->
+            <div *ngFor="let listing of userBusiness" class="blisting flex flex-col md:flex-row mx-auto">
                 <!-- <div class="flex md:w-1/3 object-cover">
                     <img src="{{ listing.image_url }}" alt="business logo">
                 </div> -->
@@ -298,15 +308,55 @@
             </div>
         </div>
 
-        <!------------- Is Business: Job Board ------------->
-        <div class="no_job_board_listing_container flex flex-col mt-10 justify-center" *ngIf="hasJobBoardListing == false">
+        <!------------- Job Board Listing Submit ------------->
+        <div *ngIf="!hasJobBoardListing" class="no_job_board_listing_container flex flex-col relative mt-10 justify-center">
             <h1 class="no_job_board_listing_header">
                 Submit a Job Board Listing
             </h1>
-            <app-register-job-board class=" mb-10 mx-auto"></app-register-job-board>
+            <div *ngIf="hasJobBoardRequest" class="jlisting_buttons_container md:absolute flex flex-row">
+                <div class="jlisting_edit_container mr-2">
+                    <button (click)="openEditJobBoardDialog()">
+                        <mat-icon class="text-black">edit</mat-icon>
+                        Edit
+                    </button>
+                </div>
+                <div class="jlisting_delete_container">
+                    <button (click)="openDeleteJobBoardDialog()">
+                        <mat-icon class="text-black">delete</mat-icon>
+                        Delete
+                    </button>
+                    <ng-template #dialogDeleteJobBoard class="overflow-hidden">
+                        <div class="p-4 text-center">
+                            <p>Are you sure you want to delete your Job Board Listing?</p>
+                            <p>This action cannot be undone.</p>
+                            <button class="job_board_delete_button" (click)="deleteJobBoardListing()">Delete</button>
+                        </div>
+                        <ng-template #dialogDeleteJobBoardSuccess class="overflow-hidden">
+                            <div class="p-4">
+                                <p>Job Board Listing Deleted!</p>
+                            </div>
+                        </ng-template>
+                        <ng-template #dialogDeleteJobBoardFail class="overflow-hidden">
+                            <div class="p-4">
+                                <p>There was an error deleting your Job Board Listing</p>
+                                <br/>
+                                <p>Please try again.</p>
+                            </div>
+                        </ng-template>
+                    </ng-template>
+                </div>
+            </div>
+            <app-register-job-board *ngIf="!hasJobBoardRequest" class=" mb-10 mx-auto"></app-register-job-board>
+            <div *ngIf="hasJobBoardRequest" class="for_hire_pending mx-auto text-center">
+                <h2 class="text-center">
+                    Request has been made! Please wait for approval.
+                </h2>
+                <p>If there are any issues, or if you would like to follow up, please contact us by email at: Ertoba.CGCA&#64;gmail.com</p>
+                <p>Thank you.</p>
+            </div>
         </div>
-    
-        <div class="job_board_listing_container flex flex-col relative mt-10" *ngIf="hasJobBoardListing == true">
+        <!------------- Job Board Listing Edit & Delete ------------->
+        <div *ngIf="hasJobBoardListing == true" class="job_board_listing_container flex flex-col relative mt-10">
             <h1 class="job_board_listing_header">
                 Your Job Board Listing
             </h1>
@@ -343,7 +393,8 @@
                     </ng-template>
                 </div>
             </div>
-            <div class="jlisting flex flex-col justify-center mx-auto" *ngFor="let listing of userJobBoardListing">
+            <!------------- Job Board Listing  ------------->
+            <div *ngFor="let listing of userJobBoardListing" class="jlisting flex flex-col justify-center mx-auto">
                 <div class="jlisting_name flex flex-col md:flex-row justify-center">
                     <h3 class="hidden md:block">{{ listing.job_title }} -&nbsp;</h3>
                     <h3 class="block md:hidden">{{ listing.job_title }}</h3>

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
 // import { CalendarEvent } from './calendarEvent.model';
-import { eventsAnimation } from './events-animation';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 
 export interface CalendarEvent {
@@ -10,13 +9,13 @@ export interface CalendarEvent {
   description: string;
   time: string;
   title: string;
+  img_url: string;
 }
 
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css'],
-  animations: [eventsAnimation],
 })
 
 export class EventsComponent {
@@ -27,11 +26,13 @@ export class EventsComponent {
     description: '',
     time: '',
     title: '',
+    img_url: '',
   };
 
   eventsList: CalendarEvent[] = [];
   eventDates: Set<string> = new Set();
   // selectedEventId?: number;
+  sliderEventsList: CalendarEvent[] = [];
 
   constructor(private supabaseService: SupabaseService) {}
 
@@ -46,6 +47,18 @@ export class EventsComponent {
         time: this.formatTime(event.time)
       }));
       this.eventDates = new Set(this.eventsList.map(event => event.date));
+
+      // Sort eventsList and put any events that are 1 week before the current date and 2 months after the current date into the sliderEventsList
+      const currentDate = new Date();
+      const twoMonthsAfter = new Date(currentDate);
+      twoMonthsAfter.setMonth(twoMonthsAfter.getMonth() + 2);
+      currentDate.setDate(currentDate.getDate() - 1);
+
+      this.eventsList.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      this.sliderEventsList = this.eventsList.filter(event => {
+        const eventDate = new Date(event.date);
+        return eventDate >= currentDate && eventDate <= twoMonthsAfter;
+      });
     }
   }
 
@@ -70,13 +83,13 @@ export class EventsComponent {
 }
 
   // ------------------ Event Slider ------------------
-  currentEvent = 0;
+  currentSliderEvent = 0;
   x = 0;
   cardx = 0;
-
+  
   onPrevious() {
-    const previousEvent = this.currentEvent - 1;
-    this.currentEvent = previousEvent < 0 ? this.eventsList.length - 1 : previousEvent;
+    const previousEvent = this.currentSliderEvent - 1;
+    this.currentSliderEvent = previousEvent < 0 ? this.eventsList.length - 1 : previousEvent;
 
     if(this.cardx != 0) {
       this.x += 360;
@@ -85,18 +98,17 @@ export class EventsComponent {
   }
 
   onNext() {
-    const nextEvent = this.currentEvent + 1;
-    this.currentEvent = nextEvent === this.eventsList.length ? 0 : nextEvent;
-
+    const nextEvent = this.currentSliderEvent + 1;
+    this.currentSliderEvent = nextEvent === this.eventsList.length ? 0 : nextEvent;
 
     if(window.innerWidth > 768) {
-      if(this.cardx != this.eventsList.length-2) {
+      if(this.cardx != this.sliderEventsList.length-2 && this.sliderEventsList.length > 1) {
         this.x -= 360;
         this.cardx += 1;
       }
     }
     else {
-      if(this.cardx != this.eventsList.length-1) {
+      if(this.cardx != this.sliderEventsList.length-1 && this.sliderEventsList.length > 1) {
         this.x -= 360;
         this.cardx += 1;
       }

@@ -2,36 +2,44 @@
     <form [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
         <h2>Register</h2>
         <div class="table mb-4">
-            <div class="table-row mb-2">
+            <div class="table-row space-y-1">
                 <label for="name" class="table-cell text-right">Full Name:</label>
                 <input type="text" id="name" name="name" formControlName="name" class="table-cell border-gray-300 border-2">
-                <i style="color: tomato" class="table-row"
+                <i class="table-row text-rojo-red"
                     *ngIf="registerForm.controls['name'].invalid && (registerForm.controls['name'].dirty || registerForm.controls['name'].touched)">
                     Name is required
                 </i>
             </div>
-            <div class="table-row mb-4">
+            <div class="table-row space-y-1">
                 <label for="phone_number" class="table-cell text-right">Phone #:</label>
                 <input type="tel" id="phone_number" name="phone_number" formControlName="phone_number" class="table-cell border-gray-300 border-2">
-                <i style="color: tomato" class="table-row"
+                <i class="table-row text-rojo-red"
                     *ngIf="registerForm.controls['phone_number'].invalid && (registerForm.controls['phone_number'].dirty || registerForm.controls['phone_number'].touched)">
                     Phone Number is required and must be valid, 10 digits
                 </i>
             </div>
-            <div class="table-row mb-2">
+            <div class="table-row space-y-1">
                 <label for="email" class="table-cell text-right">Email:</label>
                 <input type="email" id="email" name="email" formControlName="email" class="table-cell border-gray-300 border-2">
-                <i style="color: tomato" class="table-row"
+                <i class="table-row text-rojo-red"
                     *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
                     Email is required and must be valid
                 </i>
             </div>
-            <div class="table-row">
+            <div class="table-row space-y-1">
                 <label for="password" class="table-cell text-right">Password:</label>
                 <input type="password" id="password" name="password" formControlName="password" class="table-cell border-gray-300 border-2">
-                <i style="color: tomato" class="table-row"
+                <i class="table-row text-rojo-red"
                     *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)">
                     Password Must Be at Least 6 Characters
+                </i>
+            </div>
+            <div class="table-row space-y-1">
+                <label for="confirmPassword" class="table-cell text-right">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword" class="table-cell border-gray-300 border-2">
+                <i class="table-row text-rojo-red"
+                    *ngIf="registerForm.errors?.['notSame'] && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched) && (registerForm.controls['confirmPassword'].dirty || registerForm.controls['confirmPassword'].touched)">
+                    Passwords must match
                 </i>
             </div>
         </div>

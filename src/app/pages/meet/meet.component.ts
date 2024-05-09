@@ -26,6 +26,7 @@ export class MeetComponent {
   showPopup3 = false;
   showPopup4 = false;
   showPopup5 = false;
+  showPopup6 = false;
 
   togglePopup1() {
     this.showPopup1 = !this.showPopup1;
@@ -45,5 +46,9 @@ export class MeetComponent {
 
   togglePopup5() {
     this.showPopup5 = !this.showPopup5;
+  }
+
+  togglePopup6() {
+    this.showPopup6 = !this.showPopup6;
   }
 }

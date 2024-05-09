@@ -21,18 +21,18 @@ export class AccountComponent {
   userName: any = '';
   userPhone: any = '';
   isLoggedIn = false;
-  isBusiness = false;
 
   userHireListing: ForHireListing[] = [];
   hasHireListing = false;
   hasForHireRequest = false;
 
   userBusiness: BusinessListing[] = [];
-  hasBusinessRequest = false;
   hasBusinessListing = false;
+  hasBusinessRequest = false;
   
   userJobBoardListing: JobBoardListing[] = [];
   hasJobBoardListing = false;
+  hasJobBoardRequest = false;
 
   constructor(
     private supabaseService: SupabaseService,
@@ -40,42 +40,31 @@ export class AccountComponent {
     private auth: SupabaseService,
     private formBuilder: FormBuilder,
     private router: Router,
-    ) {
-      this.loginForm = this.formBuilder.group({
-        email: formBuilder.control('', [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.pattern(
-            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          ),
-        ]),
-        password: formBuilder.control('', [Validators.required, Validators.minLength(6)]),
-      });
-    }
+  ) {
+    this.loginForm = this.formBuilder.group({
+      email: formBuilder.control('', [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.pattern(
+          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        ),
+      ]),
+      password: formBuilder.control('', [Validators.required, Validators.minLength(6)]),
+    });
+  }
 
   async ngOnInit() {
     // Initialize user profile data.
     let profileData: any;
     const userId = await this.supabaseService.fetchUserId();
+    // If userId is not null, then fetch the profile and relevant data.
     if (userId) {
-      // If userId is not null, then fetch the profile.
       profileData = await this.supabaseService.getProfile(userId);
-    } else {
-      // Handle the case when there is no user logged in.
-      console.error('No user is logged in.');
-    }
-    this.userName = profileData.data?.name;
-    this.userPhone = profileData.data?.phone_number;
-    this.userEmail = profileData.data?.email;
-    // check if user has a business account
-    this.isBusiness = profileData.data?.business_acc;
-    // check if user has requested a business account
-    this.hasBusinessRequest = profileData.data?.business_request;
-    // check if user has requested a for hire listing
-    this.hasForHireRequest = profileData.data?.for_hire_request;
-    // if user is not a business, check if they have a for hire listing thast been approved
-    if(!this.isBusiness) {
-      const userHiresData = await this.supabaseService.getUserHires(this.userEmail);
+      this.userName = profileData.data?.name;
+      this.userPhone = profileData.data?.phone_number;
+      this.userEmail = profileData.data?.email;
+      // Fetch the user's hire listing.
+      const userHiresData = await this.supabaseService.getUserHires(userId);
       if (userHiresData.error) {
         console.error('Error fetching events:', userHiresData.error);
       } 
@@ -85,41 +74,56 @@ export class AccountComponent {
           if(this.userHireListing[0].approved == true) {
             this.hasHireListing = true;
           }
+          else {
+            this.hasForHireRequest = true;
+          }
         }
       }
-    }
-    // if user is a business, check if they have a business listing and job board listing 
-    else {
-      const userBusinessData = await this.supabaseService.getUserBusiness(this.userEmail);
+      // Fetch the user's business listing.
+      const userBusinessData = await this.supabaseService.getUserBusiness(userId);
       if (userBusinessData.error) {
         console.error('Error fetching events:', userBusinessData.error);
       } 
       else {
         this.userBusiness = userBusinessData.data!;
         if(this.userBusiness.length > 0) {
-          this.hasBusinessListing = true;
+          if(this.userBusiness[0].approved == true) {
+            this.hasBusinessListing = true;
+          }
+          else {
+            this.hasBusinessRequest = true;
+          }
         }
       }
-      const userJobsData = await this.supabaseService.getUserJobs(this.userEmail);
+      // Fetch the user's job board listing.
+      const userJobsData = await this.supabaseService.getUserJobs(userId);
       if (userJobsData.error) {
         console.error('Error fetching events:', userJobsData.error);
       } 
       else {
         this.userJobBoardListing = userJobsData.data!;
         if(this.userJobBoardListing.length > 0) {
-          this.hasJobBoardListing = true;
+          if(this.userJobBoardListing[0].approved == true) {
+            this.hasJobBoardListing = true;
+          }
+          else {
+            this.hasJobBoardRequest = true;
+          }
         }
       }
     }
+    else {
+      // Handle the case when there is no user logged in.
+      console.error('No user is logged in.');
+    }
   }
 
-  // ----------------- Logout -----------------
   async logout() {
     await this.supabaseService.signOut();
     setTimeout (() => {this.router.navigate(['/account-login']), 1000});
   }
 
-  // ----------------- User Info -----------------
+  // --------------------------------- USER INFO ---------------------------------
   formatPhone(userPhone: any): string {
     if (typeof userPhone === 'string') {
       return `(${userPhone.slice(0,3)}) ${userPhone.slice(3,6)}-${userPhone.slice(6,10)}`;
@@ -127,7 +131,7 @@ export class AccountComponent {
       return 'Invalid phone number'; // or any other fallback logic you want
     }
   }
-
+  // update username
   newName='';
   public updateUserName(newName: string) {
     if(newName != '') {
@@ -135,7 +139,7 @@ export class AccountComponent {
       setTimeout(() => {window.location.reload(), 3000});
     }
   }
-
+  // update phone number
   newPhone='';
   public updateUserPhone(newPhone: string) {
     console.log(newPhone);
@@ -144,7 +148,7 @@ export class AccountComponent {
       setTimeout(() => {window.location.reload(), 3000});
     }
   }
-
+  // update email
   newEmail='';
   public updateUserEmail(newEmail: string) {
     if(newEmail != '') {
@@ -152,9 +156,10 @@ export class AccountComponent {
       setTimeout(() => {window.location.reload(), 3000});
     }
   }
-
+  // update password dialog inits
   @ViewChild('dialogPasswordUpdateSuccess') dialogPasswordUpdateSuccess!: TemplateRef<any>;
   @ViewChild('dialogPasswordUpdateFail') dialogPasswordUpdateFail!: TemplateRef<any>;
+  // update password
   newPassword='';
   async updateUserPassword(newPassword: string) {
     if(newPassword != '') {
@@ -168,23 +173,7 @@ export class AccountComponent {
       }
     }
   }
-
-  @ViewChild ('dialogRegisterBusiness') dialogRegisterBusiness!: TemplateRef<any>;
-  requestBusiness() {
-    this.supabaseService.makeBusinessRequest(this.userEmail);
-    const dialogRef = this.dialog.open(this.dialogRegisterBusiness);
-    setTimeout(() => {window.location.reload(), 3000});
-  }
-
-  @ViewChild ('dialogRescindBusiness') dialogRescindBusiness!: TemplateRef<any>;
-  cancelRequest() {
-    this.supabaseService.cancelBusinessRequest(this.userEmail);
-    const dialogRef = this.dialog.open(this.dialogRescindBusiness);
-    setTimeout(() => {window.location.reload(), 3000});
-  }
-
-  // ----------------- Edits -----------------
-
+  // --------------------------------- EDITS ---------------------------------
   openEditAccountDialog(): void {
     const dialogRef = this.dialog.open(UpdateAccountComponent, {
     });
@@ -229,13 +218,19 @@ export class AccountComponent {
   @ViewChild('dialogDeleteForHireSuccess') dialogDeleteForHireSuccess!: TemplateRef<any>;
   @ViewChild('dialogDeleteForHireFail') dialogDeleteForHireFail!: TemplateRef<any>;
   async deleteForHire() {
-    const check = await this.supabaseService.deleteForHireListing(this.userEmail);
-    if(check) {
-      const dialogRef = this.dialog.open(this.dialogDeleteForHireSuccess);
-      setTimeout(() => {window.location.reload(), 3000});
+    const userId = await this.supabaseService.fetchUserId();
+    if (userId) {
+      const check = await this.supabaseService.deleteForHireListing(userId);
+      if(check) {
+        const dialogRef = this.dialog.open(this.dialogDeleteForHireSuccess);
+        setTimeout(() => {window.location.reload(), 3000});
+      }
+      else {
+        const dialogRef = this.dialog.open(this.dialogDeleteForHireFail);
+      }
     }
     else {
-      const dialogRef = this.dialog.open(this.dialogDeleteForHireFail);
+      console.error('User ID is null.');
     }
   }
 
@@ -247,13 +242,19 @@ export class AccountComponent {
   @ViewChild('dialogDeleteBusinessSuccess') dialogDeleteBusinessSuccess!: TemplateRef<any>;
   @ViewChild('dialogDeleteBusinessFail') dialogDeleteBusinessFail!: TemplateRef<any>;
   async deleteBusiness() {
-    const check = await this.supabaseService.deleteBusiness(this.userEmail);
-    if(check) {
-      const dialogRef = this.dialog.open(this.dialogDeleteBusinessSuccess);
-      setTimeout(() => {window.location.reload(), 3000});
+    const userId = await this.supabaseService.fetchUserId();
+    if (userId) {
+      const check = await this.supabaseService.deleteBusinessListing(userId);
+      if(check) {
+        const dialogRef = this.dialog.open(this.dialogDeleteBusinessSuccess);
+        setTimeout(() => {window.location.reload(), 3000});
+      }
+      else {
+        const dialogRef = this.dialog.open(this.dialogDeleteBusinessFail);
+      }
     }
     else {
-      const dialogRef = this.dialog.open(this.dialogDeleteBusinessFail);
+      console.error('User ID is null.');
     }
   }
 
@@ -265,13 +266,19 @@ export class AccountComponent {
   @ViewChild('dialogDeleteJobBoardSuccess') dialogDeleteJobBoardSuccess!: TemplateRef<any>;
   @ViewChild('dialogDeleteJobBoardFail') dialogDeleteJobBoardFail!: TemplateRef<any>;
   async deleteJobBoardListing() {
-    const check = await this.supabaseService.deleteJobBoardListing(this.userEmail);
-    if(check) {
-      const dialogRef = this.dialog.open(this.dialogDeleteJobBoardSuccess);
-      setTimeout(() => {window.location.reload(), 3000});
+    const userId = await this.supabaseService.fetchUserId();
+    if (userId) {
+      const check = await this.supabaseService.deleteJobBoardListing(userId);
+      if(check) {
+        const dialogRef = this.dialog.open(this.dialogDeleteJobBoardSuccess);
+        setTimeout(() => {window.location.reload(), 3000});
+      }
+      else {
+        const dialogRef = this.dialog.open(this.dialogDeleteJobBoardFail);
+      }
     }
     else {
-      const dialogRef = this.dialog.open(this.dialogDeleteJobBoardFail);
+      console.error('User ID is null.');
     }
   }
 }

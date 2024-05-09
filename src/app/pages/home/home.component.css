@@ -131,8 +131,8 @@
     /* background: linear-gradient(to right, #dc2626 50%, black 50%); */
     background-color: black;
     background-size: 200%;
-    background-clip: text;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -301,7 +301,7 @@
 }
 
 .support_box {
-    width: 90%;
+    width: 98%;
     height: 100%;
     border-radius: 10px;
 }
@@ -335,7 +335,7 @@
     border-width: 1px;
     color: white;
     font-size: clamp(0.875rem, 0.875rem + ((1vw - 0.48rem) * 0.481), 1.125rem);
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1;
     padding-top: 1.188rem;
     padding-right: 2.5rem;

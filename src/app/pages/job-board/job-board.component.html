@@ -2,7 +2,7 @@
     <mat-icon class="text-black float-left mt-1.5 ml-2 md:ml-6">keyboard_arrow_left</mat-icon>
 </a>
 <a href="/community" class="top_links float-left mt-2 md:ml-1">Back</a>
-<button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="top_links float-right mt-2 mr-2 md:mr-6">Login</button>
+<button *ngIf="!isLoggedIn" class="top_links float-right mt-2 mr-2 md:mr-6"><a routerLink="/account-login">Login</a></button>
 <div *ngIf="isLoggedIn" class="flex float-right mt-2 mr-2 md:mr-6 gap-2">
     <a href="/account" class="top_links"> My Account </a>
     <button (click)="logout()" class="top_links">Logout</button>

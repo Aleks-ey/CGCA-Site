@@ -6,6 +6,7 @@ import { MatInput } from '@angular/material/input';
 
 export interface ForHireListing {
   id?: number;
+  profile_id: string;
   name: string;
   profession: string;
   about: string;
@@ -57,53 +58,59 @@ export class ForHireRequestComponent {
       this.userEmail = profileData.data?.email;
       this.userName = profileData.data?.name;
       this.userPhone = profileData.data?.phone_number;
-    }
-
-    const userHires = await this.supabaseService.getUserHires(this.userEmail);
-    if (userHires.error) {
-      console.error('Error fetching data:', userHires.error);
-    } 
-    else {
-      this.userHireListing = userHires.data!;
-      if (this.userHireListing.length > 0) {
-        this.form.patchValue({
-          name: this.userHireListing[0].name,
-          profession: this.userHireListing[0].profession,
-          about: this.userHireListing[0].about,
-          email: this.userHireListing[0].email,
-          phone_number: this.userHireListing[0].phone_number,
-          location: this.userHireListing[0].location,
-          work_outside: this.userHireListing[0].work_outside,
-          approved: this.userHireListing[0].approved,
-        });
-      }
+  
+      const userHires = await this.supabaseService.getUserHires(userId);
+      if (userHires.error) {
+        console.error('Error fetching data:', userHires.error);
+      } 
       else {
-        this.form.patchValue({
-          name: this.userName,
-          profession: '',
-          about: '',
-          email: this.userEmail,
-          phone_number: this.userPhone,
-          location: '',
-          work_outside: false,
-          approved: false,
-        });
+        this.userHireListing = userHires.data!;
+        if (this.userHireListing.length > 0) {
+          this.form.patchValue({
+            name: this.userHireListing[0].name,
+            profession: this.userHireListing[0].profession,
+            about: this.userHireListing[0].about,
+            email: this.userHireListing[0].email,
+            phone_number: this.userHireListing[0].phone_number,
+            location: this.userHireListing[0].location,
+            work_outside: this.userHireListing[0].work_outside,
+            approved: false,
+          });
+        }
+        else {
+          this.form.patchValue({
+            name: this.userName,
+            profession: '',
+            about: '',
+            email: this.userEmail,
+            phone_number: this.userPhone,
+            location: '',
+            work_outside: false,
+            approved: false,
+          });
+        }
       }
+    }
+    else {
+      console.error('User ID is null.');
     }
   }
 
   async onSubmit() {
-    const addHireData = await this.supabaseService.addForHire(this.form.value, this.userEmail);
-    if (addHireData.error) {
-      console.error('Error inserting data:', addHireData.error);
-      const dialogRef = this.dialog.open(this.dialogTemplateFail);
-    } else {
-      console.log('Request submitted successfully!');
-
-      this.supabaseService.makeForHireRequest(this.userEmail);
-
-      const dialogRef = this.dialog.open(this.dialogTemplateSuccess);
-      setTimeout(() => { window.location.reload(), 3000 });
+    const userId = await this.supabaseService.fetchUserId();
+    if (userId) {
+      const addHireData = await this.supabaseService.addForHire(this.form.value, userId);
+      if (addHireData.error) {
+        console.error('Error inserting data:', addHireData.error);
+        const dialogRef = this.dialog.open(this.dialogTemplateFail);
+      } else {
+        console.log('Request submitted successfully!');
+        const dialogRef = this.dialog.open(this.dialogTemplateSuccess);
+        setTimeout(() => { window.location.reload(), 3000 });
+      }
+    }
+    else {
+      console.error('User ID is null.');
     }
   }
 }

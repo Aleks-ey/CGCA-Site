@@ -174,52 +174,6 @@
     opacity: 0.8;
     border-radius: 10px;
 }
-/* non-business account css for business account registration */
-.business_account_offer {
-    width: 70vw;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-@media screen and (max-width: 768px) {
-    .business_account_offer {
-        width: 90vw;
-    }
-}
-
-.business_account_rescind {
-    width: 70vw;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-@media screen and (max-width: 768px) {
-    .business_account_rescind {
-        width: 90vw;
-    }
-}
-
-.business_account_offer_header {
-    margin-left: 15vw;
-}
-
-@media screen and (max-width: 768px) {
-    .business_account_offer_header {
-        margin-left: 5vw;
-    }
-}
-
-.business_button {
-    color: #DC2626;
-    border: 1px solid #DC2626;
-    border-radius: 10px;
-    padding: 10px;
-    margin-top: 10px;
-}
 
 /* business account css for business listing */
 .no_blisting_header {
