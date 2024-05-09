@@ -16,19 +16,18 @@
             </button>
         </div>
     </div>
-    <div class="event_container_right flex-row md:w-2/3 justify-center"
-    (swipeleft)="onNext()" 
-    (swiperight)="onPrevious()">
+    <div class="event_container_right md:w-2/3 content-center"
+        (swipeleft)="onNext()" 
+        (swiperight)="onPrevious()"
+        [ngClass]="{ 'text-center md:text-left': sliderEventsList.length === 0}"
+    >
         <div 
             class="event_card_container m-5"
-            *ngFor="let event of eventsList, let i = index"
+            *ngFor="let event of sliderEventsList, let i = index"
             [ngStyle]="{ transform: 'translateX(' + x + 'px)', transition: 'transform 0.5s'}"
         >
-            <div 
-                class="event_card p-4"
-                @eventsAnimation
-            >
-                <img src="/" alt="event card image" class="event_card_img h-2/5 w-full">
+            <div class="event_card p-4">
+                <img *ngIf="event.img_url" src="{{ event.img_url }}" alt="event card image" class="event_card_img h-2/5 w-full">
                 <h2 class="!ml-0 !mt-4">
                     {{ event.title }}
                 </h2>
@@ -40,6 +39,13 @@
                     &nbsp; - &nbsp;
                     {{ event.time }}
                 </div>
+            </div>
+        </div>
+        <!-- if there are no events in sliderEventsList -->
+        <div class="event_card_container m-4" *ngIf="sliderEventsList.length === 0">
+            <div class="event_card p-4">
+                <h2>No upcoming events</h2>
+                <p>Check back later for more events!</p>
             </div>
         </div>
     </div>
@@ -54,13 +60,18 @@
             <p>Selected date: {{onSelect(selected)}}</p>
         </div>
         <div class="selected_events md:w-2/3">
-            <div class="selected_events_card md:ml-10 mb-4 p-6" *ngFor="let selectedEvent of selectedEventsList">
-                <h2>{{ selectedEvent.title }}</h2>
-                <p class="overflow-y-auto">{{ selectedEvent.description }}</p>
-                <div class="flex flex-row">
-                    <p>{{ selectedEvent.date }}</p>
-                    &nbsp; - &nbsp;
-                    <p>{{ selectedEvent.time }}</p>
+            <div class="selected_events_card flex flex-row md:ml-10 mb-4 p-6" *ngFor="let selectedEvent of selectedEventsList">
+                <div class="w-1/2 pr-4">
+                    <h2>{{ selectedEvent.title }}</h2>
+                    <p class="overflow-y-auto">{{ selectedEvent.description }}</p>
+                    <div class="flex flex-row">
+                        <p>{{ selectedEvent.date }}</p>
+                        &nbsp; - &nbsp;
+                        <p>{{ selectedEvent.time }}</p>
+                    </div>
+                </div>
+                <div class="w-1/2">
+                    <img *ngIf="selectedEvent.img_url" src="{{ selectedEvent.img_url }}" alt="event card image" class="shadow-lg">
                 </div>
             </div>
         </div>
