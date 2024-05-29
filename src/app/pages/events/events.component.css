@@ -50,7 +50,7 @@
 }
 
 .event_card_img {
-    box-shadow: black 0px 0px 10px;
+    /* box-shadow: black 0px 0px 10px; */
     border-radius: 10px 10px 0 0;
 }
 
@@ -74,9 +74,10 @@
 .selected_events_card {
     border-width: 1px;
     border-radius: 10px;
-    background-color: #1E293B;
+    background-color: white;
+    /* background: linear-gradient(90deg, #1E293B 47%, white 100%); */
     min-height: 200px;
-    color: white;
+    color: black;
 }
 
 .selected_events_card > p {

@@ -19,25 +19,27 @@
     <div class="event_container_right md:w-2/3 content-center"
         (swipeleft)="onNext()" 
         (swiperight)="onPrevious()"
-        [ngClass]="{ 'text-center md:text-left': sliderEventsList.length === 0}"
+        [ngClass]="{ 'text-center md:text-left': sliderEventsList.length === 0 || sliderEventsList.length === 1}"
     >
         <div 
             class="event_card_container m-5"
             *ngFor="let event of sliderEventsList, let i = index"
             [ngStyle]="{ transform: 'translateX(' + x + 'px)', transition: 'transform 0.5s'}"
         >
-            <div class="event_card p-4">
-                <img *ngIf="event.img_url" src="{{ event.img_url }}" alt="event card image" class="event_card_img h-2/5 w-full">
-                <h2 class="!ml-0 !mt-4">
-                    {{ event.title }}
-                </h2>
-                <p class="h-1/5 !ml-0 overflow-y-auto">
-                    {{ event.description }}
-                </p>
-                <div class="ml-0">
-                    {{ event.date }}
-                    &nbsp; - &nbsp;
-                    {{ event.time }}
+            <div class="event_card ">
+                <img *ngIf="event.image_url" src="{{ event.image_url }}" alt="event card image" class="event_card_img h-2/5 w-full">
+                <div class="p-4">
+                    <h2 class="!ml-0 !mt-4">
+                        {{ event.title }}
+                    </h2>
+                    <p class="h-1/5 !ml-0 overflow-y-auto">
+                        {{ event.description }}
+                    </p>
+                    <div class="ml-0">
+                        {{ event.date }}
+                        &nbsp; - &nbsp;
+                        {{ event.time }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,18 +62,18 @@
             <p>Selected date: {{onSelect(selected)}}</p>
         </div>
         <div class="selected_events md:w-2/3">
-            <div class="selected_events_card flex flex-row md:ml-10 mb-4 p-6" *ngFor="let selectedEvent of selectedEventsList">
-                <div class="w-1/2 pr-4">
+            <div class="selected_events_card flex flex-col md:flex-row md:ml-10 mb-4" *ngFor="let selectedEvent of selectedEventsList">
+                <div class="md:w-1/2 p-6">
                     <h2>{{ selectedEvent.title }}</h2>
-                    <p class="overflow-y-auto">{{ selectedEvent.description }}</p>
+                    <p class="overflow-y-auto overflow-x-auto">{{ selectedEvent.description }}</p>
                     <div class="flex flex-row">
                         <p>{{ selectedEvent.date }}</p>
                         &nbsp; - &nbsp;
                         <p>{{ selectedEvent.time }}</p>
                     </div>
                 </div>
-                <div class="w-1/2">
-                    <img *ngIf="selectedEvent.img_url" src="{{ selectedEvent.img_url }}" alt="event card image" class="shadow-lg">
+                <div class="md:w-1/2 p-2">
+                    <img *ngIf="selectedEvent.image_url" src="{{ selectedEvent.image_url }}" alt="event card image" class="shadow-lg rounded-lg">
                 </div>
             </div>
         </div>

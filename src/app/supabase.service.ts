@@ -426,4 +426,19 @@ export class SupabaseService {
         if (error) { throw error; }
         return data;
     }
+
+    async uploadFile(path: string, file: File): Promise<string> {
+        const { data, error } = await this.supabase
+            .storage
+            .from('event-images')
+            .upload(path, file);
+
+            if (error) {
+                console.error('Upload error:', error.message);
+                throw error;
+              }
+            
+              // Assuming public bucket or public URL settings
+              return `${environment.supabaseUrl}/storage/v1/object/public/${data.path || path}`;
+    }
 }

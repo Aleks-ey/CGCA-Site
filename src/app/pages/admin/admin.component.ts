@@ -1,6 +1,6 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { Profile, SupabaseService } from 'src/app/supabase.service';
-import { CalendarEvent } from './calendarEvent.model';
+import { CalendarEvent } from '../events/calendarEvent.model';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { Subscription } from 'rxjs';
@@ -20,6 +20,7 @@ export class AdminComponent {
     description: '',
     time: '',
     title: '',
+    image_url: '',
   };
 
   eventsList: CalendarEvent[] = [];
@@ -163,20 +164,47 @@ export class AdminComponent {
       sessionStorage.removeItem('callSwitchToJobBoard');
     }
   }
+  // Upload image
+  private file: File | null = null;
+  onFileSelected(event: any) {
+    this.file = event.target.files[0];
+  }
+  async upload() {
+    if (!this.file) {
+      alert('Please select a file first.');
+      return;
+    }
+    try {
+      const url = await this.supabaseService.uploadFile(`admin/assets/${this.file.name}`, this.file);
+      alert('File uploaded successfully: ' + url);
+      return url;
+    } catch (error) {
+      console.error('Upload error', error);
+      return null;
+    }
+  }
   // Add event
   async submitEvent() {
-    const result = await this.supabaseService.addEvent(this.event);
-    if (result.error) {
-      console.error('Error inserting data:', result.error);
+    const url = await this.upload();
+    console.log('URL:', url);
+    if(url) {
+      this.event.image_url = url;
+      const result = await this.supabaseService.addEvent(this.event);
+      if (result.error) {
+        console.error('Error inserting data:', result.error);
+      } else {
+        console.log('Event added successfully!');
+        await this.fetchEvents();
+        this.event = {
+          date: '',
+          description: '',
+          time: '',
+          title: '',
+          image_url: '',
+        };
+      }
     } else {
-      console.log('Event added successfully!');
-      await this.fetchEvents();
-      this.event = {
-        date: '',
-        description: '',
-        time: '',
-        title: ''
-      };
+      console.error('Error uploading image');
     }
   }
   // Fetch events

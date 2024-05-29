@@ -47,6 +47,9 @@
           <textarea matInput [(ngModel)]="event.description" name="description" title="description"></textarea>
         </mat-form-field>
       <br>
+      <!-- image upload field -->
+        <input type="file" (change)="onFileSelected($event)" class="!w-2/3" title="upload file">
+      <br>
       <button type="submit" class="py-2 px-4 border-2">Submit</button>
     </form>
   </div>

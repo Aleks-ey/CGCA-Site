@@ -49,6 +49,7 @@ import { RegisterBusinessComponent } from './components/register-business/regist
 import { RegisterJobBoardComponent } from './components/register-job-board/register-job-board.component';
 import { UpdateAccountComponent } from './components/update-account/update-account.component';
 import { AccountLoginComponent } from './pages/account-login/account-login.component';
+import { SponsorsComponent } from './pages/sponsors/sponsors.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { AccountLoginComponent } from './pages/account-login/account-login.compo
     RegisterJobBoardComponent,
     ScrollToTopComponent,
     UpdateAccountComponent,
+    SponsorsComponent,
   ],
   imports: [
     AppRoutingModule,

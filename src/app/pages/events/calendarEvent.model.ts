@@ -5,5 +5,6 @@ export interface CalendarEvent {
     description: string;
     time: string;
     title: string;
+    image_url: string;
   }
   

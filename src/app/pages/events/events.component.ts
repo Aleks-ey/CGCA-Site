@@ -1,16 +1,7 @@
 import { Component } from '@angular/core';
 import { SupabaseService } from 'src/app/supabase.service';
-// import { CalendarEvent } from './calendarEvent.model';
+import { CalendarEvent } from './calendarEvent.model';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
-
-export interface CalendarEvent {
-  id?: number;
-  date: string;
-  description: string;
-  time: string;
-  title: string;
-  img_url: string;
-}
 
 @Component({
   selector: 'app-events',
@@ -26,7 +17,7 @@ export class EventsComponent {
     description: '',
     time: '',
     title: '',
-    img_url: '',
+    image_url: '',
   };
 
   eventsList: CalendarEvent[] = [];
