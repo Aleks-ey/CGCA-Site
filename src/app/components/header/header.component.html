@@ -14,6 +14,7 @@
     <div class="header_right hidden lg:flex gap-6">
         <!-- <a routerLink="/mission" class="header_link">Our Mission</a> -->
         <a routerLink="/meet" class="header_link">Meet the Board</a>
+        <a routerLink="/sponsors" class="header_link">Sponsors</a>
         <!-- <a routerLink="/community" class="header_link">Community</a> -->
         <div class="dropdown-container">
             <button 
@@ -50,6 +51,7 @@
     <div class="expanded-menu" *ngIf="isMenuOpen">
         <a routerLink="/" class="header-link" (click)="closeMenu()">Home</a>
         <a routerLink="/meet" class="header-link" (click)="closeMenu()">Meet the Board</a>
+        <a routerLink="/sponsors" class="header-link" (click)="closeMenu()">Sponsors</a>
         <div class="expanded-community-container">
             <a routerLink="/community" class="header-link" (click)="closeMenu()">Community</a>
             <span (click)="toggleCommunityDropdown()">

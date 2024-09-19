@@ -7,6 +7,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { JobBoardComponent } from './pages/job-board/job-board.component';
 import { MissionComponent } from './pages/mission/mission.component';
 import { MeetComponent } from './pages/meet/meet.component';
+import { SponsorsComponent } from './pages/sponsors/sponsors.component';
 import { EventsComponent } from './pages/events/events.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { CommunityComponent } from './pages/community/community.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'mission', component: MissionComponent },
   { path: 'meet', component: MeetComponent },
+  { path: 'sponsors', component: SponsorsComponent},
   { path: 'events', component: EventsComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'community', component: CommunityComponent },
