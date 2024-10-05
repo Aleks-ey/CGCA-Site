@@ -1,17 +1,43 @@
-<div class="flex float-right mt-2 mr-2 md:mr-6 gap-2">
-    <a (click)="navigateToAccount()" class="account_button hover:cursor-pointer hover:underline"> My Account </a>
-</div>
-<div class="community_header my-28">
-    <h1>Colorado Georgian Community Hub</h1>
-</div>
-<div class="community_container flex flex-col md:flex-row md:mx-6">
-    <a routerLink="/business" class="community_business_container flex justify-center bg-prussian-blue">
-        <h2>Georgian Owned Businesses</h2>
+<div class="min-h-screen">
+  <div class="flex float-right mt-2 mr-2 md:mr-6 gap-2">
+    <a
+      (click)="navigateToAccount()"
+      class="hover:cursor-pointer hover:underline hover:text-rojo-red"
+    >
+      My Account
     </a>
-    <a routerLink="/job-board" class="community_job_board_container flex justify-center bg-rojo-red">
-        <h2>Job Board</h2>
-    </a>
-    <a routerLink="/for-hire" class="community_for_hire flex justify-center bg-black">
-        <h2>For Hire</h2>
-    </a>
+  </div>
+  <div class="py-10 md:py-20">
+    <div class="px-4 py-20 md:px-0 text-center">
+      <h1 class="text-3xl font-bold font-merri">
+        Colorado Georgian Community Hub
+      </h1>
+    </div>
+    <div class="flex flex-col md:flex-row p-6 md:pb-20 justify-between gap-5">
+      <a
+        routerLink="/business"
+        class="flex w-full md:w-1/3 p-10 items-center text-center justify-center text-white bg-prussian-blue group"
+      >
+        <h2 class="py-16 md:py-20 group-hover:scale-110 transition-all">
+          Georgian Owned Businesses
+        </h2>
+      </a>
+      <a
+        routerLink="/job-board"
+        class="flex w-full md:w-1/3 p-10 items-center text-center justify-center text-white bg-rojo-red group"
+      >
+        <h2 class="py-16 md:py-20 group-hover:scale-110 transition-all">
+          Job Board
+        </h2>
+      </a>
+      <a
+        routerLink="/for-hire"
+        class="flex w-full md:w-1/3 p-10 items-center text-center justify-center text-white bg-black group"
+      >
+        <h2 class="py-16 md:py-20 group-hover:scale-110 transition-all">
+          For Hire
+        </h2>
+      </a>
+    </div>
+  </div>
 </div>

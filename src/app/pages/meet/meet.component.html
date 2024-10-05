@@ -1,188 +1,386 @@
-<div class="mission_header flex flex-col justify-center text-center">
-    <h2 class="lg:mt-8" [ngClass]="{'animate': isVisible}">Strength in Unity</h2>
-    <h1 [ngClass]="{'animate': isVisible}">Our Mission</h1>
-</div>
-<div class="mission_body flex flex-col mt-12 lg:mt-0 justify-center text-left">
-    <ul class="mission_body_list ml-16 mr-8">
-        <li class="list_item1" [ngClass]="{'animate': isVisible}">
-            Promote the Georgian culture and heritage within the State of Colorado.
-        </li>
-        <li class="list_item2" [ngClass]="{'animate': isVisible}">
-            Unite, engage and inspire the Georgian Community in the State of Colorado to stand as one in support of each other’s growth, success, and development.
-        </li>
-        <li class="list_item3" [ngClass]="{'animate': isVisible}">
-            Organize events to help Georgian Community bond and assimilate.
-        </li>
-        <li class="list_item4" [ngClass]="{'animate': isVisible}">
-            Provide educational programs for the purpose of retaining the Georgian culture in Colorado.
-        </li>
-    </ul>
+<div
+  class="flex flex-col pt-20 md:py-20 justify-center text-center overflow-hidden"
+>
+  <h2
+    class="text-4xl md:text-6xl transform translate-x-[30vw] opacity-0 transition-all duration-[2s] ease-in-out text-rojo-red font-serif"
+    [ngClass]="{ '!translate-x-[10vw] opacity-100': isVisible }"
+  >
+    Strength in Unity
+  </h2>
+  <h1
+    class="text-5xl md:text-8xl transform translate-x-[-30vw] opacity-0 transition-all duration-[2s] delay-500 ease-in-out text-prussian-blue font-franklin"
+    [ngClass]="{ '!translate-x-[-10vw] opacity-100': isVisible }"
+  >
+    Our Mission
+  </h1>
 </div>
 
-<div class="meet_container flex flex-row mt-40 mx-6 md:mt-12 justify-center text-center">
-    <h2>Meet the Board <br/> Dedicated to Carrying Out Our Mission</h2>
+<div class="flex flex-col p-10 justify-center text-left">
+  <ul class="list-disc space-y-2 md:space-y-6 text-lg md:text-2xl">
+    <li
+      class="list-item transform translate-y-3 opacity-0 transition-all duration-1000 ease-in-out text-prussian-blue font-medium font-franklin"
+      [ngClass]="{ '!translate-y-0 opacity-100': isVisible }"
+    >
+      Promote the Georgian culture and heritage within the State of Colorado.
+    </li>
+    <li
+      class="list-item transform translate-y-3 opacity-0 transition-all duration-1000 delay-500 ease-in-out text-prussian-blue font-medium font-franklin"
+      [ngClass]="{ '!translate-y-0 opacity-100': isVisible }"
+    >
+      Unite, engage and inspire the Georgian Community in the State of Colorado
+      to stand as one in support of each other’s growth, success, and
+      development.
+    </li>
+    <li
+      class="list-item transform translate-y-3 opacity-0 transition-all duration-1000 delay-1000 ease-in-out text-prussian-blue font-medium font-franklin"
+      [ngClass]="{ '!translate-y-0 opacity-100': isVisible }"
+    >
+      Organize events to help Georgian Community bond and assimilate.
+    </li>
+    <li
+      class="list-item transform translate-y-3 opacity-0 transition-all duration-1000 delay-[1500ms] ease-in-out text-prussian-blue font-medium font-franklin"
+      [ngClass]="{ '!translate-y-0 opacity-100': isVisible }"
+    >
+      Provide educational programs for the purpose of retaining the Georgian
+      culture in Colorado.
+    </li>
+  </ul>
 </div>
-<div class="meet_cards_container flex flex-col md:flex-row mt-8 justify-center">
-    <!-- Tamara Card -->
-    <div class="card">
-        <button class="about-button" (click)="togglePopup1()">About</button>
-        <div class="image-container">
-            <img src='assets/images/TamaraHeadshot.png' alt="">
-        </div>
-        <div class="text-container">
-            <h2>Tamara Tsaava</h2>
-            <p>President</p>
-        </div>
-        </div>
-        <!-- Tamara Popup -->
-        <div *ngIf="showPopup1" class="popup" (click)="togglePopup1()">
-        <div class="popup-content">
-            <h3 class="text-xl">Tamara</h3>
-            <p class="text-lg">President</p>
-            <div class="popup_text"> 
-                <p>
-                    Tamara was born and raised in Tbilisi, Republic of Georgia and moved to the United States in 1992. First she lived in Atlanta, GA. and in 1998 Tamara and her family moved to Denver, CO and never left from here. She fell in love with Colorado weather, history, people and after 26 years of living in Denver, this is her home.
-                    <br/><br/>
-                    Tamara has over 30 years of experience in financial investments, wealth management, legal and real estate industries. With experience as a Merrill Lynch Global Wealth and Investment Management financial advisor, Tamara found a company Tsaava Asset Strategies Consultants specializing in marriage/divorce financial analysis and planning. She partners with Usaj Realty Co. and helps her clients buy, sell and invest in real estate.
-                    <br/><br/>
-                    It is so exciting to find so many Georgians coming to Colorado and making it their home. For a long time I wanted to find ways to promote Georgian culture and history in Colorado and United States of America. At last found the way to do that through Colorado Georgian Community Association - Ertoba. It`s about time!" - Tamara
-                </p>
-            </div>
-        </div>
+
+<div class="flex pt-20 pb-10 md:pt-32 md:pb-16 justify-center text-center">
+  <h2
+    class="px-8 text-prussian-blue text-3xl md:text-5xl font-medium font-franklin"
+  >
+    Meet the Board
+    <br />
+    Dedicated to Carrying Out Our Mission
+  </h2>
+</div>
+
+<div
+  class="flex flex-col md:grid grid-cols-3 gap-x-0 gap-y-12 py-10 justify-center justify-items-center items-center"
+>
+  <!-- Tamara Card -->
+  <div
+    class="card relative w-3/5 md:w-1/2 cursor-pointer overflow-hidden group"
+  >
+    <button
+      class="absolute top-0 w-full p-4 bg-slate-800 text-white transition-all duration-300 opacity-0 group-hover:opacity-100"
+      (click)="togglePopup1()"
+    >
+      About
+    </button>
+    <div class="transition-all duration-300 group-hover:translate-y-[50px]">
+      <img
+        src="assets/images/TamaraHeadshot.png"
+        alt="Tamara Tsaava, President"
+        class="object-50-10 object-cover w-full h-64"
+      />
     </div>
-    <!-- Ruslan Card -->
-    <div class="card">
-        <button class="about-button" (click)="togglePopup2()">About</button>
-        <div class="image-container">
-            <img src='assets/images/RuslanHeadshot.jpg' alt="">
-        </div>
-        <div class="text-container">
-            <h2>Ruslan Huhua</h2>
-            <p>Vice President</p>
-        </div>
-        </div>
-        <!-- Ruslan Popup -->
-        <div *ngIf="showPopup2" class="popup" (click)="togglePopup2()">
-        <div class="popup-content">
-            <h3 class="text-xl">Ruslan Huhua</h3>
-            <p class="text-lg">Vice President</p>
-            <div class="popup_text"> 
-                <p>
-                    Born and raised in the city of Sochi, Ruslan always had a passion for learning and exloring culture. After completing his early education in Sochi, he went on to pursue his studies in theology at the Tbilisi Theological Seminary and the Gelati Theological Academy and Seminary in Kutaisi, Georgia.
-                    <br/><br/>
-                    In 2001, Ruslan made a life-changing decision to move to the United States with his wife and two sons.
-                    <br/><br/>
-                    Ruslan is a respected member of the local community and is dedicated to making a positive impact in the world. He currently works as a contractor helping people renovate and build their properties, and with his wealth of knowledge and experience has become a trusted expert in his field, always looking for ways to provide exceptional service to his clients.
-                    <br/><br/>
-                    After his third son was born in the U.S.A., he started to see how important it was to preserve Georgian culture and traditions over generations. This led him to join forces with fellow Georgians to start the Colorado Georgian Community Association.
-                </p>
-            </div>
-        </div>
+    <div class="text-center">
+      <h2>Tamara Tsaava</h2>
+      <p>President</p>
     </div>
-    <!-- Tea Card -->
-    <div class="card">
-        <button class="about-button" (click)="togglePopup3()">About</button>
-        <div class="image-container">
-            <img class="resize_large_img" src='assets/images/TeaHeadshot.jpg' alt="">
-        </div>
-        <div class="text-container">
-            <h2>Tea Todua</h2>
-            <p>Board Director</p>
-        </div>
-        </div>
-        <!-- Tea Popup -->
-        <div *ngIf="showPopup3" class="popup" (click)="togglePopup3()">
-        <div class="popup-content">
-            <h3 class="text-xl">Tea Todua</h3>
-            <p class="text-lg">Board Director</p>
-            <div class="popup_text"> 
-                <p>
-                    Tea Todua was born and raised in the beautiful country of Georgia, next to the Black Sea in the small town of Zugdidi. She graduated from David Tvildiani Medical University DTMU (formerly AI ETI Medical School) with a MD degree. DTMU was the first school of medicine in Georgia to implement the American model of medical education, an English language curriculum in the Caucasus region at that time.
-                    <br/><br/>
-                    Tea is committed to building a career in medicine, serving the humanity. She worked as an IR (interventional radiologist) in the department of vascular surgery and mentored students at different medical schools in Georgia. With her colleagues from Tbilisi State Medical University (TSMU) and in partnership with Emory University School of Medicine (EUSM), Tea contributed to establishing a very successful program in healthcare education. the American MD program, now a trusted leader in preparing future health learners and leaders in the country of Georgia.
-                    <br/><br/>
-                    In 2015 Tea met the love of her life, and moved to Colorado. She decided to dedicate her life to family and raising three daughters with her husband, Don Pittser.'
-                    <br/><br/>
-                    "I have always been impassioned to promote my country. In that spirit, I am very excited to join forces with my fellow members in developing cultural and educational projects and hosting events in our community of Colorado." - Tea.
-                </p>
-            </div>
-        </div>
+  </div>
+  <!-- Tamara Popup -->
+  <div
+    *ngIf="showPopup1"
+    class="fixed flex h-full w-full top-7 md:top-0 bg-opacity-70 bg-black justify-center items-center z-10"
+    (click)="togglePopup1()"
+  >
+    <div class="w-11/12 h-4/5 md:w-2/3 md:h-2/3 p-8 rounded-lg bg-white">
+      <h3 class="text-2xl font-medium">Tamara</h3>
+      <p class="text-xl font-normal">President</p>
+      <div class="pt-8 h-4/5 overflow-y-auto">
+        <p>
+          Tamara was born and raised in Tbilisi, Republic of Georgia and moved
+          to the United States in 1992. First she lived in Atlanta, GA. and in
+          1998 Tamara and her family moved to Denver, CO and never left from
+          here. She fell in love with Colorado weather, history, people and
+          after 26 years of living in Denver, this is her home.
+          <br /><br />
+          Tamara has over 30 years of experience in financial investments,
+          wealth management, legal and real estate industries. With experience
+          as a Merrill Lynch Global Wealth and Investment Management financial
+          advisor, Tamara found a company Tsaava Asset Strategies Consultants
+          specializing in marriage/divorce financial analysis and planning. She
+          partners with Usaj Realty Co. and helps her clients buy, sell and
+          invest in real estate.
+          <br /><br />
+          It is so exciting to find so many Georgians coming to Colorado and
+          making it their home. For a long time I wanted to find ways to promote
+          Georgian culture and history in Colorado and United States of America.
+          At last found the way to do that through Colorado Georgian Community
+          Association - Ertoba. It`s about time!" - Tamara
+        </p>
+      </div>
     </div>
-    <!-- Alexander Card -->
-    <div class="card">
-        <button class="about-button" (click)="togglePopup4()">About</button>
-        <div class="image-container">
-            <img src='assets/images/AlexanderHeadshot.jpg' alt="">
-        </div>
-        <div class="text-container">
-            <h2>Alexander Narsia</h2>
-            <p>Treasurer</p>
-        </div>
-        </div>
-        <!-- Alexander Popup -->
-        <div *ngIf="showPopup4" class="popup" (click)="togglePopup4()">
-        <div class="popup-content">
-            <h3 class="text-xl">Alexander Narsia</h3>
-            <p class="text-lg">Treasurer</p>
-            <div class="popup_text"> 
-                <p>
-                    Alexander Narsia was born on a train in Sukhumi and raised in Tbilisi, Georgia. Thereafter he immigrated with his family to Israel at the age of 9 and to the United States of America at the age of 13. Alexander competed professionally in the sport of tennis and has transitioned into his professional career as an engineer in the oil and gas sector. He is currently a Senior Project Manager at Meritage Midstream. He is a father of two daughters, Sophia and Leila and a son, Revaz and he spends most of his time away from work bonding with them.
-                    <br/><br/>
-                    Alexander believes that being of Georgian decent is not a nationality, but a way of life and is excited to help unite the Georgian community in the State of Colorado.
-                </p>
-            </div>
-        </div>
+  </div>
+  <!-- Ruslan Card -->
+  <div
+    class="card relative w-3/5 md:w-1/2 cursor-pointer overflow-hidden group"
+  >
+    <button
+      class="absolute top-0 w-full p-4 bg-slate-800 text-white transition-all duration-300 opacity-0 group-hover:opacity-100"
+      (click)="togglePopup2()"
+    >
+      About
+    </button>
+    <div class="transition-all duration-300 group-hover:translate-y-[50px]">
+      <img
+        src="assets/images/RuslanHeadshot.jpg"
+        alt="Ruslan Huhua, Vice President"
+        class="object-50-90 object-cover w-full h-64"
+      />
     </div>
-    <!-- Donald Card -->
-    <div class="card">
-        <button class="about-button" (click)="togglePopup5()">About</button>
-        <div class="image-container">
-            <img src='assets/images/DonaldHeadshot.jpg' alt="">
-        </div>
-        <div class="text-container">
-            <h2>Donald Pittser</h2>
-            <p>Secretary</p>
-        </div>
-        </div>
-        <!-- Donald Popup -->
-        <div *ngIf="showPopup5" class="popup" (click)="togglePopup5()">
-        <div class="popup-content">
-            <h3 class="text-xl">Donald Pittser</h3>
-            <p class="text-lg">Secretary</p>
-            <div class="popup_text"> 
-                <p>
-                    My first visit to Tbilisi, Georgia was in 2008 to visit a possible business opportunity. This resulted in me living in Tbilisi for five months in 2010. Falling in love with Georgia, like many who have been fortunate enough to visit, I returned to Georgia each year before meeting my lovely wife, Tea Todua. Now we have three little Georgian/American daughters. I am excited to help the Colorado Georgian Community Association become a reality.
-                </p>
-            </div>
-        </div>
+    <div class="text-center">
+      <h2>Ruslan Huhua</h2>
+      <p>Vice President</p>
     </div>
-    <!-- Lasha Card -->
-    <div class="card">
-        <button class="about-button" (click)="togglePopup6()">About</button>
-        <div class="image-container">
-            <img class="resize_large_img" src='assets/images/LashaHeadshot.jpeg' alt="">
-        </div>
-        <div class="text-container">
-            <h2>Lasha Abashidze</h2>
-            <p>Director of Events</p>
-        </div>
-        </div>
-        <!-- Lasha Popup -->
-        <div *ngIf="showPopup6" class="popup" (click)="togglePopup6()">
-        <div class="popup-content">
-            <h3 class="text-xl">Lasha Abashid</h3>
-            <p class="text-lg">Director of Events</p>
-            <div class="popup_text">
-                <p>
-                    Lasha was born and raised in Tbilisi, Georgia. He pursued a career in Information Technologies and gained valuable experience working at the National Agency of Public Registry.
-                    <br/><br/>
-                    In 2015, Lasha relocated to the United States but missed the close-knit Georgian community back home. Determined to bring Georgians together, he initiated gatherings and provided support to those in need in Georgia. Additionally, Lasha recognized the importance of preserving Georgian culture and language for future generations, leading to the establishment of a Georgian language Sunday school. 
-                    <br/><br/>
-                    Through his efforts, Lasha aims to unite Georgians living abroad and foster a strong sense of cultural identity and pride. His commitment to his homeland and community exemplifies the values our organization stands for.
-                    <br/><br/>
-                    "I believe it's important for Georgians living away from home to support our people and preserve our culture," says Lasha.
-                </p>
-            </div>
-        </div>
+  </div>
+  <!-- Ruslan Popup -->
+  <div
+    *ngIf="showPopup2"
+    class="fixed flex h-full w-full top-7 md:top-0 bg-opacity-70 bg-black justify-center items-center z-10"
+    (click)="togglePopup2()"
+  >
+    <div class="w-11/12 h-4/5 md:w-2/3 md:h-2/3 p-8 rounded-lg bg-white">
+      <h3 class="text-2xl font-medium">Ruslan Huhua</h3>
+      <p class="text-xl font-normal">Vice President</p>
+      <div class="pt-8 h-4/5 overflow-y-auto">
+        <p>
+          Born and raised in the city of Sochi, Ruslan always had a passion for
+          learning and exloring culture. After completing his early education in
+          Sochi, he went on to pursue his studies in theology at the Tbilisi
+          Theological Seminary and the Gelati Theological Academy and Seminary
+          in Kutaisi, Georgia.
+          <br /><br />
+          In 2001, Ruslan made a life-changing decision to move to the United
+          States with his wife and two sons.
+          <br /><br />
+          Ruslan is a respected member of the local community and is dedicated
+          to making a positive impact in the world. He currently works as a
+          contractor helping people renovate and build their properties, and
+          with his wealth of knowledge and experience has become a trusted
+          expert in his field, always looking for ways to provide exceptional
+          service to his clients.
+          <br /><br />
+          After his third son was born in the U.S.A., he started to see how
+          important it was to preserve Georgian culture and traditions over
+          generations. This led him to join forces with fellow Georgians to
+          start the Colorado Georgian Community Association.
+        </p>
+      </div>
     </div>
+  </div>
+  <!-- Tea Card -->
+  <div
+    class="card relative w-3/5 md:w-1/2 cursor-pointer overflow-hidden group"
+  >
+    <button
+      class="absolute top-0 w-full p-4 bg-slate-800 text-white transition-all duration-300 opacity-0 group-hover:opacity-100"
+      (click)="togglePopup3()"
+    >
+      About
+    </button>
+    <div class="transition-all duration-300 group-hover:translate-y-[50px]">
+      <img
+        src="assets/images/TeaHeadshot.jpg"
+        alt="Tea Todua, Board Director"
+        class="object-50-10 object-cover w-full h-64"
+      />
+    </div>
+    <div class="text-center">
+      <h2>Tea Todua</h2>
+      <p>Board Director</p>
+    </div>
+  </div>
+  <!-- Tea Popup -->
+  <div
+    *ngIf="showPopup3"
+    class="fixed flex h-full w-full top-7 md:top-0 bg-opacity-70 bg-black justify-center items-center z-10"
+    (click)="togglePopup3()"
+  >
+    <div class="w-11/12 h-4/5 md:w-2/3 md:h-2/3 p-8 rounded-lg bg-white">
+      <h3 class="text-2xl font-medium">Tea Todua</h3>
+      <p class="text-xl font-normal">Board Director</p>
+      <div class="pt-8 h-4/5 overflow-y-auto">
+        <p>
+          Tea Todua was born and raised in the beautiful country of Georgia,
+          next to the Black Sea in the small town of Zugdidi. She graduated from
+          David Tvildiani Medical University DTMU (formerly AI ETI Medical
+          School) with a MD degree. DTMU was the first school of medicine in
+          Georgia to implement the American model of medical education, an
+          English language curriculum in the Caucasus region at that time.
+          <br /><br />
+          Tea is committed to building a career in medicine, serving the
+          humanity. She worked as an IR (interventional radiologist) in the
+          department of vascular surgery and mentored students at different
+          medical schools in Georgia. With her colleagues from Tbilisi State
+          Medical University (TSMU) and in partnership with Emory University
+          School of Medicine (EUSM), Tea contributed to establishing a very
+          successful program in healthcare education. the American MD program,
+          now a trusted leader in preparing future health learners and leaders
+          in the country of Georgia.
+          <br /><br />
+          In 2015 Tea met the love of her life, and moved to Colorado. She
+          decided to dedicate her life to family and raising three daughters
+          with her husband, Don Pittser.'
+          <br /><br />
+          "I have always been impassioned to promote my country. In that spirit,
+          I am very excited to join forces with my fellow members in developing
+          cultural and educational projects and hosting events in our community
+          of Colorado." - Tea.
+        </p>
+      </div>
+    </div>
+  </div>
+  <!-- Alexander Card -->
+  <div
+    class="card relative w-3/5 md:w-1/2 cursor-pointer overflow-hidden group"
+  >
+    <button
+      class="absolute top-0 w-full p-4 bg-slate-800 text-white transition-all duration-300 opacity-0 group-hover:opacity-100"
+      (click)="togglePopup4()"
+    >
+      About
+    </button>
+    <div class="transition-all duration-300 group-hover:translate-y-[50px]">
+      <img
+        src="assets/images/AlexanderHeadshot.jpg"
+        alt="Alexander Narsia, Treasurer"
+        class="object-50-10 object-cover w-full h-64"
+      />
+    </div>
+    <div class="text-center">
+      <h2>Alexander Narsia</h2>
+      <p>Treasurer</p>
+    </div>
+  </div>
+  <!-- Alexander Popup -->
+  <div
+    *ngIf="showPopup4"
+    class="fixed flex h-full w-full top-7 md:top-0 bg-opacity-70 bg-black justify-center items-center z-10"
+    (click)="togglePopup4()"
+  >
+    <div class="w-11/12 h-4/5 md:w-2/3 md:h-2/3 p-8 rounded-lg bg-white">
+      <h3 class="text-2xl font-medium">Alexander Narsia</h3>
+      <p class="text-xl font-normal">Treasurer</p>
+      <div class="pt-8 h-4/5 overflow-y-auto">
+        <p>
+          Alexander Narsia was born on a train in Sukhumi and raised in Tbilisi,
+          Georgia. Thereafter he immigrated with his family to Israel at the age
+          of 9 and to the United States of America at the age of 13. Alexander
+          competed professionally in the sport of tennis and has transitioned
+          into his professional career as an engineer in the oil and gas sector.
+          He is currently a Senior Project Manager at Meritage Midstream. He is
+          a father of two daughters, Sophia and Leila and a son, Revaz and he
+          spends most of his time away from work bonding with them.
+          <br /><br />
+          Alexander believes that being of Georgian decent is not a nationality,
+          but a way of life and is excited to help unite the Georgian community
+          in the State of Colorado.
+        </p>
+      </div>
+    </div>
+  </div>
+  <!-- Donald Card -->
+  <div
+    class="card relative w-3/5 md:w-1/2 cursor-pointer overflow-hidden group"
+  >
+    <button
+      class="absolute top-0 w-full p-4 bg-slate-800 text-white transition-all duration-300 opacity-0 group-hover:opacity-100"
+      (click)="togglePopup5()"
+    >
+      About
+    </button>
+    <div class="transition-all duration-300 group-hover:translate-y-[50px]">
+      <img
+        src="assets/images/DonaldHeadshot.jpg"
+        alt="Donald Pittser, Secretary"
+        class="object-cover w-full h-64"
+      />
+    </div>
+    <div class="text-center">
+      <h2>Donald Pittser</h2>
+      <p>Secretary</p>
+    </div>
+  </div>
+  <!-- Donald Popup -->
+  <div
+    *ngIf="showPopup5"
+    class="fixed flex h-full w-full top-7 md:top-0 bg-opacity-70 bg-black justify-center items-center z-10"
+    (click)="togglePopup5()"
+  >
+    <div class="w-11/12 h-4/5 md:w-2/3 md:h-2/3 p-8 rounded-lg bg-white">
+      <h3 class="text-2xl font-medium">Donald Pittser</h3>
+      <p class="text-xl font-normal">Secretary</p>
+      <div class="pt-8 h-4/5 overflow-y-auto">
+        <p>
+          My first visit to Tbilisi, Georgia was in 2008 to visit a possible
+          business opportunity. This resulted in me living in Tbilisi for five
+          months in 2010. Falling in love with Georgia, like many who have been
+          fortunate enough to visit, I returned to Georgia each year before
+          meeting my lovely wife, Tea Todua. Now we have three little
+          Georgian/American daughters. I am excited to help the Colorado
+          Georgian Community Association become a reality.
+        </p>
+      </div>
+    </div>
+  </div>
+  <!-- Lasha Card -->
+  <div
+    class="card relative w-3/5 md:w-1/2 cursor-pointer overflow-hidden group"
+  >
+    <button
+      class="absolute top-0 w-full p-4 bg-slate-800 text-white transition-all duration-300 opacity-0 group-hover:opacity-100"
+      (click)="togglePopup6()"
+    >
+      About
+    </button>
+    <div class="transition-all duration-300 group-hover:translate-y-[50px]">
+      <img
+        src="assets/images/LashaHeadshot.jpeg"
+        alt="Lasha Abashidze, Director of Events"
+        class="object-50-10 object-cover w-full h-64"
+      />
+    </div>
+    <div class="text-center">
+      <h2>Lasha Abashidze</h2>
+      <p>Director of Events</p>
+    </div>
+  </div>
+  <!-- Lasha Popup -->
+  <div
+    *ngIf="showPopup6"
+    class="fixed flex h-full w-full top-7 md:top-0 bg-opacity-70 bg-black justify-center items-center z-10"
+    (click)="togglePopup6()"
+  >
+    <div class="w-11/12 h-4/5 md:w-2/3 md:h-2/3 p-8 rounded-lg bg-white">
+      <h3 class="text-2xl font-medium">Lasha Abashid</h3>
+      <p class="text-xl font-normal">Director of Events</p>
+      <div class="pt-8 h-4/5 overflow-y-auto">
+        <p>
+          Lasha was born and raised in Tbilisi, Georgia. He pursued a career in
+          Information Technologies and gained valuable experience working at the
+          National Agency of Public Registry.
+          <br /><br />
+          In 2015, Lasha relocated to the United States but missed the
+          close-knit Georgian community back home. Determined to bring Georgians
+          together, he initiated gatherings and provided support to those in
+          need in Georgia. Additionally, Lasha recognized the importance of
+          preserving Georgian culture and language for future generations,
+          leading to the establishment of a Georgian language Sunday school.
+          <br /><br />
+          Through his efforts, Lasha aims to unite Georgians living abroad and
+          foster a strong sense of cultural identity and pride. His commitment
+          to his homeland and community exemplifies the values our organization
+          stands for.
+          <br /><br />
+          "I believe it's important for Georgians living away from home to
+          support our people and preserve our culture," says Lasha.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>

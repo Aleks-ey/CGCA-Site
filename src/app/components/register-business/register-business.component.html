@@ -1,52 +1,62 @@
-<div class="register_business_container flex flex-col justify-center text-center">
-    <div>
-    <h2>
-        Looking to promote your business?
-    </h2>
+<div
+  class="relative flex flex-col justify-center text-left mx-auto p-5 w-full border rounded-lg"
+>
+  <div class="text-center py-5">
+    <h2 class="text-lg">Looking to promote your business?</h2>
     <p>
-        Fill out the form below and post your business listing to the community business page.
+      Fill out the form below and post your business listing to the community
+      business page.
     </p>
-    </div>
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
-        <hr/>
-        <!-- <div class="mt-4 mb-6">
+  </div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="form" class="text-center">
+    <hr />
+    <!-- <div class="mt-4 mb-6">
             <p class="text-lg">Business Cover Photo:</p>
             <button type="button" mat-raised-button (click)="fileInput.click()" class="mb-1">Choose File</button>
             <input hidden (change)="onFileSelected($event)" #fileInput type="file">
             <p class="file-name">{{selectedFile?.name}}</p>
         </div> -->
-        <mat-form-field class="mt-4 w-3/4">
-            <mat-label>Company Name:</mat-label>
-            <input title="company name" matInput  formControlName="company_name">
-        </mat-form-field>
-        <br/>
-        <mat-form-field class="w-3/4">
-            <mat-label>Type of Business:</mat-label>
-            <input title="type" matInput formControlName="type">
-            <mat-hint>Ex: Restaurant, Retail, etc.</mat-hint>
-        </mat-form-field>
-        <br/>
-        <mat-form-field class="w-3/4">
-            <mat-label>Description:</mat-label>
-            <textarea title="description" matInput formControlName="description"></textarea>
-        </mat-form-field>
-        <br/>
-        <mat-form-field class="w-3/4">
-            <mat-label>Location (City):</mat-label>
-            <input title="location" matInput formControlName="location">
-        </mat-form-field>
-        <br/>
-        <button type="submit" class="register_business_submit w-full">Submit</button>
-        <ng-template #dialogTemplateSuccess class="overflow-hidden">
-            <div class="p-4">
-                <p>Request Submitted Successfully!</p>
-            </div>
-        </ng-template>
-        <ng-template #dialogTemplateFail class="overflow-hidden">
-            <div class="p-4">
-                <p>There was an issue proccessing your request.</p>
-                <p>Please check to make sure all fields are correct and try again.</p>
-            </div>
-        </ng-template>
-    </form>
+    <mat-form-field class="mt-4 w-3/4">
+      <mat-label>Company Name:</mat-label>
+      <input title="company name" matInput formControlName="company_name" />
+    </mat-form-field>
+    <br />
+    <mat-form-field class="w-3/4">
+      <mat-label>Type of Business:</mat-label>
+      <input title="type" matInput formControlName="type" />
+      <mat-hint>Ex: Restaurant, Retail, etc.</mat-hint>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="w-3/4">
+      <mat-label>Description:</mat-label>
+      <textarea
+        title="description"
+        matInput
+        formControlName="description"
+      ></textarea>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="w-3/4">
+      <mat-label>Location (City):</mat-label>
+      <input title="location" matInput formControlName="location" />
+    </mat-form-field>
+    <br />
+    <button
+      type="submit"
+      class="w-full p-5 text-rojo-red border border-rojo-red rounded-lg hover:bg-rojo-red hover:text-white"
+    >
+      Submit
+    </button>
+    <ng-template #dialogTemplateSuccess class="overflow-hidden">
+      <div class="p-4">
+        <p>Request Submitted Successfully!</p>
+      </div>
+    </ng-template>
+    <ng-template #dialogTemplateFail class="overflow-hidden">
+      <div class="p-4">
+        <p>There was an issue proccessing your request.</p>
+        <p>Please check to make sure all fields are correct and try again.</p>
+      </div>
+    </ng-template>
+  </form>
 </div>

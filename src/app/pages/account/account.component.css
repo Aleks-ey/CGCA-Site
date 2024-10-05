@@ -1,364 +1,179 @@
-@media screen and (max-width: 768px) {
-    .welcome {
-        padding-top: 20px;
-    }
-}
-
-.welcome > h2 {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.logout_button {
-    transform: translateY(-30px);
-}
-
-.logout_button:hover {
-    color: #DC2626;
-    text-decoration: underline;
-}
-
-.community_button {
-    transform: translateY(-30px);
-}
-
-.community_button:hover {
-    color: #DC2626;
-    text-decoration: underline;
-}
 /* update account css */
-.update_account_header {
-    margin-left: 15vw;
-}
-
-@media screen and (max-width: 768px) {
-    .update_account_header {
-        margin-left: 5vw;
-    }
-}
-
-.update_account_buttons_container {
-    top: 10px;
-    right: 15vw;
-}
-
-@media screen and (max-width: 768px) {
-    .update_account_buttons_container {
-        top: 0px;
-        margin-left: 5vw;
-    }
-}
-
-.account_edit_container > button:hover {
-    color: #DC2626;
-}
-
-.account_info_container {
-    width: 70vw;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-@media screen and (max-width: 768px) {
-    .account_info_container {
-        width: 90vw;
-    }
-}
-
 .show_password_button {
-    transform: scale(0.8);
-    right: 0;
-    top: -3px;
+  transform: scale(0.8);
+  right: 0;
+  top: -3px;
 }
 /* non-business account css for hire listings */
-.no_hire_listing_header {
-    margin-left: 15vw;
-}
-
-@media screen and (max-width: 768px) {
-    .no_hire_listing_header {
-        margin-left: 5vw;
-    }
-}
-
-.hire_listing_header {
-    margin-left: 15vw;
-}
-
-@media screen and (max-width: 768px) {  
-    .hire_listing_header {
-        margin-left: 5vw;
-    }
-}
-
-.for_hire_pending {
-    width: 70vw;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-@media screen and (max-width: 768px) {
-    .for_hire_pending {
-        width: 90vw;
-    }
-}
-
-.hlisting_buttons_container {
-    top: 10px;
-    right: 15vw;
-}
-
-@media screen and (max-width: 768px) {
-    .hlisting_buttons_container {
-        top: 0px;
-        margin-left: 5vw;
-    }
-}
-
-.hlisting_edit_container > button:hover {
-    color: #DC2626;
-}
-
-.hlisting_delete_container > button:hover {
-    color: #DC2626;
-}
-
-.hlisting_delete_container > button > mat-icon {
-    transform: translateY(5px);
-}
-
-.for_hire_delete_button {
-    color: #DC2626;
-    border: 1px solid #DC2626;
-    border-radius: 10px;
-    padding: 10px;
-    margin-top: 10px;
-}
-
 .hire_listing {
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    width: 70vw;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  width: 70vw;
 }
 
 @media screen and (max-width: 768px) {
-    .hire_listing {
-        width: 90vw;
-    }
+  .hire_listing {
+    width: 90vw;
+  }
 }
 
 .hire_listing_name > p {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .hire_listing_details > p > mat-icon {
-    transform: translateY(7px);
+  transform: translateY(7px);
 }
 
 .hire_listing_contact > p > mat-icon {
-    transform: translateY(7px);
+  transform: translateY(7px);
 }
 
 .work_outside {
-    width: max-content;
-    padding: 0px 7px 0px 7px;
-    color: white;
-    background-color: #1E293B;
-    opacity: 0.8;
-    border-radius: 10px;
+  width: max-content;
+  padding: 0px 7px 0px 7px;
+  color: white;
+  background-color: #1e293b;
+  opacity: 0.8;
+  border-radius: 10px;
 }
 
 /* business account css for business listing */
-.no_blisting_header {
-    margin-left: 15vw;
-}
-
-@media screen and (max-width: 768px) {
-    .no_blisting_header {
-        margin-left: 5vw;
-    }
-}
-
-.blisting_header {
-    margin-left: 15vw;
-}
-
-@media screen and (max-width: 768px) {
-    .blisting_header {
-        margin-left: 5vw;
-    }
-}
-
-.blisting_buttons_container {
-    top: 10px;
-    right: 15vw;
-}
-
-@media screen and (max-width: 768px) {
-    .blisting_buttons_container {
-        top: 0px;
-        margin-left: 5vw;
-    }
-}
-
-.blisting_edit_container > button:hover {
-    color: #DC2626;
-}
-
-.blisting_delete_container > button:hover {
-    color: #DC2626;
-}
-
-.blisting_delete_container > button > mat-icon {
-    transform: translateY(5px);
-}
-
-.business_delete_button {
-    color: #DC2626;
-    border: 1px solid #DC2626;
-    border-radius: 10px;
-    padding: 10px;
-    margin-top: 10px;
-}
 
 .blisting {
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    width: 70vw;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  width: 70vw;
 }
 
 @media screen and (max-width: 768px) {
-    .blisting {
-        width: 90vw;
-    }
+  .blisting {
+    width: 90vw;
+  }
 }
 
 .blisting_name > h3 {
-    font-size: 24px;
-    font-weight: bold;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 @media screen and (max-width: 768px) {
-    .blisting_name > h3 {
-        text-decoration: underline;
-        margin: 0;
-    }
+  .blisting_name > h3 {
+    text-decoration: underline;
+    margin: 0;
+  }
 }
 
 .blisting_name > p {
-    font-size: 18px;
-    font-weight: bold;
-    align-self: center;
-    margin-right: auto;
+  font-size: 18px;
+  font-weight: bold;
+  align-self: center;
+  margin-right: auto;
 }
 
 .blisting_details > p > mat-icon {
-    transform: translateY(7px);
+  transform: translateY(7px);
 }
 
 .blisting_contact > p > mat-icon {
-    transform: translateY(7px);
+  transform: translateY(7px);
 }
 
 /* business account css for job board listings */
 .job_board_listing_header {
-    margin-left: 15vw;
+  margin-left: 15vw;
 }
 
 @media screen and (max-width: 768px) {
-    .job_board_listing_header {
-        margin-left: 5vw;
-    }
+  .job_board_listing_header {
+    margin-left: 5vw;
+  }
 }
 
 .no_job_board_listing_header {
-    margin-left: 15vw;
+  margin-left: 15vw;
 }
 
 @media screen and (max-width: 768px) {
-    .no_job_board_listing_header {
-        margin-left: 5vw;
-    }
+  .no_job_board_listing_header {
+    margin-left: 5vw;
+  }
 }
 
 .jlisting_buttons_container {
-    top: 10px;
-    right: 15vw;
+  top: 10px;
+  right: 15vw;
 }
 
 @media screen and (max-width: 768px) {
-    .jlisting_buttons_container {
-        top: 0px;
-        margin-left: 5vw;
-    }
+  .jlisting_buttons_container {
+    top: 0px;
+    margin-left: 5vw;
+  }
 }
 
 .jlisting_edit_container > button:hover {
-    color: #DC2626;
+  color: #dc2626;
 }
 
 .jlisting_delete_container > button:hover {
-    color: #DC2626;
+  color: #dc2626;
 }
 
 .jlisting_delete_container > button > mat-icon {
-    transform: translateY(5px);
+  transform: translateY(5px);
 }
 
 .job_board_delete_button {
-    color: #DC2626;
-    border: 1px solid #DC2626;
-    border-radius: 10px;
-    padding: 10px;
-    margin-top: 10px;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
 }
 
 .jlisting {
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    width: 70vw;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  width: 70vw;
 }
 
 @media screen and (max-width: 768px) {
-    .jlisting {
-        width: 90vw;
-    }
+  .jlisting {
+    width: 90vw;
+  }
 }
 
 .jlisting_name > h3 {
-    font-size: 24px;
-    font-weight: bold;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 @media screen and (max-width: 768px) {
-    .jlisting_name > h3 {
-        text-decoration: underline;
-        margin: 0;
-    }
+  .jlisting_name > h3 {
+    text-decoration: underline;
+    margin: 0;
+  }
 }
 
 .jlisting_name > p {
-    font-size: 18px;
-    font-weight: bold;
-    align-self: center;
-    margin-right: auto;
+  font-size: 18px;
+  font-weight: bold;
+  align-self: center;
+  margin-right: auto;
 }
 
 .jlisting_details > p > mat-icon {
-    transform: translateY(7px);
+  transform: translateY(7px);
 }
 
 .jlisting_contact > p > mat-icon {
-    transform: translateY(7px);
+  transform: translateY(7px);
 }

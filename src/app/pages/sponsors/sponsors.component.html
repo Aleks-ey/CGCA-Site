@@ -1,38 +1,42 @@
-<div class="p-8">
-    <div>
-        <h1 class="!text-5xl">
-            Sponsors
-        </h1>
-        <p class="text-xl">
-            We are grateful for the generous support of our sponsors. 
-            Their contributions help us to continue our mission of promoting Georgian culture, uniting the Georgian community, and educating Georgian youth.
-        </p>
-    </div>
-    <div class="mt-10">
-        <a class="sponsor_btn" routerLink="/events">Become a Sponsor</a>
-    </div>
-</div>
-<div class="sponsor_container" *ngFor="let sponsors of sponsorsList">
-    <div class="sponsor_card" (click)="toggleSponsorInfo(sponsors)">
-        <div class="p-4">
-            <h2 class="text-center !mt-4">
-                {{ sponsors.name }}
-            </h2>
-            <div class="sponsor-info flex flex-row" [ngClass]="{'show': sponsors.showInfo}">
-                <div class="flex-col w-1/2">
-                    <p class="h-1/5!ml-0 overflow-hidden">
-                        {{ sponsors.logo }}
-                    </p>
-                    <div class="ml-0 overflow-hidden">
-                        {{ sponsors.url }}
-                    </div>
-                </div>
-                <div class="w-1/2">
-                    <img 
-                    src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-                    alt="sponsor card image" class="sponsor_card_img">
-                </div>
+<div class="min-h-screen">
+  <app-hero-a
+    title="Sponsors"
+    description="We are grateful for the generous support of our sponsors. Their contributions help us to continue our mission of promoting Georgian culture, uniting the Georgian community, and educating Georgian youth."
+    buttonText="Become a Sponsor"
+    buttonLink="/contact"
+  ></app-hero-a>
+  <div class="px-2 py-10 md:p-10" *ngFor="let sponsors of sponsorsList">
+    <div
+      class="inline-block overflow-hidden text-white bg-prussian-blue rounded-lg cursor-pointer"
+      (click)="toggleSponsorInfo(sponsors)"
+    >
+      <div class="p-4">
+        <h2 class="text-center !mt-4">
+          {{ sponsors.name }}
+        </h2>
+        <div
+          class="flex flex-col md:flex-row opacity-0 max-h-0 max-w-0 transform transition-all ease-in-out duration-1000"
+          [ngClass]="{
+            'opacity-100 max-h-96 max-w-96': sponsors.showInfo
+          }"
+        >
+          <div class="flex-col md:w-1/2">
+            <p class="h-1/5!ml-0 overflow-hidden">
+              {{ sponsors.logo }}
+            </p>
+            <div class="ml-0 overflow-hidden">
+              {{ sponsors.url }}
             </div>
+          </div>
+          <div class="md:w-1/2">
+            <img
+              src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+              alt="sponsor card image"
+              class=""
+            />
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

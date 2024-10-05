@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 export interface sponsor {
   name: string;
@@ -8,32 +8,31 @@ export interface sponsor {
 }
 
 @Component({
-  selector: 'app-sponsors',
-  templateUrl: './sponsors.component.html',
-  styleUrls: ['./sponsors.component.css']
+  selector: "app-sponsors",
+  templateUrl: "./sponsors.component.html",
 })
 export class SponsorsComponent {
-  constructor() { }
+  constructor() {}
 
   sponsor: sponsor = {
-    name: '',
-    logo: '',
-    url: '',
-    showInfo: false
+    name: "",
+    logo: "",
+    url: "",
+    showInfo: false,
   };
 
   clicked = false;
 
   sponsorsList = [
     {
-      name: 'Sponsor 1',
-      logo: 'https://via.placeholder.com/100',
-      url: 'https://www.google.com',
-      showInfo: false
+      name: "Sponsor 1",
+      logo: "https://via.placeholder.com/100",
+      url: "https://www.google.com",
+      showInfo: false,
     },
   ];
 
   toggleSponsorInfo(sponsor: any) {
-    sponsor.showInfo =!sponsor.showInfo;
+    sponsor.showInfo = !sponsor.showInfo;
   }
 }

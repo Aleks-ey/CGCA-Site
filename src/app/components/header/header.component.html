@@ -1,72 +1,115 @@
-<mat-toolbar class="mat_header sticky top-0 z-50 h-20 !px-0 md:!px-4">
-    <a routerLink="/" class="logo block">
-        <img src="assets/images/CGCA-LOGO.png" alt="Colorado Georgian Community Association">
-    </a>
-    <a routerLink="/" class="header_title flex flex-col pl-1 lg:pl-2" *ngIf="!isMenuOpen">
-        <h1 class="header_title_text !mb-0">CGCA</h1>
-        <!-- <h1 class="header_title_text2 !mb-0">Community Association</h1> -->
-    </a>
-    <a routerLink="/" class="header_title2 flex pl-1 lg:pl-2" *ngIf="isMenuOpen">
-        Colorado Georgian <br/> Community Association
-    </a>
+<mat-toolbar class="sticky top-0 z-50 h-20 !p-1 md:!p-2 !bg-white shadow-lg">
+  <a routerLink="/" class="block">
+    <img
+      src="assets/images/CGCA-LOGO.png"
+      alt="Colorado Georgian Community Association"
+      class="w-12 md:w-16"
+    />
+  </a>
+  <a routerLink="/" class="flex flex-col p-1 lg:p-2" *ngIf="!isMenuOpen">
+    <h1 class="!font-semibold !text-lg text-prussian-blue">CGCA</h1>
+  </a>
+  <a
+    routerLink="/"
+    class="flex z-20 pl-1 lg:pl-2 text-white"
+    *ngIf="isMenuOpen"
+  >
+    Colorado Georgian <br />
+    Community Association
+  </a>
+  <span class="flex-1"></span>
+
+  <div class="header_right hidden lg:flex gap-6">
+    <a routerLink="/meet" class="header_link">Meet the Board</a>
+    <a routerLink="/sponsors" class="header_link">Sponsors</a>
+    <div class="dropdown-container">
+      <button
+        class="header_link"
+        routerLink="/community"
+        (mouseover)="onButtonMouseOver()"
+        (mouseout)="onButtonMouseOut()"
+      >
+        Community
+      </button>
+      <div
+        class="dropdown-content"
+        *ngIf="showDropdown"
+        (mouseover)="onDropdownMouseOver()"
+        (mouseout)="onDropdownMouseOut()"
+      >
+        <a routerLink="/business">Businesses</a>
+        <a routerLink="/job-board">Job Board</a>
+        <a routerLink="/for-hire">For Hire</a>
+        <a class="hover:cursor-pointer" (click)="navigateToAccount()"
+          >My Account</a
+        >
+      </div>
+    </div>
+    <a routerLink="/events" class="header_link">Events</a>
+    <a routerLink="/gallery" class="header_link">Gallery</a>
+    <a routerLink="/contact" class="header_link">Contact</a>
     <span class="header_spacer"></span>
+    <!-- <a href="https://signup.com/go/AAXcrWH" class="header_volunteer_link">Volunteer</a> -->
+    <a class="header_donate px-4 py-2" href="https://square.link/u/20SYlc1k">
+      Donate
+    </a>
+  </div>
 
-    <div class="header_right hidden lg:flex gap-6">
-        <!-- <a routerLink="/mission" class="header_link">Our Mission</a> -->
-        <a routerLink="/meet" class="header_link">Meet the Board</a>
-        <a routerLink="/sponsors" class="header_link">Sponsors</a>
-        <!-- <a routerLink="/community" class="header_link">Community</a> -->
-        <div class="dropdown-container">
-            <button 
-                class="header_link"
-                routerLink="/community"  
-                (mouseover)="onButtonMouseOver()" 
-                (mouseout)="onButtonMouseOut()">
-                Community
-            </button>
-            <div class="dropdown-content" 
-              *ngIf="showDropdown" 
-              (mouseover)="onDropdownMouseOver()" 
-              (mouseout)="onDropdownMouseOut()">
-              <a routerLink="/business">Businesses</a>
-              <a routerLink="/job-board">Job Board</a>
-              <a routerLink="/for-hire">For Hire</a>
-              <a class="hover:cursor-pointer" (click)="navigateToAccount()">My Account</a>
-            </div>
-          </div>
-        <a routerLink="/events" class="header_link">Events</a>
-        <a routerLink="/contact" class="header_link">Contact</a>
-        <span class="header_spacer"></span>
-        <!-- <a href="https://signup.com/go/AAXcrWH" class="header_volunteer_link">Volunteer</a> -->
-        <a class="header_donate px-4 py-2" href="https://square.link/u/20SYlc1k">
-                Donate
-        </a>
+  <button mat-button class="hamburger" (click)="toggleMenu()">
+    <mat-icon class="menu_icon !mr-0" *ngIf="!isMenuOpen">menu</mat-icon>
+    <mat-icon class="close_icon z-20 text-white !mr-0" *ngIf="isMenuOpen"
+      >close</mat-icon
+    >
+  </button>
+
+  <div class="expanded-menu" *ngIf="isMenuOpen">
+    <a routerLink="/" class="header-link" (click)="closeMenu()">Home</a>
+    <a routerLink="/meet" class="header-link" (click)="closeMenu()"
+      >Meet the Board</a
+    >
+    <a routerLink="/sponsors" class="header-link" (click)="closeMenu()"
+      >Sponsors</a
+    >
+    <div class="expanded-community-container">
+      <a routerLink="/community" class="header-link" (click)="closeMenu()"
+        >Community</a
+      >
+      <span (click)="toggleCommunityDropdown()">
+        <mat-icon class="expand_arrow">{{
+          isCommunityDropdownOpen ? "arrow_drop_up" : "arrow_drop_down"
+        }}</mat-icon>
+      </span>
     </div>
-
-    <button mat-button class="hamburger" (click)="toggleMenu()" >
-        <mat-icon class="menu_icon !mr-0" *ngIf="!isMenuOpen">menu</mat-icon>
-        <mat-icon class="close_icon z-20 text-white !mr-0" *ngIf="isMenuOpen">close</mat-icon>
-    </button>
-
-    <div class="expanded-menu" *ngIf="isMenuOpen">
-        <a routerLink="/" class="header-link" (click)="closeMenu()">Home</a>
-        <a routerLink="/meet" class="header-link" (click)="closeMenu()">Meet the Board</a>
-        <a routerLink="/sponsors" class="header-link" (click)="closeMenu()">Sponsors</a>
-        <div class="expanded-community-container">
-            <a routerLink="/community" class="header-link" (click)="closeMenu()">Community</a>
-            <span (click)="toggleCommunityDropdown()">
-                <mat-icon class="expand_arrow">{{ isCommunityDropdownOpen ? 'arrow_drop_up' : 'arrow_drop_down' }}</mat-icon>
-            </span>
-        </div>
-        <div class="expanded-dropdown-menu" *ngIf="isCommunityDropdownOpen">
-            <a routerLink="/business" class="dropdown-item" (click)="closeMenu()">Businesses</a>
-            <a routerLink="/job-board" class="dropdown-item" (click)="closeMenu()">Job Board</a>
-            <a routerLink="/for-hire" class="dropdown-item" (click)="closeMenu()">For Hire</a>
-            <a class="dropdown-item hover:cursor-pointer" (click)="navigateToAccount()" (click)="closeMenu()">My Account</a>
-        </div>
-        <a routerLink="/events" class="header-link" (click)="closeMenu()">Events</a>
-        <a routerLink="/contact" class="header-link" (click)="closeMenu()">Contact</a>
-        <!-- <a href="https://signup.com/go/AAXcrWH" class="header-link" (click)="closeMenu()">Volunteer</a> -->
-        <a href="https://square.link/u/20SYlc1k" class="header-link" (click)="closeMenu()">Donate</a>
+    <div class="expanded-dropdown-menu" *ngIf="isCommunityDropdownOpen">
+      <a routerLink="/business" class="dropdown-item" (click)="closeMenu()"
+        >Businesses</a
+      >
+      <a routerLink="/job-board" class="dropdown-item" (click)="closeMenu()"
+        >Job Board</a
+      >
+      <a routerLink="/for-hire" class="dropdown-item" (click)="closeMenu()"
+        >For Hire</a
+      >
+      <a
+        class="dropdown-item hover:cursor-pointer"
+        (click)="navigateToAccount()"
+        (click)="closeMenu()"
+        >My Account</a
+      >
     </div>
+    <a routerLink="/events" class="header-link" (click)="closeMenu()">Events</a>
+    <a routerLink="/gallery" class="header-link" (click)="closeMenu()"
+      >Gallery</a
+    >
+    <a routerLink="/contact" class="header-link" (click)="closeMenu()"
+      >Contact</a
+    >
+    <!-- <a href="https://signup.com/go/AAXcrWH" class="header-link" (click)="closeMenu()">Volunteer</a> -->
+    <a
+      href="https://square.link/u/20SYlc1k"
+      class="header-link"
+      (click)="closeMenu()"
+      >Donate</a
+    >
+  </div>
 </mat-toolbar>

@@ -1,24 +1,24 @@
 .hamburger {
-    position: absolute;
-    top: 10px;
-    left: 0px;
-    z-index: 100;
-    /* width: 50px; */
-    /* height: 50px; */
-    padding: 0px;
-    /* background: #fff; */
-    border-radius: 0%;
-    /* outline: #000; */
-    /* transition: all 0.3s ease-in-out; */
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  z-index: 100;
+  /* width: 50px; */
+  /* height: 50px; */
+  padding: 0px;
+  /* background: #fff; */
+  border-radius: 0%;
+  /* outline: #000; */
+  /* transition: all 0.3s ease-in-out; */
 }
 
 #hamburger-icon {
-    position: fixed;
-    font-size: 1.75rem;
-    width: 40px;
-    height: 30px;
+  position: fixed;
+  font-size: 1.75rem;
+  width: 40px;
+  height: 30px;
 
-    /* position: sticky;
+  /* position: sticky;
     top: 0px;
     left: 0px;
     z-index: 100;
@@ -30,47 +30,47 @@
 }
 
 .mobile-header-title {
-    padding-left: 10%;
+  padding-left: 10%;
 }
 
 .mobile_home_container {
-    /* display: flex; */
-    /* flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column;
     justify-content: center;
     align-items: center; */
-    height: 100%;
-    width: 100%;
-    background: #fff;
-    position: relative;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  position: relative;
 }
 
 .sidenav_container {
-    width: 90%;
+  width: 90%;
 }
 
 .sidenav_links {
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
-    padding-top: 6vw;
-    padding-left: 8vw;
-    padding-right: 2vw;
-    gap: 6vw;
-    /* bold text */
-    font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  padding-top: 6vw;
+  padding-left: 8vw;
+  padding-right: 2vw;
+  gap: 6vw;
+  /* bold text */
+  font-weight: 600;
 }
 
 .logo {
-    width: 100%;
-    height: 100%;
-    /* object-fit: contain; */
-    /* margin-bottom: 2vw; */
+  width: 100%;
+  height: 100%;
+  /* object-fit: contain; */
+  /* margin-bottom: 2vw; */
 }
 
 .sidenav_link {
-    font-size: 2.5vw;
-    font-weight: 500;
-    color: #000;
-    text-decoration: none;
-    margin-top: 2vw;
+  font-size: 2.5vw;
+  font-weight: 500;
+  color: #000;
+  text-decoration: none;
+  margin-top: 2vw;
 }

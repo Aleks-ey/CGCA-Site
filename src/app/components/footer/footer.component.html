@@ -1,38 +1,60 @@
 <div class="flex flex-col md:flex-row">
-    <div class="flex flex-row bg-slate-800 text-white justify-between w-full p-8 mt-32">
-        <div class="flex flex-col">
-            <p>Colorado Georgian Community Association</p>
-            <p>Denver, CO</p>
-            <p>(720) 275-8789</p>
-            <p>Ertoba.CGCA&#64;gmail.com</p>
-        </div>
-        
-        <div class="flex flex-col">
-            <h3>INFO</h3>
-            <a routerLink="/" class="header-link">Home</a>
-            <a routerLink="/mission" class="header-link">Our Mission</a>
-            <a routerLink="/meet" class="header-link">Meet the Board</a>
-            <a routerLink="/events" class="header-link">Events</a>
-        </div>
+  <div
+    class="flex flex-col md:flex-row gap-y-10 bg-slate-800 text-white justify-evenly w-full py-8 pl-6 md:pl-0"
+  >
+    <div class="flex flex-col">
+      <p>Colorado Georgian Community Association</p>
+      <p>Denver, CO</p>
+      <p>(720) 275-8789</p>
+      <p>Ertoba.CGCA&#64;gmail.com</p>
     </div>
 
-    <div class="flex flex-row bg-slate-800 text-white justify-between w-full p-8 md:mt-32">
-        <div class="flex flex-col md:ml-24">
-            <h3>CONTACT</h3>
-            <a routerLink="/contact" class="header-link">Contact</a>
-            <a routerLink="/contact" class="header-link">Volunteer</a>
-            <a routerLink="/contact" class="header-link">Donate</a>
-        </div>
-
-        <div class="flex flex-col mr-6 md:mr-16">
-            <!-- socials -->
-            <h3>SOCIALS</h3>
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener" class="facebook_link ml-3">
-                <mat-icon class="text-white">facebook</mat-icon>
-            </a>
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="instagram_link w-9 mt-4">
-                <img src="assets/images/instagram_icon_white.png" alt="CGCA Logo"/>
-            </a>
-        </div>
+    <div class="flex flex-col">
+      <h3 class="font-semibold pb-4">INFO</h3>
+      <a routerLink="/" class="header-link">Home</a>
+      <a routerLink="/mission" class="header-link">Our Mission</a>
+      <a routerLink="/meet" class="header-link">Meet the Board</a>
+      <a routerLink="/events" class="header-link">Events</a>
     </div>
+  </div>
+
+  <div
+    class="flex flex-col md:flex-row gap-y-10 bg-slate-800 text-white justify-evenly w-full py-8 pl-6 md:pl-0"
+  >
+    <div class="flex flex-col">
+      <h3 class="font-semibold pb-4">CONTACT</h3>
+      <a routerLink="/contact" class="header-link">Contact</a>
+      <a routerLink="/contact" class="header-link">Volunteer</a>
+      <a routerLink="/contact" class="header-link">Donate</a>
+    </div>
+
+    <div class="flex flex-col">
+      <!-- socials -->
+      <h3 class="font-semibold pb-5">SOCIALS</h3>
+      <a
+        href="https://www.facebook.com/"
+        target="_blank"
+        rel="noopener"
+        class="w-9 m-1"
+      >
+        <img
+          src="assets/icons/facebook-brands-solid.svg"
+          alt="Facebook Logo"
+          class="filter-white"
+        />
+      </a>
+      <a
+        href="https://www.instagram.com/"
+        target="_blank"
+        rel="noopener"
+        class="w-9 m-1"
+      >
+        <img
+          src="assets/icons/instagram-brands-solid.svg"
+          alt="instagram Logo"
+          class="filter-white"
+        />
+      </a>
+    </div>
+  </div>
 </div>
