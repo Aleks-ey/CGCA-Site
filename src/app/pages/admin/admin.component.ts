@@ -92,14 +92,14 @@ export class AdminComponent {
   onFileSelected(event: any) {
     this.file = event.target.files[0];
   }
-  async upload() {
+  async upload(path: string) {
     if (!this.file) {
       alert("Please select a file first.");
       return;
     }
     try {
       const url = await this.supabaseService.uploadFile(
-        `admin/assets/${this.file.name}`,
+        `${path}${this.file.name}`,
         this.file
       );
       alert("File uploaded successfully: " + url);
@@ -109,9 +109,10 @@ export class AdminComponent {
       return null;
     }
   }
+
   // Add event
   async submitEvent() {
-    const url = await this.upload();
+    const url = await this.upload("event-images/admin/assets/");
     console.log("URL:", url);
     if (url) {
       this.event.image_url = url;

@@ -51,11 +51,13 @@ import { UpdateAccountComponent } from "./components/update-account/update-accou
 import { AccountLoginComponent } from "./pages/account-login/account-login.component";
 import { SponsorsComponent } from "./pages/sponsors/sponsors.component";
 import { GalleryComponent } from "./pages/gallery/gallery.component";
+
 import { HeroAComponent } from "./components/hero-components/hero-a/hero-a.component";
 import { ForHireListingsComponent } from "./components/community-listings/for-hire-listings/for-hire-listings.component";
 import { JobBoardListingsComponent } from "./components/community-listings/job-board-listings/job-board-listings.component";
 import { BusinessListingsComponent } from "./components/community-listings/business-listings/business-listings.component";
 import { ListingsActionButtonsComponent } from "./components/community-listings/listings-action-buttons/listings-action-buttons.component";
+import { ImageDialogComponent } from "./components/utility/image-dialog/image-dialog.component";
 
 @NgModule({
   declarations: [
@@ -114,6 +116,7 @@ import { ListingsActionButtonsComponent } from "./components/community-listings/
     JobBoardListingsComponent,
     BusinessListingsComponent,
     ListingsActionButtonsComponent,
+    ImageDialogComponent,
   ],
   providers: [
     {
