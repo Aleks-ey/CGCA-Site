@@ -1,21 +1,18 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'app-members',
+  selector: "app-members",
   templateUrl: `./meet.component.html`,
-  styleUrls: ['./meet.component.css']
 })
 export class MeetComponent {
   isVisible: boolean = false;
 
-  ngOnInit(){
+  ngOnInit() {
     // wait 1 second and then change isVisible to true
     setTimeout(() => {
       this.isVisible = true;
-    }
-    , 500);
+    }, 500);
   }
-  
 
   // ngAfterViewInit() {
   //   this.isVisible = true;

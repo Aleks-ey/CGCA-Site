@@ -1,0 +1,49 @@
+<div class="flex flex-row">
+  <div class="mr-2">
+    <button (click)="onEdit()" class="flex flex-row">
+      <mat-icon class="text-black">edit</mat-icon>
+      <span class="hidden md:inline">{{ editLabel }}</span>
+    </button>
+  </div>
+  <div *ngIf="!editOnly" class="">
+    <button (click)="onDelete()" class="flex flex-row">
+      <mat-icon class="text-black">delete</mat-icon>
+      <span class="hidden md:inline">{{ deleteLabel }}</span>
+    </button>
+  </div>
+</div>
+
+<!-- Delete Confirmation Dialog -->
+<ng-template #deleteDialog>
+  <h2 mat-dialog-title>{{ deleteDialogTitle }}</h2>
+  <mat-dialog-content>
+    <p>{{ deleteDialogMessage }}</p>
+    <p>{{ deleteDialogWarning }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button mat-button (click)="onConfirmDelete()">Delete</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<!-- Success Dialog -->
+<ng-template #successDialog>
+  <h2 mat-dialog-title>Success!</h2>
+  <mat-dialog-content>
+    <p>{{ successMessage }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button mat-button mat-dialog-close>OK</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<!-- Failure Dialog -->
+<ng-template #failDialog>
+  <h2 mat-dialog-title>Error</h2>
+  <mat-dialog-content>
+    <p>{{ failMessage }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button mat-button mat-dialog-close>OK</button>
+  </mat-dialog-actions>
+</ng-template>

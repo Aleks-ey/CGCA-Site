@@ -1,0 +1,93 @@
+<div class="flex flex-col justify-center gap-y-5">
+  <ng-container *ngIf="displayedListings.length > 0; else noListings">
+    <div
+      class="flex flex-col justify-center border rounded-lg p-4"
+      *ngFor="let listing of displayedListings"
+      (click)="
+        admin ? openHiresApproval(listing.profile_id, listing.email) : null
+      "
+    >
+      <div class="flex flex-row justify-center py-2">
+        <p>{{ listing.name }} -&nbsp;</p>
+        <p>{{ listing.profession }}</p>
+      </div>
+
+      <div class="py-2">
+        <p>{{ listing.about }}</p>
+      </div>
+
+      <div class="flex flex-row py-2">
+        <mat-icon class="text-black mr-1">map</mat-icon>
+        <p>{{ listing.location }}</p>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-6 py-2">
+        <div class="flex flex-row">
+          <mat-icon class="text-black mr-1">email</mat-icon>
+          <p>{{ listing.email }}</p>
+        </div>
+        <div *ngIf="listing.phone_number" class="flex flex-row">
+          <mat-icon class="text-black mr-1">phone</mat-icon>
+          <p>
+            ({{ listing.phone_number.slice(0, 3) }}){{
+              listing.phone_number.slice(3, 6)
+            }}-{{ listing.phone_number.slice(6, 10) }}
+          </p>
+        </div>
+        <div *ngIf="!listing.phone_number" class="flex flex-row">
+          <mat-icon class="text-black mr-1">phone</mat-icon>
+          <p>No phone number provided</p>
+        </div>
+      </div>
+
+      <div *ngIf="listing.work_outside" class="py-2">
+        Willing to work outside of profession
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #noListings>
+    <div class="text-center mt-6 p-16">
+      <p>There are no {{ messageBasedOnFilter }} for hire listings.</p>
+    </div>
+  </ng-template>
+</div>
+
+<!-- Admin Approval Toggle Dialog -->
+<ng-template #dialogForHireAdminToggle>
+  <div class="p-4 text-center">
+    <h1 class="text-lg">
+      Click the toggle to unapprove for hire listing for
+      {{ userEmail }}:
+    </h1>
+
+    <form
+      [formGroup]="toggleForm"
+      class="flex items-center place-content-center py-6 md:py-2"
+    >
+      <span>Unapproved</span>
+      <mat-slide-toggle
+        formControlName="toggleValue"
+        class="text-black"
+      ></mat-slide-toggle>
+      <span>Approved</span>
+    </form>
+
+    <div class="flex flex-row justify-center gap-x-4">
+      <button
+        mat-button
+        (click)="submitHiresApproval(userId)"
+        class="bg-transparent border border-red-600 text-red-600 rounded-lg p-2 hover:bg-red-600 hover:text-white"
+      >
+        Submit
+      </button>
+      <button
+        mat-button
+        (click)="closeDialog()"
+        class="bg-transparent border border-red-600 text-red-600 rounded-lg p-2 hover:bg-red-600 hover:text-white"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>

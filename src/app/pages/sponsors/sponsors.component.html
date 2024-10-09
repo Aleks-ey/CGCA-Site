@@ -1,3 +1,27 @@
-<div>
-    
+<div class="min-h-screen">
+  <app-hero-a
+    title="Sponsors"
+    description="We are grateful for the generous support of our sponsors. Their contributions help us to continue our mission of promoting Georgian culture, uniting the Georgian community, and educating Georgian youth."
+    buttonText="Become a Sponsor"
+    buttonLink="/contact"
+    imageSrc="assets/images/CgcaGroupPhoto.png"
+    imageAlt="Colorado Georgian Community Association Group Photo At First Event"
+    imageOverlay="CGCA's First Community Event"
+    [imageLeft]="true"
+  ></app-hero-a>
+
+  <app-sponsor-logo-carousel
+    bg="white"
+    [shuffle]="true"
+  ></app-sponsor-logo-carousel>
+
+  <div class="md:w-2/3 px-8 pt-20 mx-auto text-center">
+    <h2 class="text-3xl font-semibold">A Look At Our Incredible Sponsors</h2>
+    <p class="text-lg text-gray-700">
+      We are so thankful for our sponsors support. We invite you to join us in
+      showing appreciation by supporting them in return.
+    </p>
+  </div>
+
+  <app-sponsor-list [alternate]="true" [image]="true"></app-sponsor-list>
 </div>

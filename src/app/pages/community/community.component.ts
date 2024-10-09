@@ -1,40 +1,28 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { SupabaseService, Profile } from 'src/app/supabase.service';
-import { FormBuilder } from '@angular/forms';
-import { AuthSession, SupabaseClient } from '@supabase/supabase-js';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input } from "@angular/core";
+import { SupabaseService } from "src/app/supabase.service";
+import { FormBuilder } from "@angular/forms";
+import { AuthSession, SupabaseClient } from "@supabase/supabase-js";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-community',
+  selector: "app-community",
   templateUrl: `community.component.html`,
-  styleUrls: ['./community.component.css'],
 })
 export class CommunityComponent {
-  profile: Profile | null = null;
-
   constructor(
     private supabaseService: SupabaseService,
     private auth: SupabaseService,
-    private router: Router,
-    ) {
-  }
-
-  ngOnInit() {
-
-    // console.log(this.supabaseService.fetchUser().then((res) => {console.log(res)}));
-    // console.log(this.supabaseService.profile(this.supabaseService.fetchProfile()));
-  }
+    private router: Router
+  ) {}
 
   // ------------------ MyAccount Navigation ------------------
   async navigateToAccount() {
-    await this.supabaseService.isLoggedIn() 
-    .then (res => {
+    await this.supabaseService.isLoggedIn().then((res) => {
       if (res === true) {
-        this.router.navigate(['/account']);
+        this.router.navigate(["/account"]);
       } else {
-        this.router.navigate(['/account-login']);
+        this.router.navigate(["/account-login"]);
       }
     });
   }
 }
-

@@ -1,9 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { Component } from '@angular/core';
-import { DeviceDetectorService } from 'ngx-device-detector';
+import { BrowserModule } from "@angular/platform-browser";
+import { Component } from "@angular/core";
+import { DeviceDetectorService } from "ngx-device-detector";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   template: `
     <div *ngIf="isDesktop || isTablet || isMobile" class="h-max">
       <app-header></app-header>
@@ -12,10 +12,10 @@ import { DeviceDetectorService } from 'ngx-device-detector';
       <app-footer></app-footer>
     </div>
   `,
-  styleUrls: ['./app.component.css']
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-  title = 'Georgian-Website';
+  title = "Georgian-Website";
 
   events: string[] = [];
   opened: boolean | undefined;
@@ -28,12 +28,12 @@ export class AppComponent {
 
   onActivate(event: any) {
     let scrollToTop = window.setInterval(() => {
-        let pos = window.scrollY;
-        if (pos > 0) {
-            window.scrollTo(0, pos - 50); // how far to scroll on each step
-        } else {
-            window.clearInterval(scrollToTop);
-        }
+      let pos = window.scrollY;
+      if (pos > 0) {
+        window.scrollTo(0, pos - 50); // how far to scroll on each step
+      } else {
+        window.clearInterval(scrollToTop);
+      }
     }, 1);
   }
 }

@@ -43,18 +43,10 @@
             "outputPath": "dist/georgian-website",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -94,10 +86,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Georgian-Website:build:development"
+              "buildTarget": "Georgian-Website:build:development"
             },
             "development": {
-              "browserTarget": "Georgian-Website:build:development"
+              "buildTarget": "Georgian-Website:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -105,7 +97,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Georgian-Website:build"
+            "buildTarget": "Georgian-Website:build"
           }
         }
       }

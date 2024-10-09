@@ -1,23 +1,23 @@
-import { Component } from '@angular/core';
-import { SupabaseService } from 'src/app/supabase.service';
-import { CalendarEvent } from './calendarEvent.model';
-import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import { Component } from "@angular/core";
+import { SupabaseService } from "src/app/supabase.service";
+import { CalendarEvent } from "../../models/calendarEvent.model";
+import { MatCalendarCellCssClasses } from "@angular/material/datepicker";
+import { MatDialog } from "@angular/material/dialog";
+import { ImageDialogComponent } from "src/app/components/utility/image-dialog/image-dialog.component";
 
 @Component({
-  selector: 'app-events',
-  templateUrl: './events.component.html',
-  styleUrls: ['./events.component.css'],
+  selector: "app-events",
+  templateUrl: "./events.component.html",
 })
-
 export class EventsComponent {
-  selected: Date | null = null;
+  selected: Date | null = new Date();
 
   event: CalendarEvent = {
-    date: '',
-    description: '',
-    time: '',
-    title: '',
-    image_url: '',
+    date: "",
+    description: "",
+    time: "",
+    title: "",
+    image_url: "",
   };
 
   eventsList: CalendarEvent[] = [];
@@ -25,19 +25,22 @@ export class EventsComponent {
   // selectedEventId?: number;
   sliderEventsList: CalendarEvent[] = [];
 
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(
+    private supabaseService: SupabaseService,
+    private dialog: MatDialog
+  ) {}
 
   async ngOnInit() {
     const result = await this.supabaseService.getAllEvents();
     if (result.error) {
-      console.error('Error fetching events:', result.error);
+      console.error("Error fetching events:", result.error);
     } else {
-      this.eventsList = result.data!.map(event => ({
+      this.eventsList = result.data!.map((event) => ({
         ...event,
         date: this.formatDate(event.date),
-        time: this.formatTime(event.time)
+        time: this.formatTime(event.time),
       }));
-      this.eventDates = new Set(this.eventsList.map(event => event.date));
+      this.eventDates = new Set(this.eventsList.map((event) => event.date));
 
       // Sort eventsList and put any events that are 1 week before the current date and 2 months after the current date into the sliderEventsList
       const currentDate = new Date();
@@ -45,8 +48,10 @@ export class EventsComponent {
       twoMonthsAfter.setMonth(twoMonthsAfter.getMonth() + 2);
       currentDate.setDate(currentDate.getDate() - 1);
 
-      this.eventsList.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-      this.sliderEventsList = this.eventsList.filter(event => {
+      this.eventsList.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+      this.sliderEventsList = this.eventsList.filter((event) => {
         const eventDate = new Date(event.date);
         return eventDate >= currentDate && eventDate <= twoMonthsAfter;
       });
@@ -54,35 +59,49 @@ export class EventsComponent {
   }
 
   myDateClass = (date: Date): MatCalendarCellCssClasses => {
-    const formattedDate = this.formatDate(date.toISOString().split('T')[0]);
+    const formattedDate = this.formatDate(date.toISOString().split("T")[0]);
     const hasEvent = this.eventDates.has(formattedDate);
-    return hasEvent ? 'has-event' : '';
-  }
+    return hasEvent ? "has-event" : "";
+  };
   formatEventDates() {
-    this.eventsList = this.eventsList.map(event => {
-        event.date = this.formatDate(event.date);
-        return event;
+    this.eventsList = this.eventsList.map((event) => {
+      event.date = this.formatDate(event.date);
+      return event;
     });
   }
 
   formatDate(dateString: string): string {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const [year, month, day] = dateString.split('-').map(Number);
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const [year, month, day] = dateString.split("-").map(Number);
     const formattedMonth = months[month - 1];
-    const formattedDay = String(day).padStart(2, '0');
+    const formattedDay = String(day).padStart(2, "0");
     return `${formattedMonth} ${formattedDay}, ${year}`;
-}
+  }
 
   // ------------------ Event Slider ------------------
   currentSliderEvent = 0;
   x = 0;
   cardx = 0;
-  
+
   onPrevious() {
     const previousEvent = this.currentSliderEvent - 1;
-    this.currentSliderEvent = previousEvent < 0 ? this.eventsList.length - 1 : previousEvent;
+    this.currentSliderEvent =
+      previousEvent < 0 ? this.eventsList.length - 1 : previousEvent;
 
-    if(this.cardx != 0) {
+    if (this.cardx != 0) {
       this.x += 360;
       this.cardx -= 1;
     }
@@ -90,40 +109,73 @@ export class EventsComponent {
 
   onNext() {
     const nextEvent = this.currentSliderEvent + 1;
-    this.currentSliderEvent = nextEvent === this.eventsList.length ? 0 : nextEvent;
+    this.currentSliderEvent =
+      nextEvent === this.eventsList.length ? 0 : nextEvent;
 
-    if(window.innerWidth > 768) {
-      if(this.cardx != this.sliderEventsList.length-2 && this.sliderEventsList.length > 1) {
+    if (window.innerWidth > 768) {
+      if (
+        this.cardx != this.sliderEventsList.length - 2 &&
+        this.sliderEventsList.length > 1
+      ) {
+        this.x -= 360;
+        this.cardx += 1;
+      }
+    } else {
+      if (
+        this.cardx != this.sliderEventsList.length - 1 &&
+        this.sliderEventsList.length > 1
+      ) {
         this.x -= 360;
         this.cardx += 1;
       }
     }
-    else {
-      if(this.cardx != this.sliderEventsList.length-1 && this.sliderEventsList.length > 1) {
-        this.x -= 360;
-        this.cardx += 1;
-      }
-    }
+  }
+
+  openImageDialog(imageUrl: string, title: string) {
+    this.dialog.open(ImageDialogComponent, {
+      data: { imageUrl, title },
+      panelClass: "py-10",
+    });
   }
 
   // ------------------ Event Selector ------------------
   onSelect(selected: Date | null | undefined) {
-
-    if (!selected) {
-      return 'Select a date to view events for that day.';
-  }
-
     const dateObj = new Date(selected!);
 
-    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
 
     const dayOfWeek = daysOfWeek[dateObj.getUTCDay()];
     const month = months[dateObj.getUTCMonth()];
     const dayOfMonth = dateObj.getUTCDate();
-    if(dayOfMonth == 1 || dayOfMonth == 2 || dayOfMonth == 3 || dayOfMonth == 4 || dayOfMonth == 5 || dayOfMonth == 6 || dayOfMonth == 7 || dayOfMonth == 8 || dayOfMonth == 9) {
-      const dayOfMonthString = String(dayOfMonth).padStart(2, '0');
-      this.showSelectedEvents(`${month} ${dayOfMonthString}, ${dateObj.getUTCFullYear()}`);
+    if (
+      dayOfMonth == 1 ||
+      dayOfMonth == 2 ||
+      dayOfMonth == 3 ||
+      dayOfMonth == 4 ||
+      dayOfMonth == 5 ||
+      dayOfMonth == 6 ||
+      dayOfMonth == 7 ||
+      dayOfMonth == 8 ||
+      dayOfMonth == 9
+    ) {
+      const dayOfMonthString = String(dayOfMonth).padStart(2, "0");
+      this.showSelectedEvents(
+        `${month} ${dayOfMonthString}, ${dateObj.getUTCFullYear()}`
+      );
       return `${dayOfWeek}, ${month} ${dayOfMonthString}, ${dateObj.getUTCFullYear()}`;
     }
 
@@ -138,8 +190,8 @@ export class EventsComponent {
 
   showSelectedEvents(date: string) {
     this.selectedEventsList = [];
-    for(let i = 0; i < this.eventsList.length; i++) {
-      if(this.eventsList[i].date == date) {
+    for (let i = 0; i < this.eventsList.length; i++) {
+      if (this.eventsList[i].date == date) {
         this.selectedEventsList.push(this.eventsList[i]);
       }
     }
@@ -148,15 +200,14 @@ export class EventsComponent {
 
   formatTime(timeString: string): string {
     // Check if timeString is valid and has the expected format "HH:MM"
-    if (!timeString || !timeString.includes(':')) {
+    if (!timeString || !timeString.includes(":")) {
       return timeString; // or you could return an error or a default value
     }
-  
-    const [hours, minutes] = timeString.split(':').map(Number);
-    const period = hours >= 12 ? 'PM' : 'AM';
+
+    const [hours, minutes] = timeString.split(":").map(Number);
+    const period = hours >= 12 ? "PM" : "AM";
     const hours12 = hours % 12 || 12; // Convert to 12-hour format and handle midnight
-  
-    return `${hours12}:${minutes.toString().padStart(2, '0')} ${period}`;
+
+    return `${hours12}:${minutes.toString().padStart(2, "0")} ${period}`;
   }
-  
 }

@@ -1,49 +1,35 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { SupabaseClient } from '@supabase/supabase-js';
-import { SupabaseService } from 'src/app/supabase.service';
-
-export interface BusinessListing {
-  id?: number;
-  profile_id: string;
-  company_name: string;
-  type: string;
-  description: string;
-  owner: string;
-  email: string;
-  phone_number: string;
-  location: string;
-  image_url: string;
-  approved: boolean;
-}
+import { Component, TemplateRef, ViewChild } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { SupabaseService } from "src/app/supabase.service";
+import { BusinessListing } from "src/app/models/businessListing.model";
 
 @Component({
-  selector: 'app-register-business',
-  templateUrl: './register-business.component.html',
-  styleUrls: ['./register-business.component.css'],
+  selector: "app-register-business",
+  templateUrl: "./register-business.component.html",
 })
 export class RegisterBusinessComponent {
   constructor(
-    private supabaseService: SupabaseService, 
+    private supabaseService: SupabaseService,
     private formBuilder: FormBuilder,
     private storage: SupabaseService,
-    public dialog: MatDialog,
-  ) { }
+    public dialog: MatDialog
+  ) {}
 
-  @ViewChild('dialogTemplateSuccess') dialogTemplateSuccess!: TemplateRef<any>;
-  @ViewChild('dialogTemplateFail') dialogTemplateFail!: TemplateRef<any>;
+  @ViewChild("dialogTemplateSuccess") dialogTemplateSuccess!: TemplateRef<any>;
+  @ViewChild("dialogTemplateFail") dialogTemplateFail!: TemplateRef<any>;
 
   public form: FormGroup = new FormGroup({
-    company_name: this.formBuilder.control(''),
-    type: this.formBuilder.control(''),
-    description: this.formBuilder.control(''),
-    owner: this.formBuilder.control(''),
-    email: this.formBuilder.control(''),
-    phone_number: this.formBuilder.control(''),
-    location: this.formBuilder.control(''),
-    image_url: this.formBuilder.control(''),
-    approved: this.formBuilder.control(''),
+    company_name: this.formBuilder.control(""),
+    type: this.formBuilder.control(""),
+    description: this.formBuilder.control(""),
+    owner: this.formBuilder.control(""),
+    email: this.formBuilder.control(""),
+    phone_number: this.formBuilder.control(""),
+    location: this.formBuilder.control(""),
+    image_url: this.formBuilder.control(""),
+    approved: this.formBuilder.control(""),
   });
 
   userEmail: any;
@@ -55,10 +41,10 @@ export class RegisterBusinessComponent {
   selectedFile: File | null = null;
 
   onFileSelected(event: Event): void {
-      const input = event.target as HTMLInputElement;
-      if (input.files && input.files[0]) {
-          this.selectedFile = input.files[0];
-      }
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.selectedFile = input.files[0];
+    }
   }
 
   async ngOnInit() {
@@ -73,11 +59,10 @@ export class RegisterBusinessComponent {
 
       const userBusiness = await this.supabaseService.getUserBusiness(userId);
       if (userBusiness.error) {
-        console.error('Error fetching events:', userBusiness.error);
-      } 
-      else {
+        console.error("Error fetching events:", userBusiness.error);
+      } else {
         this.userBusiness = userBusiness.data!;
-        if(this.userBusiness.length > 0) {
+        if (this.userBusiness.length > 0) {
           this.form.patchValue({
             company_name: this.userBusiness[0].company_name,
             type: this.userBusiness[0].type,
@@ -89,8 +74,7 @@ export class RegisterBusinessComponent {
             image_url: this.userBusiness[0].image_url,
             approved: this.userBusiness[0].approved,
           });
-        }
-        else {
+        } else {
           this.form.patchValue({
             owner: this.userName,
             email: this.userEmail,
@@ -99,9 +83,8 @@ export class RegisterBusinessComponent {
           });
         }
       }
-    }
-    else {
-      console.error('User ID is null.');
+    } else {
+      console.error("User ID is null.");
     }
   }
 
@@ -110,20 +93,23 @@ export class RegisterBusinessComponent {
     // console.log(this.temp_image_url);
     const userId = await this.supabaseService.fetchUserId();
     if (userId) {
-      const result = await this.supabaseService.addBusiness(this.form.value, userId);
+      const result = await this.supabaseService.addBusiness(
+        this.form.value,
+        userId
+      );
       if (result.error) {
-        console.error('Error inserting data:', result.error);
+        console.error("Error inserting data:", result.error);
         const dialogRef = this.dialog.open(this.dialogTemplateFail);
       } else {
-        console.log('Request submitted successfully!');
+        console.log("Request submitted successfully!");
 
         const dialogRef = this.dialog.open(this.dialogTemplateSuccess);
-        setTimeout(() => { window.location.reload(), 3000});
+        setTimeout(() => {
+          window.location.reload(), 3000;
+        });
       }
-    }
-    else {
-      console.error('User ID is null.');
+    } else {
+      console.error("User ID is null.");
     }
   }
-
 }

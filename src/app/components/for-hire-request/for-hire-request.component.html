@@ -1,48 +1,54 @@
-<div class="hire_request_container flex flex-col justify-center text-left mx-auto">
-    <div>
-    <h2>
-        Looking to get hired within the Georgian Community?
-    </h2>
+<div
+  class="relative flex flex-col justify-center text-left mx-auto p-5 w-full border rounded-lg"
+>
+  <div class="text-center py-5">
+    <h2 class="text-lg">Looking to get hired within the Georgian Community?</h2>
     <p>
-        Fill out the form below and make a request to get your listing posted on the For Hire page.
+      Fill out the form below and make a request to get your listing posted on
+      the For Hire page.
     </p>
+  </div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <mat-form-field class="w-full">
+      <mat-label>Profession:</mat-label>
+      <input title="profession" matInput formControlName="profession" />
+    </mat-form-field>
+    <br />
+    <mat-form-field class="w-full">
+      <mat-label>About:</mat-label>
+      <textarea title="about" matInput formControlName="about"></textarea>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="w-full">
+      <mat-label>Location (City):</mat-label>
+      <input title="location" matInput formControlName="location" />
+    </mat-form-field>
+    <br />
+    <div class="w-full text-center">
+      <mat-label>Flexible in job choice?</mat-label>
+      <br />
+      <mat-radio-group formControlName="work_outside">
+        <mat-radio-button value="yes">Yes</mat-radio-button>
+        <mat-radio-button value="no">No</mat-radio-button>
+      </mat-radio-group>
     </div>
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
-        <mat-form-field class="w-full">
-            <mat-label>Profession:</mat-label>
-            <input title="profession" matInput formControlName="profession">
-        </mat-form-field>
-        <br>
-        <mat-form-field class="w-full">
-            <mat-label>About:</mat-label>
-            <textarea title="about" matInput formControlName="about"></textarea>
-        </mat-form-field>
-        <br>
-        <mat-form-field class="w-full">
-            <mat-label>Location (City):</mat-label>
-            <input title="location" matInput formControlName="location">
-        </mat-form-field>
-        <br>
-        <div class="w-full text-center">
-        <mat-label>Flexible in job choice?</mat-label>
-        <br/>
-            <mat-radio-group formControlName="work_outside">
-                <mat-radio-button value="yes">Yes</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <br/>
-        <button type="submit" class="for_hire_submit w-full">Submit</button>
-        <ng-template #dialogTemplateSuccess class="overflow-hidden">
-            <div class="p-4">
-                <p>Request Submitted Successfully!</p>
-            </div>
-        </ng-template>
-        <ng-template #dialogTemplateFail class="overflow-hidden">
-            <div class="p-4">
-                <p>There was an issue proccessing your request.</p>
-                <p>Please check to make sure all fields are correct and try again.</p>
-            </div>
-        </ng-template>
-    </form>
+    <br />
+    <button
+      type="submit"
+      class="w-full p-5 text-rojo-red border border-rojo-red rounded-lg hover:bg-rojo-red hover:text-white"
+    >
+      Submit
+    </button>
+    <ng-template #dialogTemplateSuccess class="overflow-hidden">
+      <div class="p-4">
+        <p>Request Submitted Successfully!</p>
+      </div>
+    </ng-template>
+    <ng-template #dialogTemplateFail class="overflow-hidden">
+      <div class="p-4">
+        <p>There was an issue proccessing your request.</p>
+        <p>Please check to make sure all fields are correct and try again.</p>
+      </div>
+    </ng-template>
+  </form>
 </div>

@@ -1,27 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { SupabaseService } from 'src/app/supabase.service';
-import { MatDialog } from '@angular/material/dialog';
-import { BusinessListing } from 'src/app/components/register-business/register-business.component';
+import { Component, OnInit } from "@angular/core";
+import { SupabaseService } from "src/app/supabase.service";
+import { MatDialog } from "@angular/material/dialog";
+import { BusinessListing } from "src/app/models/businessListing.model";
 // import { LoginComponent } from 'src/app/components/login/login.component';
-import { Router } from '@angular/router';
-
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-business',
-  templateUrl: './business.component.html',
-  styleUrls: ['./business.component.css'],
+  selector: "app-business",
+  templateUrl: "./business.component.html",
+  styleUrls: ["./business.component.css"],
 })
 export class BusinessComponent implements OnInit {
   listing: BusinessListing = {
-    profile_id: '',
-    company_name: '',
-    type: '',
-    description: '',
-    owner: '',
-    email: '',
-    phone_number: '',
-    location: '',
-    image_url: '',
+    profile_id: "",
+    company_name: "",
+    type: "",
+    description: "",
+    owner: "",
+    email: "",
+    phone_number: "",
+    location: "",
+    image_url: "",
     approved: false,
   };
 
@@ -31,7 +30,7 @@ export class BusinessComponent implements OnInit {
 
   allBusinessesList: BusinessListing[] = [];
   displayedBusinessesList: BusinessListing[] = [];
-  searchQuery = ''; // Holds the search query
+  searchQuery = ""; // Holds the search query
   currentPage = 1; // Current page index
   pageSize = 10; // Number of businesses per page
   totalBusinesses = 0; // Total number of businesses
@@ -40,12 +39,11 @@ export class BusinessComponent implements OnInit {
   constructor(
     private supabaseService: SupabaseService,
     public dialog: MatDialog,
-    private router: Router,
-    ) {}
+    private router: Router
+  ) {}
 
   async ngOnInit() {
-    await this.supabaseService.isLoggedIn()
-    .then (res => {
+    await this.supabaseService.isLoggedIn().then((res) => {
       if (res === true) {
         this.isLoggedIn = true;
       } else {
@@ -56,7 +54,7 @@ export class BusinessComponent implements OnInit {
     // fetch all businesses
     const allBusinesses = await this.supabaseService.getAllBusiness();
     if (allBusinesses.error) {
-      console.error('Error fetching events:', allBusinesses.error);
+      console.error("Error fetching events:", allBusinesses.error);
     } else {
       this.businessesList = allBusinesses.data!;
     }
@@ -68,20 +66,25 @@ export class BusinessComponent implements OnInit {
 
   updateDisplayedBusinesses() {
     let filteredBusinesses = this.allBusinessesList;
-    
+
     if (this.searchQuery) {
       filteredBusinesses = filteredBusinesses.filter((business) =>
-        business.company_name.toLowerCase().includes(this.searchQuery.toLowerCase())
+        business.company_name
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase())
       );
     }
 
-    if (this.searchQuery == '') {
+    if (this.searchQuery == "") {
       this.searchPerformed = false;
     }
 
     this.totalBusinesses = filteredBusinesses.length;
     const startIndex = (this.currentPage - 1) * this.pageSize;
-    this.displayedBusinessesList = filteredBusinesses.slice(startIndex, startIndex + this.pageSize);
+    this.displayedBusinessesList = filteredBusinesses.slice(
+      startIndex,
+      startIndex + this.pageSize
+    );
   }
 
   onSearchChange() {
@@ -101,8 +104,8 @@ export class BusinessComponent implements OnInit {
   get pageNumbers(): number[] {
     const totalPages = this.totalPages();
     return Array.from({ length: totalPages }, (_, i) => i + 1);
-  } 
-  
+  }
+
   goToPage(page: number) {
     this.currentPage = page;
     this.updateDisplayedBusinesses();
@@ -143,12 +146,11 @@ export class BusinessComponent implements OnInit {
   }
 
   async navigateToAccount() {
-    await this.supabaseService.isLoggedIn() 
-    .then (res => {
+    await this.supabaseService.isLoggedIn().then((res) => {
       if (res === true) {
-        this.router.navigate(['/account']);
+        this.router.navigate(["/account"]);
       } else {
-        this.router.navigate(['/account-login']);
+        this.router.navigate(["/account-login"]);
       }
     });
   }

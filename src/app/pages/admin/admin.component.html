@@ -1,487 +1,333 @@
-<button (click)="openLoginDialog()" *ngIf="!isLoggedIn" class="float-right mt-2 mr-6">Login</button>
-<div *ngIf="isLoggedIn" class="flex flex-row float-right pr-2">
-  <span>{{ userEmail }}</span>
-  <button (click)="logout()" class="ml-4">Logout</button>
-</div>
-
-<div class="admin_header mt-12 justify-center text-center" [ngClass]="{'mb-28 mt-24':!isAdmin}">
-  <h1>Welcome Admin!</h1>
-  <h2 *ngIf="!isAdmin">Please login to the admin account to start making changes!</h2>
-</div>
-
-<div class="switch_forms_container flex flex-wrap md:flex-nowrap place-content-center mx-2 gap-2 md:gap-10" *ngIf="isAdmin" [ngClass]="{'mb-44':switchForm==0, 'mb-0': switchForm>0}">
-  <button type="button" (click)="switchToEvents()" class="w-1/2 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black" [ngClass]="{'text-white bg-black':switchForm==1}">Events</button>
-  <button type="button" (click)="switchToHires()" class="w-1/2 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black" [ngClass]="{'text-white bg-black':switchForm==2}">For Hire</button>
-  <button type="button" (click)="switchToBusinesses()" class="w-1/2 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black" [ngClass]="{'text-white bg-black':switchForm==3}">Business</button>
-  <button type="button" (click)="switchToJobBoard()" class="w-1/2 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black" [ngClass]="{'text-white bg-black':switchForm==4}">Job Board</button>
-</div>
-<!-- SWITCH FORM 1: Events -->
-<div class="admin_events" *ngIf="switchForm == 1">
-  <div class="admin_add_header mt-12 justify-center text-center">
-    <h2>Add Event:</h2>
+<div class="min-h-screen">
+  <button
+    (click)="openLoginDialog()"
+    *ngIf="!isLoggedIn"
+    class="absolute right-0 mt-2 mr-6"
+  >
+    Login
+  </button>
+  <div *ngIf="isLoggedIn" class="absolute flex flex-row right-0 pr-2">
+    <span>{{ userEmail }}</span>
+    <button (click)="logout()" class="ml-4">Logout</button>
   </div>
-  <div class="admin_add_form mt-6 text-center">
-    <!-- form to collect event information -->
-    <form (ngSubmit)="submitEvent()">
-      <mat-form-field class="!w-2/3">
-        <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="event.date" name="date" title="date">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <br>
+
+  <div class="p-16 justify-center text-center" [ngClass]="{ '': !isAdmin }">
+    <h1 class="text-3xl">Welcome Admin!</h1>
+    <h2 *ngIf="!isAdmin" class="text-xl">
+      Please login to the admin account to start making changes!
+    </h2>
+  </div>
+
+  <div
+    class="switch_forms_container flex flex-wrap md:flex-nowrap place-content-center mx-2 gap-2 md:gap-10"
+    *ngIf="isAdmin"
+    [ngClass]="{ '': switchForm == 0, '': switchForm > 0 }"
+  >
+    <button
+      type="button"
+      (click)="switchToEvents()"
+      class="w-1/2 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
+      [ngClass]="{ 'text-white bg-black': switchForm == 1 }"
+    >
+      Events
+    </button>
+    <button
+      type="button"
+      (click)="switchToHires()"
+      class="w-1/2 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
+      [ngClass]="{ 'text-white bg-black': switchForm == 2 }"
+    >
+      For Hire
+    </button>
+    <button
+      type="button"
+      (click)="switchToBusinesses()"
+      class="w-1/2 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
+      [ngClass]="{ 'text-white bg-black': switchForm == 3 }"
+    >
+      Business
+    </button>
+    <button
+      type="button"
+      (click)="switchToJobBoard()"
+      class="w-1/2 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
+      [ngClass]="{ 'text-white bg-black': switchForm == 4 }"
+    >
+      Job Board
+    </button>
+  </div>
+  <!-- SWITCH FORM 1: Events -->
+  <div class="admin_events" *ngIf="switchForm == 1">
+    <div class="admin_add_header mt-12 justify-center text-center">
+      <h2>Add Event:</h2>
+    </div>
+    <div class="admin_add_form mt-6 text-center">
+      <!-- form to collect event information -->
+      <form (ngSubmit)="submitEvent()">
+        <mat-form-field class="!w-2/3">
+          <mat-label>Choose a date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="event.date"
+            name="date"
+            title="date"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <br />
         <mat-form-field class="!w-2/3">
           <mat-label>Time</mat-label>
-          <input matInput [(ngModel)]="event.time" name="time" title="time">
+          <input matInput [(ngModel)]="event.time" name="time" title="time" />
           <mat-hint>HH:MM:SS AM/PM</mat-hint>
         </mat-form-field>
-      <br>
+        <br />
         <mat-form-field class="!w-2/3">
           <mat-label>Title</mat-label>
-          <input matInput [(ngModel)]="event.title" name="title" title="title">
+          <input
+            matInput
+            [(ngModel)]="event.title"
+            name="title"
+            title="title"
+          />
         </mat-form-field>
-      <br>
+        <br />
         <mat-form-field class="!w-2/3">
           <mat-label>Description</mat-label>
-          <textarea matInput [(ngModel)]="event.description" name="description" title="description"></textarea>
+          <textarea
+            matInput
+            [(ngModel)]="event.description"
+            name="description"
+            title="description"
+          ></textarea>
         </mat-form-field>
-      <br>
-      <!-- image upload field -->
-        <input type="file" (change)="onFileSelected($event)" class="!w-2/3" title="upload file">
-      <br>
-      <button type="submit" class="py-2 px-4 border-2">Submit</button>
-    </form>
+        <br />
+        <!-- image upload field -->
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          class="!w-2/3"
+          title="upload file"
+        />
+        <br />
+        <button type="submit" class="py-2 px-4 border-2">Submit</button>
+      </form>
+    </div>
+
+    <div class="admin_delete_header mt-12 justify-center text-center">
+      <h2>Delete Event:</h2>
+    </div>
+    <div class="admin_delete_form mt-6 text-center justify-center">
+      <!-- dropdown form to delete event -->
+      <form (ngSubmit)="deleteEvent()" class="flex flex-col w-2/3 mx-auto">
+        <mat-form-field>
+          <mat-label>Select Event</mat-label>
+          <mat-select [(value)]="selectedEventId">
+            <mat-option *ngFor="let event of eventsList" [value]="event.id">
+              {{ event.title }} - {{ event.date }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button type="submit" class="w-24 mx-auto py-2 px-4 border-2">
+          Delete
+        </button>
+      </form>
+    </div>
+
+    <div
+      class="my-4 px-10 pt-2 pb-8 w-2/3 mx-auto border border-black rounded-lg"
+    >
+      <app-sponsor-upload></app-sponsor-upload>
+    </div>
+    <div
+      class="my-4 px-10 pt-2 pb-8 w-2/3 mx-auto border border-black rounded-lg"
+    >
+      <app-sponsor-delete></app-sponsor-delete>
+    </div>
+    <div
+      class="my-4 px-10 pt-2 pb-8 w-2/3 mx-auto border border-black rounded-lg"
+    >
+      <app-sponsor-update></app-sponsor-update>
+    </div>
   </div>
 
-  <div class="admin_delete_header mt-12 justify-center text-center">
-    <h2>Delete Event:</h2>
-  </div>
-  <div class="admin_delete_form mt-6 text-center justify-center">
-    <!-- dropdown form to delete event -->
-    <form (ngSubmit)="deleteEvent()" class="flex flex-col w-2/3 mx-auto">
-      <mat-form-field>
-        <mat-label>Select Event</mat-label>
-        <mat-select [(value)]="selectedEventId">
-          <mat-option *ngFor="let event of eventsList" [value]="event.id">
-            {{ event.title }} - {{ event.date }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button type="submit" class="w-24 mx-auto py-2 px-4 border-2">Delete</button>
-    </form>
-  </div>
-</div>
-<!-- SWITCH FORM 2: FOR HIRE-->
-<div class="admin_hires" *ngIf="switchForm == 2">
-  <div class="switch_forms_container flex flex-row mx-2 mt-3 gap-2" [ngClass]="{'mb-32':hireSwitchForm==0, 'mb-0': hireSwitchForm>0}">
-    <button type="button" (click)="switchToApprovedHires()" class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black" [ngClass]="{'text-white bg-black':hireSwitchForm==1}">Approved Listings</button>
-    <button type="button" (click)="switchToNewHires()" class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black" [ngClass]="{'text-white bg-black':hireSwitchForm==2}">Unapproved Listings</button>
-    <button type="button" (click)="switchToEditHires()" class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black" [ngClass]="{'text-white bg-black':hireSwitchForm==3}">Edits</button>
-  </div>
-  <!-- HIRE SWITCH FORM 1: APPROVED -->
-  <div class="admin_for_hire_approved" *ngIf="hireSwitchForm == 1">
-    <div *ngIf="approvedHiresList.length === 0" class="hire_listing_container text-center mt-6 p-16">
-      <p>There are no approved listings.</p>
+  <!-- SWITCH FORM 2: FOR HIRE-->
+  <div class="" *ngIf="switchForm == 2">
+    <div
+      class="flex flex-row mx-2 mt-3 gap-2"
+      [ngClass]="{ 'mb-32': hireSwitchForm == 0, 'mb-0': hireSwitchForm > 0 }"
+    >
+      <button
+        type="button"
+        (click)="switchToApprovedHires()"
+        class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
+        [ngClass]="{ 'text-white bg-black': hireSwitchForm == 1 }"
+      >
+        Approved Listings
+      </button>
+      <button
+        type="button"
+        (click)="switchToNewHires()"
+        class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
+        [ngClass]="{ 'text-white bg-black': hireSwitchForm == 2 }"
+      >
+        Unapproved Listings
+      </button>
+      <button
+        type="button"
+        (click)="switchToEditHires()"
+        class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
+        [ngClass]="{ 'text-white bg-black': hireSwitchForm == 3 }"
+      >
+        Edits
+      </button>
     </div>
-    <div class="hire_listing_container flex flex-col justify-center">
-      <!-- APPROVED FOR HIRE LISTINGS -->
-      <div class="hire_listing flex flex-col justify-center mt-6 border-black border-2" *ngFor="let listing of approvedHiresList" (click)="openHiresApproval(listing.profile_id , listing.email)">
-        <div class="hire_listing_header flex flex-row justify-center">
-          <p>{{ listing.name }} -&nbsp;</p> 
-          <p> {{ listing.profession }}</p>
-        </div>
-        <div class="hire_listing_description">
-          <p>{{ listing.about }}</p>
-        </div>
-        <div class="hire_listing_details flex flex-row"> 
-          <p>
-            <mat-icon class="text-black">map</mat-icon>
-            {{ listing.location }}
-          </p>
-        </div>
-        <div class="hire_listing_contact flex flex-row gap-6">
-          <p>
-            <mat-icon class="text-black">email</mat-icon>
-            {{ listing.email }}
-          </p>
-          <p class="" *ngIf="listing.phone_number != null">
-            <mat-icon class="text-black">phone</mat-icon>
-            ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
-          </p>
-          <p *ngIf="listing.phone_number == null">
-            <mat-icon class="text-black">phone</mat-icon>
-            No phone number provided
-          </p>
-        </div>
-        <div class="work_outside" *ngIf=(listing.work_outside)>
-          Willing to work outside of profession
-        </div>
-      </div>
-      <ng-template #dialogNewHires>
-        <div class="p-4">
-          <h2>Click the toggle to unapprove for hire listing for {{this.userEmail}}:</h2>
-          <form [formGroup]="toggleForm" class="form_flex">
-            <span class="label_unapproved">Unapproved</span>
-            <mat-slide-toggle formControlName="toggleValue" class="toggle_slider text-black"></mat-slide-toggle>
-            <span class="label_approved">Approved</span>
-          </form>
-          <div>
-            <button mat-button (click)="submitHiresApproval(userId)" class="submit_btn">Submit</button>
-            <button mat-button (click)="closeDialog()" class="cancel_btn">Cancel</button>
-          </div>
-        </div>
-      </ng-template>
+
+    <!-- HIRE SWITCH FORM 1: APPROVED -->
+    <div class="px-4 py-10 md:p-10" *ngIf="hireSwitchForm == 1">
+      <app-for-hire-listings
+        [single]="false"
+        [admin]="true"
+        [approved]="true"
+      ></app-for-hire-listings>
+    </div>
+    <!-- HIRE SWITCH FORM 2: NEW -->
+    <div class="px-4 py-10 md:p-10" *ngIf="hireSwitchForm == 2">
+      <app-for-hire-listings
+        [single]="false"
+        [admin]="true"
+        [unapproved]="true"
+      ></app-for-hire-listings>
+    </div>
+    <!-- HIRE SWITCH FORM 3: EDITS -->
+    <div class="px-4 py-10 md:p-10" *ngIf="hireSwitchForm == 3">
+      <app-for-hire-listings
+        [single]="false"
+        [admin]="true"
+        [edit]="true"
+      ></app-for-hire-listings>
     </div>
   </div>
-  <!-- HIRE SWITCH FORM 2: NEW -->
-  <div class="admin_for_hire_new" *ngIf="hireSwitchForm == 2">
-    <div *ngIf="unapprovedHiresList.length === 0" class="hire_listing_container text-center mt-6 p-16">
-      <p>There are no unapproved listings.</p>
+
+  <!-- SWITCH FORM 3: Businesses -->
+  <div class="" *ngIf="switchForm == 3">
+    <div
+      class="flex flex-row mx-2 mt-3 gap-2"
+      [ngClass]="{
+        'mb-32': businessSwitchForm == 0,
+        'mb-0': businessSwitchForm > 0
+      }"
+    >
+      <button
+        type="button"
+        (click)="switchToApprovedBusinesses()"
+        class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
+        [ngClass]="{ 'text-white bg-black': businessSwitchForm == 1 }"
+      >
+        Approved Listings
+      </button>
+      <button
+        type="button"
+        (click)="switchToNewBusiness()"
+        class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
+        [ngClass]="{ 'text-white bg-black': businessSwitchForm == 2 }"
+      >
+        Unapproved Listings
+      </button>
+      <button
+        type="button"
+        (click)="switchToEditBusiness()"
+        class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
+        [ngClass]="{ 'text-white bg-black': businessSwitchForm == 3 }"
+      >
+        Edits
+      </button>
     </div>
-    <div class="hire_listing_container flex flex-col justify-center" >
-      <!-- UNAPPROVED NEW FOR HIRE LISTINGS -->
-      <div class="hire_listing flex flex-col justify-center mt-6 border-black border-2" *ngFor="let listing of unapprovedHiresList" (click)="openHiresApproval(listing.profile_id, listing.email)">
-        <div class="hire_listing_header flex flex-row justify-center">
-          <p>{{ listing.name }} -&nbsp;</p> 
-          <p> {{ listing.profession }}</p>
-        </div>
-        <div class="hire_listing_description">
-          <p>{{ listing.about }}</p>
-        </div>
-        <div class="hire_listing_details flex flex-row"> 
-          <p>
-            <mat-icon class="text-black">map</mat-icon>
-            {{ listing.location }}
-          </p>
-        </div>
-        <div class="hire_listing_contact flex flex-row gap-6">
-          <p>
-            <mat-icon class="text-black">email</mat-icon>
-            {{ listing.email }}
-          </p>
-          <p>
-            <mat-icon class="text-black">phone</mat-icon>
-            ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
-          </p>
-        </div>
-        <div class="work_outside" *ngIf=(listing.work_outside)>
-          Willing to work outside of profession
-        </div>
-      </div>
-      <ng-template #dialogNewHires>
-        <div class="p-4">
-          <h2>Click the toggle to approve for hire listing for {{this.userEmail}}:</h2>
-          <form [formGroup]="toggleForm" class="form_flex items-center ml-6">
-            <span class="label_unapproved">Unapproved</span>
-            <mat-slide-toggle formControlName="toggleValue" class="toggle_slider text-black"></mat-slide-toggle>
-            <span class="label_approved">Approved</span>
-          </form>
-          <div>
-            <button mat-button (click)="submitHiresApproval(userId)" class="submit_btn">Submit</button>
-            <button mat-button (click)="closeDialog()" class="cancel_btn">Cancel</button>
-          </div>
-        </div>
-      </ng-template>
+    <!-- BUSINESS SWITCH FORM 1: APPROVED -->
+    <div class="px-4 py-10 md:p-10" *ngIf="businessSwitchForm == 1">
+      <app-business-listings
+        [single]="false"
+        [admin]="true"
+        [approved]="true"
+      ></app-business-listings>
     </div>
-  </div>
-  <!-- HIRE SWITCH FORM 3: EDITS -->
-  <div class="admin_for_hire_edit" *ngIf="hireSwitchForm == 3">
-    <div *ngIf="editHiresList.length === 0" class="hire_listing_container text-center mt-6 p-16">
-      <p>There are no edits to be approved.</p>
+    <!-- BUSINESS SWITCH FORM 2: NEW -->
+    <div class="px-4 py-10 md:p-10" *ngIf="businessSwitchForm == 2">
+      <app-business-listings
+        [single]="false"
+        [admin]="true"
+        [unapproved]="true"
+      ></app-business-listings>
     </div>
-    <div class="hire_listing_container flex flex-col justify-center" >
-      <!-- FOR HIRE EDIT LISTINGS -->
-      <div class="hire_listing flex flex-col justify-center mt-6 border-black border-2" *ngFor="let listing of editHiresList" (click)="openHiresApproval(listing.profile_id, listing.email)">
-        <div class="hire_listing_header flex flex-row justify-center">
-          <p>{{ listing.name }} -&nbsp;</p> 
-          <p> {{ listing.profession }}</p>
-        </div>
-        <div class="hire_listing_description">
-          <p>{{ listing.about }}</p>
-        </div>
-        <div class="hire_listing_details flex flex-row"> 
-          <p>
-            <mat-icon class="text-black">map</mat-icon>
-            {{ listing.location }}
-          </p>
-        </div>
-        <div class="hire_listing_contact flex flex-row gap-6">
-          <p>
-            <mat-icon class="text-black">email</mat-icon>
-            {{ listing.email }}
-          </p>
-          <p class="" *ngIf="listing.phone_number != null">
-            <mat-icon class="text-black">phone</mat-icon>
-            ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
-          </p>
-          <p *ngIf="listing.phone_number == null">
-            <mat-icon class="text-black">phone</mat-icon>
-            No phone number provided
-          </p>
-        </div>
-        <div class="work_outside" *ngIf=(listing.work_outside)>
-          Willing to work outside of profession
-        </div>
-      </div>
-      <ng-template #dialogNewHires>
-        <div class="p-4">
-          <h2>Click the toggle to replace {{this.userEmail}}'s for hire listing with this edit:</h2>
-          <form [formGroup]="toggleForm" class="form_flex">
-            <span class="label_unapproved">Unapproved</span>
-            <mat-slide-toggle formControlName="toggleValue" class="toggle_slider text-black"></mat-slide-toggle>
-            <span class="label_approved">Approved</span>
-          </form>
-          <div>
-            <button mat-button (click)="submitHireEdit(userId)" class="submit_btn">Submit</button>
-            <button mat-button (click)="closeDialog()" class="cancel_btn">Cancel</button>
-          </div>
-        </div>
-      </ng-template>
+    <!-- BUSINESS SWITCH FORM 3: EDITS -->
+    <div class="px-4 py-10 md:p-10" *ngIf="businessSwitchForm == 3">
+      <app-business-listings
+        [single]="false"
+        [admin]="true"
+        [edit]="true"
+      ></app-business-listings>
     </div>
   </div>
-</div>
-<!-- SWITCH FORM 3: Businesses -->
-<div class="admin_businesses" *ngIf="switchForm == 3">
-  <div class="switch_forms_container flex flex-row mx-2 mt-3 gap-2" [ngClass]="{'mb-32':businessSwitchForm==0, 'mb-0': businessSwitchForm>0}">
-    <button type="button" (click)="switchToApprovedBusinesses()" class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black" [ngClass]="{'text-white bg-black':businessSwitchForm==1}">Approved Listings</button>
-    <button type="button" (click)="switchToNewBusiness()" class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black" [ngClass]="{'text-white bg-black':businessSwitchForm==2}">Unapproved Listings</button>
-    <button type="button" (click)="switchToEditBusiness()" class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black" [ngClass]="{'text-white bg-black':businessSwitchForm==3}">Edits</button>
-  </div>
-  <!-- BUSINESS SWITCH FORM 1: APPROVED -->
-  <div class="admin_business_approved" *ngIf="businessSwitchForm == 1">
-    <div *ngIf="approvedBusinessList.length === 0" class="business_listing_container text-center mt-6 p-16">
-      <p>There are no approved listings.</p>
+
+  <!-- SWITCH FORM 4: Job Board -->
+  <div class="" *ngIf="switchForm == 4">
+    <div
+      class="flex flex-row mx-2 mt-3 gap-2"
+      [ngClass]="{ 'mb-32': jobSwitchForm == 0, 'mb-0': jobSwitchForm > 0 }"
+    >
+      <button
+        type="button"
+        (click)="switchToApprovedJobs()"
+        class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
+        [ngClass]="{ 'text-white bg-black': jobSwitchForm == 1 }"
+      >
+        Approved Listings
+      </button>
+      <button
+        type="button"
+        (click)="switchToNewJobs()"
+        class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
+        [ngClass]="{ 'text-white bg-black': jobSwitchForm == 2 }"
+      >
+        Unapproved Listings
+      </button>
+      <button
+        type="button"
+        (click)="switchToEditJobs()"
+        class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
+        [ngClass]="{ 'text-white bg-black': jobSwitchForm == 3 }"
+      >
+        Edits
+      </button>
     </div>
-    <div class="business_listing_container flex flex-col justify-center">
-      <!-- APPROVED BUSINESS LISTINGS -->
-      <div class="business_listing flex flex-col justify-center mt-6 border-2 border-black" *ngFor="let listing of approvedBusinessList" (click)="openBusinessesApproval(listing.profile_id, listing.email)">
-        <div class="business_listing_header flex flex-row justify-center">
-          <p> {{ listing.company_name }} </p>
-        </div>
-        <div class="business_listing_contact flex flex-row justify-center gap-6">
-          <p>
-            <mat-icon class="text-black">email</mat-icon>
-            {{ listing.email }}
-          </p>
-          <p>
-            <mat-icon class="text-black">phone</mat-icon>
-            ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
-          </p>
-        </div>
-      </div>
-      <ng-template #dialogNewBusiness class="overflow-hidden">
-        <div class="w-full p-4">
-          <h3>Click the toggle to unapprove business listing for {{userId}}:</h3>
-          <form [formGroup]="toggleForm" class="form_flex items-center ml-6">
-            <span class="label_unapproved">Unapproved</span>
-            <mat-slide-toggle formControlName="toggleValue" class="text-black toggle_slider"></mat-slide-toggle>
-            <span class="label_approved">Approved</span>
-          </form>
-          <div class="mt-4">
-            <button mat-button (click)="submitBusinessesApproval(userId)" class="submit_btn">Submit</button>
-            <button mat-button (click)="closeDialog()" class="cancel_btn">Cancel</button>
-          </div>
-        </div>
-      </ng-template>      
+    <!-- JOB SWITCH FORM 1: APPROVED -->
+    <div class="px-4 py-10 md:p-10" *ngIf="jobSwitchForm == 1">
+      <app-job-board-listings
+        [single]="false"
+        [admin]="true"
+        [approved]="true"
+      ></app-job-board-listings>
     </div>
-  </div>
-  <!-- BUSINESS SWITCH FORM 2: NEW -->
-  <div class="admin_business_new" *ngIf="businessSwitchForm == 2">
-    <div class="business_listing_container flex flex-col justify-center">
-      <div *ngIf="unapprovedBusinessList.length === 0" class="business_listing_container text-center mt-6 p-16">
-        <p>There are no unapproved listings.</p>
-      </div>
-      <!-- UNAPPROVED NEW BUSINESS LISTINGS -->
-      <div class="business_listing flex flex-col justify-center mt-6 border-2 border-black" *ngFor="let listing of unapprovedBusinessList" (click)="openBusinessesApproval(listing.profile_id, listing.email)">
-        <div class="business_listing_header flex flex-row justify-center">
-          <p>{{ listing.company_name }}</p>
-        </div>
-        <div class="business_listing_contact flex flex-row justify-center gap-6">
-          <p>
-            <mat-icon class="text-black">email</mat-icon>
-            {{ listing.email }}
-          </p>
-          <p>
-            <mat-icon class="text-black">phone</mat-icon>
-            ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
-          </p>
-        </div>
-      </div>
-      <ng-template #dialogNewBusiness class="overflow-hidden">
-        <div class="w-full p-4">
-          <h3>Click the toggle to approve business listing for {{userId}}:</h3>
-          <form [formGroup]="toggleForm" class="form_flex items-center ml-6">
-            <span class="label_unapproved">Unapproved</span>
-            <mat-slide-toggle formControlName="toggleValue" class="text-black toggle_slider"></mat-slide-toggle>
-            <span class="label_approved">Approved</span>
-          </form>
-          <div class="mt-4">
-            <button mat-button (click)="submitBusinessesApproval(userId)" class="submit_btn">Submit</button>
-            <button mat-button (click)="closeDialog()" class="cancel_btn">Cancel</button>
-          </div>
-        </div>
-      </ng-template>      
+    <!-- JOB SWITCH FORM 2: NEW -->
+    <div class="px-4 py-10 md:p-10" *ngIf="jobSwitchForm == 2">
+      <app-job-board-listings
+        [single]="false"
+        [admin]="true"
+        [unapproved]="true"
+      ></app-job-board-listings>
     </div>
-  </div>
-  <!-- BUSINESS SWITCH FORM 3: EDITS -->
-  <div class="admin_business_edit" *ngIf="businessSwitchForm == 3">
-    <div *ngIf="editBusinessList.length === 0" class="business_listing_container text-center mt-6 p-16">
-      <p>There are no edits to be approved.</p>
-    </div>
-    <div class="business_listing_container flex flex-col justify-center">
-      <!-- BUSINESS EDIT LISTINGS -->
-      <div class="business_listing flex flex-col justify-center mt-6 border-2 border-black" *ngFor="let listing of editBusinessList" (click)="openBusinessesApproval(listing.profile_id, listing.email)">
-        <div class="business_listing_header flex flex-row justify-center">
-          <p> {{ listing.company_name }} </p>
-        </div>
-        <div class="business_listing_contact flex flex-row justify-center gap-6">
-          <p>
-            <mat-icon class="text-black">email</mat-icon>
-            {{ listing.email }}
-          </p>
-          <p>
-            <mat-icon class="text-black">phone</mat-icon>
-            ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
-          </p>
-        </div>
-      </div>
-      <ng-template #dialogNewBusiness class="overflow-hidden">
-        <div class="w-full p-4">
-          <h3>Click the toggle to replace {{this.userEmail}}'s business listing with this edit:</h3>
-          <form [formGroup]="toggleForm" class="form_flex items-center ml-6">
-            <span class="label_unapproved">Unapproved</span>
-            <mat-slide-toggle formControlName="toggleValue" class="text-black toggle_slider"></mat-slide-toggle>
-            <span class="label_approved">Approved</span>
-          </form>
-          <div class="mt-4">
-            <button mat-button (click)="submitBusinessesApproval(userId)" class="submit_btn">Submit</button>
-            <button mat-button (click)="closeDialog()" class="cancel_btn">Cancel</button>
-          </div>
-        </div>
-      </ng-template>      
-    </div>
-  </div>
-</div>
-<!-- SWITCH FORM 4: Job Board -->
-<div class="admin_job_board" *ngIf="switchForm == 4">
-  <div class="switch_forms_container flex flex-row mx-2 mt-3 gap-2" [ngClass]="{'mb-32':jobSwitchForm==0, 'mb-0': jobSwitchForm>0}">
-    <button type="button" (click)="switchToApprovedJobs()" class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black" [ngClass]="{'text-white bg-black':jobSwitchForm==1}">Approved Listings</button>
-    <button type="button" (click)="switchToNewJobs()" class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"[ngClass]="{'text-white bg-black':jobSwitchForm==2}">Unapproved Listings</button>
-    <button type="button" (click)="switchToEditJobs()" class="w-1/3 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black" [ngClass]="{'text-white bg-black':jobSwitchForm==3}">Edits</button>
-  </div>
-  <!-- JOB SWITCH FORM 1: APPROVED -->
-  <div class="admin_job_board_approved" *ngIf="jobSwitchForm == 1">
-    <div *ngIf="approvedJobsList.length === 0" class="job_board_listing_container text-center mt-6 p-16">
-      <p>There are no approved listings.</p>
-    </div>
-    <div class="job_board_listing_container flex flex-col justify-center">
-      <!-- APPROVED JOB BOARD LISTINGS -->
-      <div class="job_board_listing flex flex-col justify-center mt-6 border-2 border-black" *ngFor="let listing of approvedJobsList" (click)="openJobsApproval(listing.profile_id, listing.email)">
-        <div class="job_board_listing_header flex flex-row justify-center">
-          <p> {{ listing.company_name }} </p>
-        </div>
-        <div class="job_board_listing_contact flex flex-row justify-center gap-6">
-          <p>
-            <mat-icon class="text-black">email</mat-icon>
-            {{ listing.email }}
-          </p>
-          <p>
-            <mat-icon class="text-black">phone</mat-icon>
-            ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
-          </p>
-        </div>
-      </div>
-      <ng-template #dialogNewJobs class="overflow-hidden">
-        <div class="w-full p-4">
-          <h3>Click the toggle to unapprove job board listing for {{userId}}:</h3>
-          <form [formGroup]="toggleForm" class="form_flex items-center ml-6">
-            <span class="label_unapproved">Unapproved</span>
-            <mat-slide-toggle formControlName="toggleValue" class="text-black toggle_slider"></mat-slide-toggle>
-            <span class="label_approved">Approved</span>
-          </form>
-          <div class="mt-4">
-            <button mat-button (click)="submitJobsApproval(userId)" class="submit_btn">Submit</button>
-            <button mat-button (click)="closeDialog()" class="cancel_btn">Cancel</button>
-          </div>
-        </div>
-      </ng-template>      
-    </div>
-  </div>
-  <!-- JOB SWITCH FORM 2: NEW -->
-  <div class="admin_job_board_new" *ngIf="jobSwitchForm == 2">
-    <div *ngIf="unapprovedJobsList.length === 0" class="job_board_listing_container text-center mt-6 p-16">
-      <p>There are no unapproved listings.</p>
-    </div>
-    <div class="job_board_listing_container flex flex-col justify-center">
-      <!-- UNAPPROVED NEW JOB BOARD LISTINGS -->
-      <div class="job_board_listing flex flex-col justify-center mt-6 border-2 border-black" *ngFor="let listing of unapprovedBusinessList" (click)="openJobsApproval(listing.profile_id, listing.email)">
-        <div class="job_board_listing_header flex flex-row justify-center">
-          <p>{{ listing.company_name }}</p>
-        </div>
-        <div class="job_board_listing_contact flex flex-row justify-center gap-6">
-          <p>
-            <mat-icon class="text-black">email</mat-icon>
-            {{ listing.email }}
-          </p>
-          <p>
-            <mat-icon class="text-black">phone</mat-icon>
-            ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
-          </p>
-        </div>
-      </div>
-      <ng-template #dialogNewJobs class="overflow-hidden">
-        <div class="w-full p-4">
-          <h3>Click the toggle to approve job board listing for {{userId}}:</h3>
-          <form [formGroup]="toggleForm" class="form_flex items-center ml-6">
-            <span class="label_unapproved">Unapproved</span>
-            <mat-slide-toggle formControlName="toggleValue" class="text-black toggle_slider"></mat-slide-toggle>
-            <span class="label_approved">Approved</span>
-          </form>
-          <div class="mt-4">
-            <button mat-button (click)="submitJobsApproval(userId)" class="submit_btn">Submit</button>
-            <button mat-button (click)="closeDialog()" class="cancel_btn">Cancel</button>
-          </div>
-        </div>
-      </ng-template>      
-    </div>
-  </div>
-  <!-- JOB SWITCH FORM 3: EDITS -->
-  <div class="admin_job_board_edit" *ngIf="jobSwitchForm == 3">
-    <div *ngIf="editJobsList.length === 0" class="job_board_listing_container text-center mt-6 p-16">
-      <p>There are no edits to be approved.</p>
-    </div>
-    <div class="job_board_listing_container flex flex-col justify-center">
-      <!-- JOB BOARD EDIT LISTINGS -->
-      <div class="job_board_listing flex flex-col justify-center mt-6 border-2 border-black" *ngFor="let listing of editJobsList" (click)="openJobsApproval(listing.profile_id, listing.email)">
-        <div class="business_listing_header flex flex-row justify-center">
-          <p> {{ listing.company_name }} </p>
-        </div>
-        <div class="job_board_listing_contact flex flex-row justify-center gap-6">
-          <p>
-            <mat-icon class="text-black">email</mat-icon>
-            {{ listing.email }}
-          </p>
-          <p>
-            <mat-icon class="text-black">phone</mat-icon>
-            ({{ listing.phone_number.slice(0,3) }}) {{ listing.phone_number.slice(3,6) }}-{{ listing.phone_number.slice(6,10) }}
-          </p>
-        </div>
-      </div>
-      <ng-template #dialogNewJobs class="overflow-hidden">
-        <div class="w-full p-4">
-          <h3>Click the toggle to replace {{this.userEmail}}'s job board listing with this edit:</h3>
-          <form [formGroup]="toggleForm" class="form_flex items-center ml-6">
-            <span class="label_unapproved">Unapproved</span>
-            <mat-slide-toggle formControlName="toggleValue" class="text-black toggle_slider"></mat-slide-toggle>
-            <span class="label_approved">Approved</span>
-          </form>
-          <div class="mt-4">
-            <button mat-button (click)="submitJobsApproval(userId)" class="submit_btn">Submit</button>
-            <button mat-button (click)="closeDialog()" class="cancel_btn">Cancel</button>
-          </div>
-        </div>
-      </ng-template>      
+    <!-- JOB SWITCH FORM 3: EDITS -->
+    <div class="px-4 py-10 md:p-10" *ngIf="jobSwitchForm == 3">
+      <app-job-board-listings
+        [single]="false"
+        [admin]="true"
+        [edit]="true"
+      ></app-job-board-listings>
     </div>
   </div>
 </div>

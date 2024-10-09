@@ -1,46 +1,33 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { SupabaseService } from 'src/app/supabase.service';
-import { BusinessListing } from '../register-business/register-business.component';
-
-export interface JobBoardListing {
-  id?: number;
-  profile_id: string;
-  company_name: string;
-  job_title: string;
-  job_description: string;
-  email: string;
-  phone_number: string;
-  pay: string;
-  location: string;
-  approved: boolean;
-}
+import { Component, TemplateRef, ViewChild } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import { SupabaseService } from "src/app/supabase.service";
+import { BusinessListing } from "src/app/models/businessListing.model";
+import { JobBoardListing } from "src/app/models/jobBoardListing.model";
 
 @Component({
-  selector: 'app-register-job-board',
-  templateUrl: './register-job-board.component.html',
-  styleUrls: ['./register-job-board.component.css'],
+  selector: "app-register-job-board",
+  templateUrl: "./register-job-board.component.html",
 })
 export class RegisterJobBoardComponent {
   constructor(
-    private supabaseService: SupabaseService, 
+    private supabaseService: SupabaseService,
     private formBuilder: FormBuilder,
     private auth: SupabaseService,
-    public dialog: MatDialog,
-  ) { }
+    public dialog: MatDialog
+  ) {}
 
-  @ViewChild('dialogTemplateSuccess') dialogTemplateSuccess!: TemplateRef<any>;
-  @ViewChild('dialogTemplateFail') dialogTemplateFail!: TemplateRef<any>;
+  @ViewChild("dialogTemplateSuccess") dialogTemplateSuccess!: TemplateRef<any>;
+  @ViewChild("dialogTemplateFail") dialogTemplateFail!: TemplateRef<any>;
 
   public form: FormGroup = new FormGroup({
-    company_name: this.formBuilder.control(''),
-    job_title: this.formBuilder.control(''),
-    job_description: this.formBuilder.control(''),
-    email: this.formBuilder.control(''),
-    phone_number: this.formBuilder.control(''),
-    pay: this.formBuilder.control(''),
-    location: this.formBuilder.control(''),
+    company_name: this.formBuilder.control(""),
+    job_title: this.formBuilder.control(""),
+    job_description: this.formBuilder.control(""),
+    email: this.formBuilder.control(""),
+    phone_number: this.formBuilder.control(""),
+    pay: this.formBuilder.control(""),
+    location: this.formBuilder.control(""),
   });
 
   userEmail: any;
@@ -73,42 +60,44 @@ export class RegisterJobBoardComponent {
           pay: this.userJobBoardListing[0].pay,
           location: this.userJobBoardListing[0].location,
         });
-      }
-      else if(this.userBusiness.length > 0){
+      } else if (this.userBusiness.length > 0) {
         this.form.patchValue({
           company_name: this.userBusiness[0].company_name,
           email: this.userBusiness[0].email,
           phone_number: this.userBusiness[0].phone_number,
           location: this.userBusiness[0].location,
         });
-      }
-      else {
+      } else {
         this.form.patchValue({
           email: this.userEmail,
           phone_number: this.userPhone,
         });
       }
-    }
-    else {
-      console.error('User ID is null.');
+    } else {
+      console.error("User ID is null.");
     }
   }
 
   async onSubmit() {
     const userId = await this.supabaseService.fetchUserId();
     if (userId) {
-      const result = await this.supabaseService.addJobBoard(this.form.value, userId);
+      const result = await this.supabaseService.addJobBoard(
+        this.form.value,
+        userId
+      );
       if (result.error) {
-        console.error('Error inserting data:', result.error);
+        console.error("Error inserting data:", result.error);
         const dialogRef = this.dialog.open(this.dialogTemplateFail);
       } else {
-        console.log('Request submitted successfully!');
+        console.log("Request submitted successfully!");
 
         const dialogRef = this.dialog.open(this.dialogTemplateSuccess);
-        setTimeout(() => { window.location.reload(), 3000});
+        setTimeout(() => {
+          window.location.reload(), 3000;
+        });
       }
     } else {
-      console.error('User ID is null.');
+      console.error("User ID is null.");
     }
   }
 }
