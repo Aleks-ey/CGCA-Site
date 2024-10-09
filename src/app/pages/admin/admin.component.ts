@@ -1,6 +1,6 @@
 import { Component, TemplateRef, ViewChild } from "@angular/core";
-import { Profile, SupabaseService } from "src/app/supabase.service";
-import { CalendarEvent } from "../events/calendarEvent.model";
+import { SupabaseService } from "src/app/supabase.service";
+import { CalendarEvent } from "src/app/models/calendarEvent.model";
 import { MatDialog } from "@angular/material/dialog";
 import { LoginComponent } from "src/app/components/login/login.component";
 import { Subscription } from "rxjs";
@@ -92,13 +92,14 @@ export class AdminComponent {
   onFileSelected(event: any) {
     this.file = event.target.files[0];
   }
-  async upload(path: string) {
+  async upload(path: string, bucket: string) {
     if (!this.file) {
       alert("Please select a file first.");
       return;
     }
     try {
       const url = await this.supabaseService.uploadFile(
+        bucket,
         `${path}${this.file.name}`,
         this.file
       );
@@ -112,7 +113,7 @@ export class AdminComponent {
 
   // Add event
   async submitEvent() {
-    const url = await this.upload("event-images/admin/assets/");
+    const url = await this.upload("event-images", "admin/assets/");
     console.log("URL:", url);
     if (url) {
       this.event.image_url = url;

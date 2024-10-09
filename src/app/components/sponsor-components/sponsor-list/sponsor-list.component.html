@@ -1,0 +1,153 @@
+<div class="px-2 md:px-10 py-20">
+  <div
+    *ngFor="let sponsor of sponsors; let i = index"
+    class="relative flex items-center my-2 p-4 border border-black rounded-lg"
+    [ngClass]="{ 'bg-gray-100': alternate && i % 2 !== 0 }"
+  >
+    <!-- Normal layout (even rows or when 'alternate' is false) -->
+    <div
+      *ngIf="!alternate || i % 2 === 0"
+      class="flex flex-col lg:flex-row w-full items-center justify-between relative"
+    >
+      <!-- Sponsor Logo or Image -->
+      <div *ngIf="!image" class="w-1/5">
+        <img
+          [src]="sponsor.logo_url"
+          [alt]="sponsor.custom_logo_file_name"
+          alt=""
+          class="w-40 mx-auto"
+        />
+      </div>
+      <div *ngIf="image && sponsor.image_url" class="mx-auto lg:mr-5">
+        <img
+          [src]="sponsor.image_url"
+          [alt]="sponsor.custom_file_name"
+          alt=""
+          class="mx-auto lg:min-w-96 rounded-lg shadow-lg"
+        />
+      </div>
+      <!-- Sponsor Information -->
+      <div
+        class="text-center md:text-left"
+        [ngClass]="image ? 'w-auto' : 'w-4/5'"
+      >
+        <h3 class="font-bold text-lg">{{ sponsor.sponsor }}</h3>
+        <p>{{ sponsor.description }}</p>
+        <div class="mt-2 space-y-1">
+          <p *ngIf="sponsor.phone" class="text-sm">
+            <strong>Phone:</strong> {{ sponsor.phone }}
+          </p>
+          <p *ngIf="sponsor.website" class="text-sm">
+            <strong>Website: </strong>
+            <a
+              [href]="sponsor.website"
+              class="text-blue-600 underline break-all"
+              target="{{ sponsor.website }}"
+              >{{ sponsor.website }}</a
+            >
+          </p>
+          <p *ngIf="sponsor.location" class="text-sm">
+            <strong>Location:</strong> {{ sponsor.location }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Bottom right corner logo (when 'image' is true) -->
+      <div *ngIf="image" class="flex md:absolute bottom-0 right-0 p-2">
+        <img
+          [src]="sponsor.logo_url"
+          [alt]="sponsor.custom_logo_file_name"
+          alt=""
+          (click)="goToWebsite(sponsor.website)"
+          [ngClass]="{
+            'translate-y-5': sponsor.sponsor == 'MK Marble Granite',
+            'scale-[2]': sponsor.logo_url?.endsWith('.svg')
+          }"
+          class="w-16 cursor-pointer scale-150"
+        />
+      </div>
+    </div>
+
+    <!-- Alternate layout (odd rows when 'alternate' is true) -->
+    <div
+      *ngIf="alternate && i % 2 !== 0"
+      class="flex flex-col-reverse lg:flex-row w-full items-center justify-between relative"
+    >
+      <!-- Bottom logo (when 'image' is true) and screen is sm-->
+      <div *ngIf="image" class="flex md:hidden lg:mt-0 bottom-0 left-0 p-2">
+        <img
+          [src]="sponsor.logo_url"
+          [alt]="sponsor.custom_logo_file_name"
+          (click)="goToWebsite(sponsor.website)"
+          alt=""
+          [ngClass]="{
+            'translate-y-5': sponsor.sponsor == 'MK Marble Granite',
+            'scale-[2]': sponsor.logo_url?.endsWith('.svg')
+          }"
+          class="w-16 cursor-pointer scale-150"
+        />
+      </div>
+      <!-- Sponsor Information -->
+      <div
+        class="text-center md:text-right"
+        [ngClass]="image ? 'w-auto' : 'w-4/5'"
+      >
+        <h3 class="font-bold text-lg">{{ sponsor.sponsor }}</h3>
+        <p>{{ sponsor.description }}</p>
+        <div class="mt-2 space-y-1">
+          <p *ngIf="sponsor.phone" class="text-sm">
+            <strong>Phone:</strong> {{ sponsor.phone }}
+          </p>
+          <p *ngIf="sponsor.website" class="text-sm">
+            <strong>Website: </strong>
+            <a
+              [href]="sponsor.website"
+              class="text-blue-600 underline break-all"
+              target="{{ sponsor.website }}"
+              >{{ sponsor.website }}</a
+            >
+          </p>
+          <p *ngIf="sponsor.location" class="text-sm">
+            <strong>Location:</strong> {{ sponsor.location }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Sponsor Logo or Image -->
+      <div *ngIf="!image" class="w-1/5 bg-slate-400">
+        <img
+          [src]="sponsor.logo_url"
+          [alt]="sponsor.custom_logo_file_name"
+          alt=""
+          class="w-40 mx-auto"
+        />
+      </div>
+      <div *ngIf="image && sponsor.image_url" class="mx-auto lg:ml-5">
+        <img
+          [src]="sponsor.image_url"
+          [alt]="sponsor.custom_file_name"
+          alt=""
+          class="mx-auto lg:min-w-96 rounded-lg shadow-lg"
+        />
+      </div>
+
+      <!-- Bottom left corner logo (when 'image' is true) and screen is md or above-->
+      <div
+        *ngIf="image"
+        class="hidden md:block md:absolute lg:mt-0 bottom-0 left-0 p-2"
+      >
+        <img
+          [src]="sponsor.logo_url"
+          [alt]="sponsor.custom_logo_file_name"
+          (click)="goToWebsite(sponsor.website)"
+          alt=""
+          [ngClass]="{
+            'translate-y-5': sponsor.sponsor == 'MK Marble Granite',
+            'scale-[2]': sponsor.logo_url?.endsWith('.svg')
+          }"
+          class="w-16 cursor-pointer scale-150"
+        />
+      </div>
+    </div>
+  </div>
+</div>

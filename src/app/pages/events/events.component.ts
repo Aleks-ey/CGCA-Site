@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { SupabaseService } from "src/app/supabase.service";
-import { CalendarEvent } from "./calendarEvent.model";
+import { CalendarEvent } from "../../models/calendarEvent.model";
 import { MatCalendarCellCssClasses } from "@angular/material/datepicker";
 import { MatDialog } from "@angular/material/dialog";
 import { ImageDialogComponent } from "src/app/components/utility/image-dialog/image-dialog.component";

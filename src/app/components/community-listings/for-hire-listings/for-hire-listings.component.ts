@@ -5,7 +5,7 @@ import {
   TemplateRef,
   ViewChild,
 } from "@angular/core";
-import { Profile, SupabaseService } from "src/app/supabase.service";
+import { SupabaseService } from "src/app/supabase.service";
 import { CommonModule } from "@angular/common";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
@@ -16,19 +16,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from "@angular/forms";
-
-export interface ForHireListing {
-  id?: number;
-  profile_id: string;
-  name: string;
-  profession: string;
-  about: string;
-  email: string;
-  phone_number: string;
-  location: string;
-  work_outside: boolean;
-  approved: boolean;
-}
+import { ForHireListing } from "src/app/models/forHireListing.model";
 
 @Component({
   selector: "app-for-hire-listings",

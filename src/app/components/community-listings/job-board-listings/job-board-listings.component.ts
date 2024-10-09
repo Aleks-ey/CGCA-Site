@@ -16,19 +16,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from "@angular/forms";
-
-export interface JobBoardListing {
-  id?: number;
-  profile_id: string;
-  company_name: string;
-  job_title: string;
-  job_description: string;
-  email: string;
-  phone_number: string;
-  pay: string;
-  location: string;
-  approved: boolean;
-}
+import { JobBoardListing } from "src/app/models/jobBoardListing.model";
 
 @Component({
   selector: "app-job-board-listings",

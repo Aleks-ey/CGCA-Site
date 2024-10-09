@@ -58,6 +58,11 @@ import { JobBoardListingsComponent } from "./components/community-listings/job-b
 import { BusinessListingsComponent } from "./components/community-listings/business-listings/business-listings.component";
 import { ListingsActionButtonsComponent } from "./components/community-listings/listings-action-buttons/listings-action-buttons.component";
 import { ImageDialogComponent } from "./components/utility/image-dialog/image-dialog.component";
+import { SponsorUploadComponent } from "./components/sponsor-components/sponsor-upload/sponsor-upload.component";
+import { SponsorDeleteComponent } from "./components/sponsor-components/sponsor-delete/sponsor-delete.component";
+import { SponsorUpdateComponent } from "./components/sponsor-components/sponsor-update/sponsor-update.component";
+import { SponsorLogoCarouselComponent } from "./components/sponsor-components/sponsor-logo-carousel/sponsor-logo-carousel.component";
+import { SponsorListComponent } from "./components/sponsor-components/sponsor-list/sponsor-list.component";
 
 @NgModule({
   declarations: [
@@ -117,6 +122,11 @@ import { ImageDialogComponent } from "./components/utility/image-dialog/image-di
     BusinessListingsComponent,
     ListingsActionButtonsComponent,
     ImageDialogComponent,
+    SponsorUploadComponent,
+    SponsorDeleteComponent,
+    SponsorUpdateComponent,
+    SponsorLogoCarouselComponent,
+    SponsorListComponent,
   ],
   providers: [
     {

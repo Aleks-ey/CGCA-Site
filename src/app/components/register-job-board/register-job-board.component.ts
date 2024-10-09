@@ -2,20 +2,8 @@ import { Component, TemplateRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { SupabaseService } from "src/app/supabase.service";
-import { BusinessListing } from "../register-business/register-business.component";
-
-export interface JobBoardListing {
-  id?: number;
-  profile_id: string;
-  company_name: string;
-  job_title: string;
-  job_description: string;
-  email: string;
-  phone_number: string;
-  pay: string;
-  location: string;
-  approved: boolean;
-}
+import { BusinessListing } from "src/app/models/businessListing.model";
+import { JobBoardListing } from "src/app/models/jobBoardListing.model";
 
 @Component({
   selector: "app-register-job-board",

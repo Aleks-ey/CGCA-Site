@@ -96,3 +96,24 @@ body {
   filter: invert(89%) sepia(45%) saturate(23%) hue-rotate(349deg)
     brightness(106%) contrast(106%);
 }
+
+.pause-animation {
+  animation-play-state: paused !important;
+}
+// keyframes for logo carousel
+@keyframes slide-ltr {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+@keyframes slide-rtl {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}

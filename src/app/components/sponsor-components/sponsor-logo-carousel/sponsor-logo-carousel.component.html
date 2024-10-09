@@ -1,0 +1,99 @@
+<div class="w-full py-10">
+  <!-- Top Carousel -->
+  <div
+    [ngClass]="getBgClasses()"
+    class="w-full pt-4 overflow-hidden whitespace-nowrap relative before:absolute before:left-0 before:z-10 before:h-full before:w-40 before:bg-gradient-to-r before:to-transparent after:absolute after:right-0 after:z-10 after:h-full after:w-40 after:bg-gradient-to-r after:from-transparent"
+  >
+    <div
+      class="inline-block transition-transform whitespace-nowrap animate-slide-ltr"
+      [class.pause-animation]="isPaused"
+    >
+      <ng-container *ngFor="let sponsor of sponsors">
+        <div
+          class="w-40 h-40 mx-4 md:mx-12 p-0 inline-block hover:scale-110 cursor-pointer"
+          (click)="goToWebsite(sponsor.website)"
+          (mouseover)="pauseCarousel()"
+          (mouseleave)="resumeCarousel()"
+        >
+          <img
+            [src]="sponsor.logo_url"
+            [alt]="sponsor.sponsor"
+            alt=""
+            [ngClass]="{ 'scale-150': sponsor.logo_url.endsWith('.svg') }"
+            class="object-contain w-full h-full"
+          />
+        </div>
+      </ng-container>
+    </div>
+    <div
+      class="inline-block transition-transform whitespace-nowrap animate-slide-ltr"
+      [class.pause-animation]="isPaused"
+    >
+      <ng-container *ngFor="let sponsor of sponsors">
+        <div
+          class="w-40 h-40 mx-4 md:mx-12 p-0 inline-block hover:scale-110 cursor-pointer"
+          (click)="goToWebsite(sponsor.website)"
+          (mouseover)="pauseCarousel()"
+          (mouseleave)="resumeCarousel()"
+        >
+          <img
+            [src]="sponsor.logo_url"
+            [alt]="sponsor.sponsor"
+            alt=""
+            [ngClass]="{ 'scale-150': sponsor.logo_url.endsWith('.svg') }"
+            class="object-contain w-full h-full"
+          />
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Bottom Carousel -->
+  <div
+    [ngClass]="getBgClasses()"
+    class="w-full pb-4 overflow-hidden whitespace-nowrap relative before:absolute before:left-0 before:z-10 before:h-full before:w-40 before:bg-gradient-to-r before:to-transparent after:absolute after:right-0 after:z-10 after:h-full after:w-40 after:bg-gradient-to-r after:from-transparent"
+  >
+    <div
+      class="inline-block transition-transform animate-slide-rtl"
+      [class.pause-animation]="isPaused"
+    >
+      <ng-container *ngFor="let sponsor of sponsors2">
+        <div
+          class="w-40 h-40 mx-4 md:mx-12 p-0 inline-block hover:scale-110 cursor-pointer"
+          (click)="goToWebsite(sponsor.website)"
+          (mouseover)="pauseCarousel()"
+          (mouseleave)="resumeCarousel()"
+        >
+          <img
+            [src]="sponsor.logo_url"
+            [alt]="sponsor.sponsor"
+            alt=""
+            [ngClass]="{ 'scale-150': sponsor.logo_url.endsWith('.svg') }"
+            class="object-contain w-full h-full"
+          />
+        </div>
+      </ng-container>
+    </div>
+    <div
+      class="inline-block transition-transform animate-slide-rtl"
+      [class.pause-animation]="isPaused"
+    >
+      <ng-container *ngFor="let sponsor of sponsors2">
+        <div
+          class="w-40 h-40 mx-4 md:mx-12 p-0 inline-block hover:scale-110 cursor-pointer"
+          (click)="goToWebsite(sponsor.website)"
+          (mouseover)="pauseCarousel()"
+          (mouseleave)="resumeCarousel()"
+        >
+          <img
+            [src]="sponsor.logo_url"
+            [alt]="sponsor.sponsor"
+            alt=""
+            [ngClass]="{ 'scale-150': sponsor.logo_url.endsWith('.svg') }"
+            class="object-contain w-full h-full"
+          />
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

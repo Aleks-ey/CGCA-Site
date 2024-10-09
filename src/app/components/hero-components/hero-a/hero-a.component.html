@@ -7,12 +7,12 @@
     'flex flex-col md:flex-row': true
   }"
 >
-  <div class="flex-1">
-    <h1 class="text-5xl pb-8" [ngClass]="{ 'text-6xl': !imageSrc }">
+  <div class="flex-1 content-center">
+    <h1 class="text-5xl pb-8 font-merri" [ngClass]="{ 'text-6xl': !imageSrc }">
       {{ title }}
     </h1>
     <p
-      class="text-xl pb-8"
+      class="text-xl pb-8 font-oxygen"
       [ngClass]="{
             'text-2xl': !imageSrc,
             'md:pl-4': imageSrc && imageLeft,
@@ -36,10 +36,14 @@
       </a>
     </div>
   </div>
-  <div class="hidden md:block flex-1" *ngIf="imageSrc">
+  <div
+    class="hidden md:block flex-1 cursor-pointer"
+    *ngIf="imageSrc"
+    (click)="openImageDialog(imageSrc, imageAlt)"
+  >
     <div class="relative">
       <img
-        class="w-full h-auto max-h-96 rounded-lg aspect-square"
+        class="w-full h-auto max-h-[450px] rounded-lg aspect-square"
         [src]="imageSrc"
         [alt]="imageAlt"
         alt=""

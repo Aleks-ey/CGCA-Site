@@ -4,39 +4,24 @@
     description="We are grateful for the generous support of our sponsors. Their contributions help us to continue our mission of promoting Georgian culture, uniting the Georgian community, and educating Georgian youth."
     buttonText="Become a Sponsor"
     buttonLink="/contact"
+    imageSrc="assets/images/CgcaGroupPhoto.png"
+    imageAlt="Colorado Georgian Community Association Group Photo At First Event"
+    imageOverlay="CGCA's First Community Event"
+    [imageLeft]="true"
   ></app-hero-a>
-  <div class="px-2 py-10 md:p-10" *ngFor="let sponsors of sponsorsList">
-    <div
-      class="inline-block overflow-hidden text-white bg-prussian-blue rounded-lg cursor-pointer"
-      (click)="toggleSponsorInfo(sponsors)"
-    >
-      <div class="p-4">
-        <h2 class="text-center !mt-4">
-          {{ sponsors.name }}
-        </h2>
-        <div
-          class="flex flex-col md:flex-row opacity-0 max-h-0 max-w-0 transform transition-all ease-in-out duration-1000"
-          [ngClass]="{
-            'opacity-100 max-h-96 max-w-96': sponsors.showInfo
-          }"
-        >
-          <div class="flex-col md:w-1/2">
-            <p class="h-1/5!ml-0 overflow-hidden">
-              {{ sponsors.logo }}
-            </p>
-            <div class="ml-0 overflow-hidden">
-              {{ sponsors.url }}
-            </div>
-          </div>
-          <div class="md:w-1/2">
-            <img
-              src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-              alt="sponsor card image"
-              class=""
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+
+  <app-sponsor-logo-carousel
+    bg="white"
+    [shuffle]="true"
+  ></app-sponsor-logo-carousel>
+
+  <div class="md:w-2/3 px-8 pt-20 mx-auto text-center">
+    <h2 class="text-3xl font-semibold">A Look At Our Incredible Sponsors</h2>
+    <p class="text-lg text-gray-700">
+      We are so thankful for our sponsors support. We invite you to join us in
+      showing appreciation by supporting them in return.
+    </p>
   </div>
+
+  <app-sponsor-list [alternate]="true" [image]="true"></app-sponsor-list>
 </div>

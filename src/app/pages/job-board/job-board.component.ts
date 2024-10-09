@@ -1,23 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { SupabaseService } from 'src/app/supabase.service';
-import { JobBoardListing } from 'src/app/components/register-job-board/register-job-board.component';
+import { Component, OnInit } from "@angular/core";
+import { SupabaseService } from "src/app/supabase.service";
+import { JobBoardListing } from "src/app/models/jobBoardListing.model";
 // import { LoginComponent } from 'src/app/components/login/login.component';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { MatDialog } from "@angular/material/dialog";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-job-board',
-  templateUrl: './job-board.component.html',
-  styleUrls: ['./job-board.component.css'],
+  selector: "app-job-board",
+  templateUrl: "./job-board.component.html",
+  styleUrls: ["./job-board.component.css"],
 })
 export class JobBoardComponent {
-
   jobsList: JobBoardListing[] = [];
   userEmail: any;
   isLoggedIn = false;
 
   displayedJobsList: JobBoardListing[] = []; // Array for jobs to be displayed on current page
-  searchQuery = '';
+  searchQuery = "";
   currentPage = 1;
   pageSize = 10; // Number of jobs per page
   totalJobs = 0; // Total number of filtered jobs
@@ -26,12 +25,11 @@ export class JobBoardComponent {
   constructor(
     private supabaseService: SupabaseService,
     public dialog: MatDialog,
-    private router: Router,
-    ) {}
+    private router: Router
+  ) {}
 
   async ngOnInit() {
-    await this.supabaseService.isLoggedIn()
-    .then (res => {
+    await this.supabaseService.isLoggedIn().then((res) => {
       if (res === true) {
         this.isLoggedIn = true;
       } else {
@@ -42,7 +40,7 @@ export class JobBoardComponent {
     // fetch all jobs
     const allJobsData = await this.supabaseService.getAllJobs();
     if (allJobsData.error) {
-      console.error('Error fetching events:', allJobsData.error);
+      console.error("Error fetching events:", allJobsData.error);
     } else {
       this.jobsList = allJobsData.data!;
     }
@@ -53,12 +51,13 @@ export class JobBoardComponent {
 
   updateDisplayedJobs() {
     // First, filter the jobs based on the search query
-    let filteredJobs = this.jobsList.filter((job) =>
-      job.job_title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      job.company_name.toLowerCase().includes(this.searchQuery.toLowerCase())
+    let filteredJobs = this.jobsList.filter(
+      (job) =>
+        job.job_title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        job.company_name.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
 
-    if (this.searchQuery == '') {
+    if (this.searchQuery == "") {
       this.searchPerformed = false;
     }
 
@@ -67,7 +66,10 @@ export class JobBoardComponent {
 
     // Calculate the slice of jobs to be displayed based on the current page
     const startIndex = (this.currentPage - 1) * this.pageSize;
-    this.displayedJobsList = filteredJobs.slice(startIndex, startIndex + this.pageSize);
+    this.displayedJobsList = filteredJobs.slice(
+      startIndex,
+      startIndex + this.pageSize
+    );
   }
 
   onSearchChange() {
@@ -127,12 +129,11 @@ export class JobBoardComponent {
   }
 
   async navigateToAccount() {
-    await this.supabaseService.isLoggedIn() 
-    .then (res => {
+    await this.supabaseService.isLoggedIn().then((res) => {
       if (res === true) {
-        this.router.navigate(['/account']);
+        this.router.navigate(["/account"]);
       } else {
-        this.router.navigate(['/account-login']);
+        this.router.navigate(["/account-login"]);
       }
     });
   }

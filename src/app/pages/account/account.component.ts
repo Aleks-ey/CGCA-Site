@@ -3,18 +3,12 @@ import { SupabaseService } from "src/app/supabase.service";
 import { MatDialog } from "@angular/material/dialog";
 import { RegisterComponent } from "src/app/components/register/register.component";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {
-  ForHireListing,
-  ForHireRequestComponent,
-} from "src/app/components/for-hire-request/for-hire-request.component";
-import {
-  BusinessListing,
-  RegisterBusinessComponent,
-} from "src/app/components/register-business/register-business.component";
-import {
-  JobBoardListing,
-  RegisterJobBoardComponent,
-} from "src/app/components/register-job-board/register-job-board.component";
+import { ForHireListing } from "src/app/models/forHireListing.model";
+import { ForHireRequestComponent } from "src/app/components/for-hire-request/for-hire-request.component";
+import { BusinessListing } from "src/app/models/businessListing.model";
+import { RegisterBusinessComponent } from "src/app/components/register-business/register-business.component";
+import { JobBoardListing } from "src/app/models/jobBoardListing.model";
+import { RegisterJobBoardComponent } from "src/app/components/register-job-board/register-job-board.component";
 import { UpdateAccountComponent } from "src/app/components/update-account/update-account.component";
 import { Router } from "@angular/router";
 

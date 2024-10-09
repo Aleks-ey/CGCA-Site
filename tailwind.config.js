@@ -13,6 +13,7 @@ module.exports = {
         merri: ["Merriweather", "sans-serif"],
         serif: ["serif", "sans-serif"],
         franklin: ["Franklin Gothic Medium", "sans-serif"],
+        oxygen: ["Oxygen", "sans-serif"],
       },
       objectPosition: {
         "50-10": "50% 10%",

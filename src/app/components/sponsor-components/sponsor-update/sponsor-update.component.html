@@ -1,0 +1,147 @@
+<div class="text-center py-10">
+  <h2 class="text-lg font-bold">Update Sponsor:</h2>
+</div>
+<form
+  [formGroup]="sponsorForm"
+  (ngSubmit)="onSubmit()"
+  class="flex flex-col text-center space-y-4"
+>
+  <mat-form-field appearance="fill" class="w-full">
+    <input
+      type="text"
+      placeholder="Select a sponsor"
+      matInput
+      [formControl]="sponsorControl"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      [displayWith]="displayFn"
+      (optionSelected)="onSponsorSelected($event.option.value)"
+    >
+      <mat-option
+        *ngFor="let sponsor of filteredSponsors | async"
+        [value]="sponsor"
+      >
+        {{ sponsor.sponsor }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Sponsor Name</mat-label>
+    <input matInput formControlName="sponsor" title="sponsor" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Description</mat-label>
+    <textarea
+      matInput
+      formControlName="description"
+      title="description"
+      required
+    ></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Location</mat-label>
+    <input matInput formControlName="location" title="location" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Phone</mat-label>
+    <input matInput formControlName="phone" title="phone" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Website</mat-label>
+    <input matInput formControlName="website" title="website" />
+  </mat-form-field>
+
+  <div *ngIf="selectedSponsor" class="w-full">
+    <div class="mx-auto">
+      <img
+        *ngIf="selectedSponsor.image_url"
+        [src]="selectedSponsor.image_url"
+        alt="Sponsor Image"
+        class="mx-auto"
+      />
+      <p *ngIf="selectedSponsor.file_name">
+        File name: {{ selectedSponsor.file_name }}
+      </p>
+      <p *ngIf="selectedSponsor.custom_file_name">
+        Custom name: {{ selectedSponsor.custom_file_name }}
+      </p>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <label
+      for="imageFile"
+      class="block text-left text-base font-medium text-gray-700"
+      >Sponsor Image Upload:</label
+    >
+    <input
+      type="file"
+      id="imageFile"
+      (change)="onImageSelected($event)"
+      class="mt-1 block w-full"
+    />
+  </div>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Custom File Name</mat-label>
+    <input matInput formControlName="customFileName" title="customFileName" />
+  </mat-form-field>
+
+  <div *ngIf="selectedSponsor" class="w-full">
+    <div class="mx-auto">
+      <img
+        *ngIf="selectedSponsor.logo_url"
+        [src]="selectedSponsor.logo_url"
+        alt="Sponsor Logo"
+        class="mx-auto"
+      />
+      <p *ngIf="selectedSponsor.logo_file_name">
+        Logo file name: {{ selectedSponsor.logo_file_name }}
+      </p>
+      <p *ngIf="selectedSponsor.custom_logo_file_name">
+        Custom logo name: {{ selectedSponsor.custom_logo_file_name }}
+      </p>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <label
+      for="logoFile"
+      class="block text-left text-base font-medium text-gray-700"
+      >Sponsor Logo Upload:</label
+    >
+    <input
+      type="file"
+      id="logoFile"
+      (change)="onLogoSelected($event)"
+      class="mt-1 block w-full"
+    />
+  </div>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Custom File Name</mat-label>
+    <input
+      matInput
+      formControlName="customLogoFileName"
+      title="customLogoFileName"
+    />
+  </mat-form-field>
+
+  <div class="text-center">
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      class="mt-6 bg-white hover:bg-rojo-red text-rojo-red hover:text-white py-2 px-4 border border-rojo-red rounded"
+    >
+      Update Sponsor
+    </button>
+  </div>
+</form>

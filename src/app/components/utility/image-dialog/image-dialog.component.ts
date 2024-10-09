@@ -7,7 +7,7 @@ import { MatDialogModule } from "@angular/material/dialog";
   standalone: true,
   imports: [MatDialogModule],
   template: `
-    <div class="flex h-[90vh] justify-center items-center">
+    <div class="flex h-[90vh] w-[90vw] justify-center items-center">
       <img
         [src]="data.imageUrl"
         [alt]="data.title"
