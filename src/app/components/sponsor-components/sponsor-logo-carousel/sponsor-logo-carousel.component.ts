@@ -47,7 +47,10 @@ export class SponsorLogoCarouselComponent implements OnInit {
   ngOnInit() {
     this.currentWindowWidth = window.innerWidth;
     this.fetchSponsors();
-    this.setAnimations();
+    // delay setting animations
+    setTimeout(() => {
+      this.setAnimations();
+    }, 1000);
   }
 
   fetchSponsors() {
