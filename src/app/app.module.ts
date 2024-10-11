@@ -53,6 +53,7 @@ import { SponsorsComponent } from "./pages/sponsors/sponsors.component";
 import { GalleryComponent } from "./pages/gallery/gallery.component";
 
 import { HeroAComponent } from "./components/hero-components/hero-a/hero-a.component";
+import { HeroBComponent } from "./components/hero-components/hero-b/hero-b.component";
 import { ForHireListingsComponent } from "./components/community-listings/for-hire-listings/for-hire-listings.component";
 import { JobBoardListingsComponent } from "./components/community-listings/job-board-listings/job-board-listings.component";
 import { BusinessListingsComponent } from "./components/community-listings/business-listings/business-listings.component";
@@ -63,6 +64,8 @@ import { SponsorDeleteComponent } from "./components/sponsor-components/sponsor-
 import { SponsorUpdateComponent } from "./components/sponsor-components/sponsor-update/sponsor-update.component";
 import { SponsorLogoCarouselComponent } from "./components/sponsor-components/sponsor-logo-carousel/sponsor-logo-carousel.component";
 import { SponsorListComponent } from "./components/sponsor-components/sponsor-list/sponsor-list.component";
+import { GalleryUploadComponent } from "./components/gallery-components/gallery-upload/gallery-upload.component";
+import { GalleryDisplayComponent } from "./components/gallery-components/gallery-display/gallery-display.component";
 
 @NgModule({
   declarations: [
@@ -117,6 +120,7 @@ import { SponsorListComponent } from "./components/sponsor-components/sponsor-li
     MatToolbarModule,
     ReactiveFormsModule,
     HeroAComponent,
+    HeroBComponent,
     ForHireListingsComponent,
     JobBoardListingsComponent,
     BusinessListingsComponent,
@@ -127,6 +131,8 @@ import { SponsorListComponent } from "./components/sponsor-components/sponsor-li
     SponsorUpdateComponent,
     SponsorLogoCarouselComponent,
     SponsorListComponent,
+    GalleryUploadComponent,
+    GalleryDisplayComponent,
   ],
   providers: [
     {

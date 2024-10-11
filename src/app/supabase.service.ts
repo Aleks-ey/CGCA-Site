@@ -14,11 +14,13 @@ import { BusinessListing } from "src/app/models/businessListing.model";
 import { JobBoardListing } from "src/app/models/jobBoardListing.model";
 import { CalendarEvent } from "./pages/admin/calendarEvent.model";
 import { Sponsor } from "./models/sponsor.model";
+import { GalleryImage } from "./models/galleryImage.model";
 
 import { AuthService } from "./supabase-services/auth.service";
 import { ProfileService } from "./supabase-services/profile.service";
 import { EventService } from "./supabase-services/event.service";
 import { SponsorService } from "./supabase-services/sponsor.service";
+import { GalleryService } from "./supabase-services/gallery.service";
 import { ImageUploadService } from "./supabase-services/image-upload.service";
 import { ForHireService } from "./supabase-services/for-hire.service";
 import { BusinessService } from "./supabase-services/business.service";
@@ -33,6 +35,7 @@ export class SupabaseService {
     public profileService: ProfileService,
     public eventService: EventService,
     public sponsorService: SponsorService,
+    public galleryService: GalleryService,
     public imageUploadService: ImageUploadService,
     public forHireService: ForHireService,
     public businessService: BusinessService,
@@ -234,6 +237,25 @@ export class SupabaseService {
   }
   updateSponsor(sponsorId: number, sponsorData: Sponsor) {
     return this.sponsorService.updateSponsor(sponsorId, sponsorData);
+  }
+  // --------------------------------- GALLERY ---------------------------------
+  getAllGalleryImages() {
+    return this.galleryService.getAllGalleryImages();
+  }
+  getGalleryImage(galleryImageId: number) {
+    return this.galleryService.getGalleryImage(galleryImageId);
+  }
+  addGalleryImageData(galleryImage: GalleryImage) {
+    return this.galleryService.addGalleryImageData(galleryImage);
+  }
+  deleteGalleryImage(galleryImageId: number) {
+    return this.galleryService.deleteGalleryImage(galleryImageId);
+  }
+  getGalleryImagesPaginated(limit: number, offset: number, events?: string[]) {
+    return this.galleryService.getGalleryImagesPaginated(limit, offset, events);
+  }
+  getAllGalleryEvents() {
+    return this.galleryService.getAllGalleryEvents();
   }
   // --------------------------------- IMAGE UPLOADS ---------------------------------
   uploadFile(bucket: string, path: string, file: File) {

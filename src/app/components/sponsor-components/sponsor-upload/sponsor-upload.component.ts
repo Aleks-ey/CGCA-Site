@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import {
   FormBuilder,
   FormGroup,
@@ -10,6 +10,8 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSnackBarModule, MatSnackBar } from "@angular/material/snack-bar";
 import { SupabaseService } from "src/app/supabase.service";
+import { RefreshService } from "src/app/services/refresh.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-sponsor-upload",
@@ -23,7 +25,9 @@ import { SupabaseService } from "src/app/supabase.service";
   ],
   templateUrl: "./sponsor-upload.component.html",
 })
-export class SponsorUploadComponent {
+export class SponsorUploadComponent implements OnInit, OnDestroy {
+  private refreshSubscription!: Subscription;
+
   sponsorForm: FormGroup;
   imageFile: File | null = null;
   logoFile: File | null = null;
@@ -31,7 +35,8 @@ export class SponsorUploadComponent {
   constructor(
     private fb: FormBuilder,
     private supabaseService: SupabaseService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private refreshService: RefreshService
   ) {
     this.sponsorForm = this.fb.group({
       sponsor: ["", Validators.required],
@@ -42,6 +47,27 @@ export class SponsorUploadComponent {
       customFileName: [""],
       customLogoFileName: [""],
     });
+  }
+
+  ngOnInit(): void {
+    // Subscribe to the refresh observable
+    this.refreshSubscription = this.refreshService.refreshObservable.subscribe(
+      (context) => {
+        if (context === "sponsors") {
+          this.resetForm();
+        }
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.refreshSubscription.unsubscribe();
+  }
+
+  resetForm() {
+    this.sponsorForm.reset();
+    this.imageFile = null;
+    this.logoFile = null;
   }
 
   onImageSelected(event: Event) {
@@ -60,14 +86,10 @@ export class SponsorUploadComponent {
     }
   }
 
-  private resetForm(): void {
-    this.sponsorForm.reset();
-    this.imageFile = null;
-    this.logoFile = null;
-  }
-
   async onSubmit() {
     if (this.sponsorForm.valid) {
+      let imagePath = null;
+      let logoPath = null;
       try {
         // Generate a unique file name for the upload
         const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
@@ -80,7 +102,7 @@ export class SponsorUploadComponent {
         // Check if imageFile is provided, if it is, attach unique suffix to sponsor image file and upload it. Get the URL
         if (this.imageFile) {
           imageFilename = `${uniqueSuffix}-${this.imageFile.name}`;
-          const imagePath = `sponsors/${imageFilename}`;
+          imagePath = `sponsors/${imageFilename}`;
           imageUrl = await this.supabaseService.uploadFile(
             "sponsors",
             imagePath,
@@ -91,7 +113,7 @@ export class SponsorUploadComponent {
         // Check if logoFile is provided, if it is, attach unique suffix to sponsor logo file and upload it. Get the URL
         if (this.logoFile) {
           logoFilename = `${uniqueSuffix}-${this.logoFile.name}`;
-          const logoPath = `sponsors/${logoFilename}`;
+          logoPath = `sponsors/${logoFilename}`;
           logoUrl = await this.supabaseService.uploadFile(
             "sponsors",
             logoPath,
@@ -119,7 +141,10 @@ export class SponsorUploadComponent {
         // Add sponsor entry to Supabase
         await this.supabaseService.addSponsor(sponsorData);
         console.log("Sponsor uploaded successfully!");
-        this.resetForm();
+
+        this.resetForm(); // refresh self
+        this.refreshService.triggerRefresh("sponsors"); // Notify other components to refresh
+
         this.snackBar.open("Sponsor added successfully!", "Close", {
           duration: 3000,
         });
@@ -128,6 +153,19 @@ export class SponsorUploadComponent {
         this.snackBar.open("Failed to add sponsor!", "Close", {
           duration: 3000,
         });
+        // If image or logo were provided, delete them from bucket
+        if (this.imageFile && imagePath) {
+          console.log(
+            "Deleting attempted upload for image with path: " + imagePath
+          );
+          await this.supabaseService.deleteFile("sponsors", imagePath);
+        }
+        if (this.logoFile && logoPath) {
+          console.log(
+            "Deleting attempted upload for logo with path: " + logoPath
+          );
+          await this.supabaseService.deleteFile("sponsors", logoPath);
+        }
       }
     } else {
       this.snackBar.open("Please fill out all required fields!", "Close", {

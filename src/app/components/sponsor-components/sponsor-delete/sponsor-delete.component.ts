@@ -1,4 +1,10 @@
-import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  TemplateRef,
+  ViewChild,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import {
   FormBuilder,
@@ -18,10 +24,11 @@ import {
   MatDialog,
   MatDialogRef,
 } from "@angular/material/dialog";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { SupabaseService } from "src/app/supabase.service";
 import { Sponsor } from "src/app/models/sponsor.model";
+import { RefreshService } from "src/app/services/refresh.service";
 
 @Component({
   selector: "app-sponsor-delete",
@@ -39,7 +46,9 @@ import { Sponsor } from "src/app/models/sponsor.model";
   ],
   templateUrl: "./sponsor-delete.component.html",
 })
-export class SponsorDeleteComponent {
+export class SponsorDeleteComponent implements OnInit, OnDestroy {
+  private refreshSubscription!: Subscription;
+
   sponsors: Sponsor[] = [];
   sponsorControl = new FormControl();
   filteredSponsors: Observable<any[]>;
@@ -47,7 +56,8 @@ export class SponsorDeleteComponent {
   constructor(
     private supabaseService: SupabaseService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private refreshService: RefreshService
   ) {
     this.filteredSponsors = this.sponsorControl.valueChanges.pipe(
       startWith(""),
@@ -57,6 +67,30 @@ export class SponsorDeleteComponent {
   }
 
   ngOnInit(): void {
+    this.supabaseService.getAllSponsors().then((response) => {
+      if (response.data) {
+        this.sponsors = response.data;
+      } else if (response.error) {
+        console.error("Failed to fetch sponsors:", response.error.message);
+      }
+    });
+
+    // Subscribe to the refresh observable
+    this.refreshSubscription = this.refreshService.refreshObservable.subscribe(
+      (context) => {
+        if (context === "sponsors") {
+          this.resetForm();
+        }
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.refreshSubscription.unsubscribe;
+  }
+
+  resetForm() {
+    this.sponsorControl.setValue("");
     this.supabaseService.getAllSponsors().then((response) => {
       if (response.data) {
         this.sponsors = response.data;
@@ -119,16 +153,46 @@ export class SponsorDeleteComponent {
     });
   }
 
-  deleteSponsor(sponsorId: number): void {
-    this.supabaseService
-      .deleteSponsor(sponsorId)
-      .then(() => {
-        console.log("Sponsor and associated image deleted successfully");
-        // Refresh the list of sponsors or handle UI feedback
-        this.sponsors = this.sponsors.filter((s) => s.id !== sponsorId);
-      })
-      .catch((error) => {
-        console.error("Failed to delete sponsor", error);
-      });
+  async deleteSponsor(sponsorId: number): Promise<void> {
+    try {
+      // Get sponsor details before deletion
+      const { data: sponsor } = await this.supabaseService.getSponsor(
+        sponsorId
+      );
+      if (!sponsor) {
+        console.error("Sponsor not found.");
+        return;
+      }
+
+      // Attempt to delete the sponsor
+      const deleteResponse = await this.supabaseService.deleteSponsor(
+        sponsorId
+      );
+      if (deleteResponse != null) {
+        throw deleteResponse;
+      } else {
+        console.log("Sponsor deleted successfully");
+
+        // If sponsor has associated image, delete it
+        if (sponsor.file_name) {
+          const imagePath = `sponsors/${sponsor.file_name}`;
+          await this.supabaseService.deleteFile("sponsors", imagePath);
+          console.log("Sponsor image deleted successfully");
+        }
+
+        // If sponsor has associated logo, delete it
+        if (sponsor.logo_file_name) {
+          const logoPath = `sponsors/${sponsor.logo_file_name}`;
+          await this.supabaseService.deleteFile("sponsors", logoPath);
+          console.log("Sponsor logo deleted successfully");
+        }
+
+        this.resetForm(); // refresh self
+        this.sponsors = this.sponsors.filter((s) => s.id !== sponsorId); // Update UI or state
+        this.refreshService.triggerRefresh("sponsors"); // Notify other components to refresh
+      }
+    } catch (error) {
+      console.error("Failed to delete sponsor and associated images", error);
+    }
   }
 }

@@ -1,0 +1,126 @@
+<div class="text-center py-10">
+  <h2 class="text-lg font-bold">Add Gallery Images:</h2>
+</div>
+<form
+  [formGroup]="uploadForm"
+  (ngSubmit)="onSubmit()"
+  class="flex flex-col text-center space-y-4"
+>
+  <!-- Toggle between single and multiple image uploads -->
+  <div class="toggle-upload-mode">
+    <label>
+      <input type="checkbox" (change)="toggleMultipleUpload()" />
+      Upload multiple images
+    </label>
+  </div>
+
+  <!-- Event input field -->
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Event</mat-label>
+    <input
+      matInput
+      formControlName="event"
+      placeholder="Enter event name. Case Sensitive"
+      required
+    />
+  </mat-form-field>
+
+  <!-- Single image file input -->
+  <div *ngIf="!isMultiple" class="w-full">
+    <div class="text-center mt-4">
+      <label
+        for="file"
+        class="block text-left text-base font-medium text-gray-700"
+        >Gallery Image:</label
+      >
+      <input
+        type="file"
+        id="file"
+        (change)="onFileChange($event)"
+        class="mt-1 block w-full"
+      />
+    </div>
+  </div>
+
+  <!-- Drag and drop file upload for multiple images-->
+  <div
+    *ngIf="isMultiple"
+    class="flex w-full h-80 p-10 items-center justify-center bg-slate-200 border border-dashed border-black"
+    (drop)="onDrop($event)"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+  >
+    <div class="text-center">
+      <i class="material-icons text-3xl">download</i>
+      <p>Drag and drop images here to add to upload list.</p>
+      <p>Drag and drop a folder of up to 100 images here to upload all.</p>
+      <p>
+        When uploading multiple images at once, custom file names are
+        unavailable.
+      </p>
+    </div>
+    <input
+      type="file"
+      id="fileInput"
+      (change)="onFileChange($event)"
+      hidden
+      multiple
+      webkitdirectory
+    />
+  </div>
+  <!-- File Preview List (only show if files are added) -->
+  <div *ngIf="isMultiple" class="w-full">
+    <div class="w-full text-center bg-slate-200 border border-black">
+      <h3 class="text-base font-medium">Files to Upload</h3>
+    </div>
+    <div
+      *ngIf="imageFiles.length == 0"
+      class="w-full text-center content-center h-8 overflow-y-auto border border-black"
+    >
+      <p class="">No Images Added to Upload List</p>
+    </div>
+    <div
+      *ngIf="imageFiles.length > 0"
+      class="w-full text-left min-h-10 max-h-36 overflow-y-auto border border-black"
+    >
+      <ul>
+        <li
+          *ngFor="let file of imageFiles; let i = index"
+          class="flex justify-between p-4 my-2 rounded-md"
+        >
+          <span>{{ file.name }}</span>
+          <button
+            type="button"
+            (click)="removeFile(i)"
+            class="flex p-2 bg-rojo-red text-white cursor-pointer rounded-md"
+          >
+            <i class="material-icons"> delete </i>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Show custom file name field only for single image uploads -->
+  <div *ngIf="!isMultiple" class="w-full">
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Custom File Name</mat-label>
+      <input
+        matInput
+        formControlName="customFileName"
+        placeholder="Enter custom file name (optional)"
+      />
+    </mat-form-field>
+  </div>
+
+  <!-- Submit button -->
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="uploadForm.invalid"
+    class="mt-6 bg-white hover:bg-rojo-red text-rojo-red hover:text-white py-2 px-4 border border-rojo-red rounded"
+  >
+    Upload {{ isMultiple ? "Images" : "Image" }}
+  </button>
+</form>

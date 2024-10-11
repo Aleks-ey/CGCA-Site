@@ -26,6 +26,9 @@ module.exports = {
         "50-80": "50% 80%",
         "50-90": "50% 90%",
       },
+      boxShadow: {
+        "inner-y-lg": "inset 0px 20px 30px gray, inset 0px -20px 30px gray",
+      },
     },
   },
   variants: {

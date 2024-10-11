@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import {
   FormGroup,
@@ -17,6 +17,8 @@ import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { SupabaseService } from "src/app/supabase.service";
 import { Sponsor } from "src/app/models/sponsor.model";
+import { RefreshService } from "src/app/services/refresh.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-sponsor-update",
@@ -33,7 +35,9 @@ import { Sponsor } from "src/app/models/sponsor.model";
   ],
   templateUrl: "./sponsor-update.component.html",
 })
-export class SponsorUpdateComponent implements OnInit {
+export class SponsorUpdateComponent implements OnInit, OnDestroy {
+  private refreshSubscription!: Subscription;
+
   sponsors: Sponsor[] = [];
   sponsorForm: FormGroup;
   filteredSponsors: Observable<Sponsor[]> | undefined;
@@ -44,7 +48,8 @@ export class SponsorUpdateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private supabaseService: SupabaseService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private refreshService: RefreshService
   ) {
     this.sponsorForm = this.fb.group({
       sponsor: ["", Validators.required],
@@ -62,6 +67,34 @@ export class SponsorUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.supabaseService.getAllSponsors().then((response) => {
+      if (response.data) {
+        this.sponsors = response.data;
+        this.setupFilteredSponsors();
+      } else if (response.error) {
+        console.error("Failed to fetch sponsors:", response.error.message);
+      }
+    });
+
+    this.refreshSubscription = this.refreshService.refreshObservable.subscribe(
+      (context) => {
+        if (context === "sponsors") {
+          this.resetForm();
+        }
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.refreshSubscription.unsubscribe();
+  }
+
+  resetForm() {
+    this.sponsorForm.reset();
+    this.selectedSponsor = undefined;
+    this.imageFile = null;
+    this.logoFile = null;
+    // refresh the list of sponsors
     this.supabaseService.getAllSponsors().then((response) => {
       if (response.data) {
         this.sponsors = response.data;
@@ -133,14 +166,6 @@ export class SponsorUpdateComponent implements OnInit {
     }
   }
 
-  private resetForm(): void {
-    this.sponsorForm.reset();
-    this.selectedSponsor = undefined;
-    this.imageFile = null;
-    this.logoFile = null;
-    // refresh the list of sponsors
-  }
-
   async onSubmit(): Promise<void> {
     if (this.sponsorForm.valid && this.selectedSponsor) {
       if (!this.selectedSponsor.id) {
@@ -150,47 +175,41 @@ export class SponsorUpdateComponent implements OnInit {
       // Generate a unique file name for the upload
       const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
       let newImageFilename = null;
+      let imagePath = null;
       let newImageUrl = null;
       let newLogoFilename = null;
+      let logoPath = null;
       let newLogoUrl = null;
+
+      let oldFileName = null;
+      if (this.selectedSponsor.file_name) {
+        oldFileName = this.selectedSponsor.file_name;
+      }
+      let oldLogoFileName = null;
+      if (this.selectedSponsor.logo_file_name) {
+        oldLogoFileName = this.selectedSponsor.logo_file_name;
+      }
 
       // Check if imageFile is provided, if it is, attach unique suffix to sponsor image file and upload it. Get the URL
       if (this.imageFile) {
         newImageFilename = `${uniqueSuffix}-${this.imageFile.name}`;
-        const imagePath = `sponsors/${newImageFilename}`;
+        imagePath = `sponsors/${newImageFilename}`;
         newImageUrl = await this.supabaseService.uploadFile(
           "sponsors",
           imagePath,
           this.imageFile
         );
-        // Delete old image if new one is uploaded
-        if (this.selectedSponsor.image_url && this.selectedSponsor.file_name) {
-          await this.supabaseService.deleteFile(
-            "sponsors",
-            this.selectedSponsor.file_name
-          );
-        }
       }
 
       // Check if logoFile is provided, if it is, attach unique suffix to sponsor logo file and upload it. Get the URL
       if (this.logoFile) {
         newLogoFilename = `${uniqueSuffix}-${this.logoFile.name}`;
-        const logoPath = `sponsors/${newLogoFilename}`;
+        logoPath = `sponsors/${newLogoFilename}`;
         newLogoUrl = await this.supabaseService.uploadFile(
           "sponsors",
           logoPath,
           this.logoFile
         );
-        // Delete old logo if new one is uploaded
-        if (
-          this.selectedSponsor.logo_url &&
-          this.selectedSponsor.logo_file_name
-        ) {
-          await this.supabaseService.deleteFile(
-            "sponsors",
-            this.selectedSponsor.logo_file_name
-          );
-        }
       }
 
       // Prepare updated data, including new image URLs if they were updated
@@ -216,15 +235,44 @@ export class SponsorUpdateComponent implements OnInit {
           updatedData
         );
         console.log("Sponsor updated successfully");
+
+        // Delete old images if new ones were uploaded and sponsor updated successfully
+        if (this.imageFile && oldFileName) {
+          const oldImagePath = `sponsors/${oldFileName}`;
+          await this.supabaseService.deleteFile("sponsors", oldImagePath);
+          console.log("Old sponsor image deleted successfully");
+        }
+        if (this.logoFile && oldLogoFileName) {
+          const oldLogoPath = `sponsors/${oldLogoFileName}`;
+          await this.supabaseService.deleteFile("sponsors", oldLogoPath);
+          console.log("Old sponsor logo deleted successfully");
+        }
+
         this.snackBar.open("Sponsor updated successfully!", "Close", {
           duration: 3000,
         });
-        this.resetForm();
+
+        this.resetForm(); // refresh self
+        this.refreshService.triggerRefresh("sponsors"); // Notify other components to refresh
       } catch (error) {
         console.error("Error updating sponsor:", error);
         this.snackBar.open("Failed to update sponsor!", "Close", {
           duration: 3000,
         });
+
+        // If image or logo were provided, delete them from bucket
+        if (this.imageFile && imagePath) {
+          await this.supabaseService.deleteFile("sponsors", imagePath);
+          console.log(
+            "Deleted attempted update for image with path: " + imagePath
+          );
+        }
+        if (this.logoFile && logoPath) {
+          await this.supabaseService.deleteFile("sponsors", logoPath);
+          console.log(
+            "Deleted attempted update for logo with path: " + logoPath
+          );
+        }
       }
     } else {
       this.snackBar.open("Form is not valid!", "Close", { duration: 3000 });

@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Renderer2, ElementRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  Renderer2,
+  ElementRef,
+  HostListener,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { interval, Subscription } from "rxjs";
 import { SupabaseService } from "src/app/supabase.service";
@@ -29,6 +36,7 @@ export class SponsorLogoCarouselComponent implements OnInit {
   sponsors: any[] = [];
   sponsors2: any[] = [];
   isPaused = false;
+  currentWindowWidth: number = 0;
 
   constructor(
     private supabaseService: SupabaseService,
@@ -37,6 +45,7 @@ export class SponsorLogoCarouselComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.currentWindowWidth = window.innerWidth;
     this.fetchSponsors();
     this.setAnimations();
   }
@@ -101,8 +110,13 @@ export class SponsorLogoCarouselComponent implements OnInit {
     return array;
   }
 
+  @HostListener("window:resize")
+  onResize() {
+    this.currentWindowWidth = window.innerWidth;
+  }
+
   pauseCarousel() {
-    if (this.pause) {
+    if (this.pause && this.currentWindowWidth > 768) {
       this.isPaused = true;
     } else {
       this.isPaused = false;
