@@ -32,16 +32,9 @@ export class GalleryDisplayComponent implements OnInit {
   pageSize: number = 25; // Number of images per page
   totalImages: number = 0; // Total number of images for the query
   loading: boolean = false; // Track loading stat
-  delayedLoad: boolean = false;
+  showMasonry: boolean = false; // Track whether to show masonry
   currentWindowWidth: number = 0;
-  currentBreakpoint =
-    this.currentWindowWidth >= 1024
-      ? "lg"
-      : this.currentWindowWidth >= 768
-      ? "md"
-      : this.currentWindowWidth >= 430
-      ? "sm"
-      : "xs";
+  currentBreakpoint: string = ""; // Default breakpoint
 
   public myOptions: NgxMasonryOptions = {
     percentPosition: true,
@@ -55,7 +48,17 @@ export class GalleryDisplayComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading == true;
     this.currentWindowWidth = window.innerWidth;
+    this.currentBreakpoint =
+      this.currentWindowWidth >= 768
+        ? "lg"
+        : this.currentWindowWidth >= 640
+        ? "md"
+        : "sm";
+    if (this.currentBreakpoint != "sm") {
+      this.showMasonry = true;
+    }
     this.fetchEvents(); // Fetch distinct events
     this.fetchGalleryImages(); // Fetch initial gallery images
   }
@@ -76,7 +79,6 @@ export class GalleryDisplayComponent implements OnInit {
   ) {
     try {
       this.loading = true; // start spinner
-      this.delayedLoad = true;
       const offset = pageIndex * this.pageSize;
       const result = await this.supabaseService.getGalleryImagesPaginated(
         this.pageSize,
@@ -94,11 +96,10 @@ export class GalleryDisplayComponent implements OnInit {
     } catch (error) {
       console.error("Error fetching gallery images:", error);
     } finally {
-      this.loading = false; // stop spinner
-      //delay then delayd loading equal false
-      setTimeout(() => {
-        this.delayedLoad = false;
-      }, 2000);
+      setTimeout(
+        () => (this.loading = false), // stop spinner
+        1000
+      );
     }
   }
 
@@ -135,14 +136,21 @@ export class GalleryDisplayComponent implements OnInit {
     this.currentWindowWidth = window.innerWidth;
     const lastBreakpoint = this.currentBreakpoint;
     this.currentBreakpoint =
-      this.currentWindowWidth >= 1024
+      this.currentWindowWidth >= 768
         ? "lg"
-        : this.currentWindowWidth >= 768
+        : this.currentWindowWidth >= 640
         ? "md"
-        : this.currentWindowWidth >= 430
-        ? "sm"
-        : "xs";
-    if (lastBreakpoint != this.currentBreakpoint) {
+        : "sm";
+
+    // Disable masonry on small screens
+    if (this.currentBreakpoint != "sm") {
+      this.showMasonry = true;
+    } else {
+      this.showMasonry = false;
+      this.loading = false;
+    }
+
+    if (lastBreakpoint != this.currentBreakpoint && this.showMasonry) {
       this.fetchGalleryImages(this.pageIndex);
     }
   }
