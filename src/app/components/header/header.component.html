@@ -1,9 +1,11 @@
-<mat-toolbar class="sticky top-0 z-50 h-20 !p-1 md:!p-2 !bg-white shadow-lg">
+<mat-toolbar
+  class="sticky top-0 z-50 !h-auto !p-1 !md:px-2 !md:py-1 !bg-white shadow-lg"
+>
   <a routerLink="/" class="block">
     <img
       src="assets/images/CGCA-LOGO.png"
       alt="Colorado Georgian Community Association"
-      class="w-12 md:w-16"
+      class="w-16 md:w-20"
     />
   </a>
   <a routerLink="/" class="flex flex-col p-1 lg:p-2" *ngIf="!isMenuOpen">
