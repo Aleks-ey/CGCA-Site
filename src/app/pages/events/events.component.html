@@ -35,27 +35,48 @@
       }"
     >
       <div class="flex flex-col h-full w-full bg-white rounded-lg">
-        <div
+        <!-- <div
           class="md:h-2/5 bg-prussian-blue"
           (click)="openImageDialog(event.image_url, event.title)"
-        >
-          <img
-            *ngIf="event.image_url"
-            src="{{ event.image_url }}"
-            alt="{{ event.title }}"
-            class="h-full w-full rounded-t-lg cursor-pointer object-contain"
-          />
-        </div>
+        > -->
+        <img
+          *ngIf="event.image_url"
+          src="{{ event.image_url }}"
+          alt="{{ event.title }}"
+          class="h-auto md:h-2/5 w-auto rounded-t-lg cursor-pointer object-fill"
+          (click)="openImageDialog(event.image_url, event.title)"
+        />
+        <!-- </div> -->
         <div class="flex flex-col md:h-3/5 px-4 py-2">
-          <h2 class="text-lg font-medium">
+          <h2 class="text-lg font-medium text-wrap">
             {{ event.title }}
           </h2>
           <div class="py-2 overflow-y-auto whitespace-normal">
             <p>{{ event.description }}</p>
           </div>
-          <div class="pt-2 font-medium">
+          <div class="pt-2 font-medium text-wrap">
             {{ event.date }}
             &nbsp; - &nbsp; Starts at {{ event.time }}
+          </div>
+          <div id="customButton">
+            <a
+              href="https://ticketstripe.com/independencedaygeorgia"
+              style="
+                background-color: #f8a102;
+                border: 1px solid #f8a102;
+                text-shadow: 0 -1px #f8a102;
+                display: inline-block;
+                color: #ffffff;
+                font-family: arial;
+                font-size: 15px;
+                font-weight: bold;
+                margin: 0;
+                padding: 5px 10px;
+                text-decoration: none;
+              "
+              target="_top"
+              >Click Here to Buy Tickets</a
+            >
           </div>
         </div>
       </div>

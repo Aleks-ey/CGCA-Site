@@ -134,7 +134,7 @@ export class EventsComponent {
   openImageDialog(imageUrl: string, title: string) {
     this.dialog.open(ImageDialogComponent, {
       data: { imageUrl, title },
-      panelClass: "py-10",
+      panelClass: "py-2",
     });
   }
 
