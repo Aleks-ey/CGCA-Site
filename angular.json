@@ -46,13 +46,7 @@
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": [
-              "src/styles.scss",
-              "https://cdn.jotfor.ms/stylebuilder/static/form-common.css?v=da2db26",
-              "https://cdn.jotfor.ms/themes/CSS/5e6b428acc8c4e222d1beb91.css?v=3.3.63506",
-              "https://cdn.jotfor.ms/css/styles/payment/payment_styles.css?3.3.63506",
-              "https://cdn.jotfor.ms/css/styles/payment/payment_feature.css?3.3.63506"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": []
           },
           "configurations": {
