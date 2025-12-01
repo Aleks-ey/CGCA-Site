@@ -1,98 +1,160 @@
-.hire_filter_container {
-    padding: 20px;
+/* General layout */
+.min-h-screen {
+  min-height: 100vh;
+  background-color: #f9fafb;
+  padding: 2rem;
+  font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.hire_filter_search > input {
-    border: 1px solid #e5e7eb;
-    border-radius: 5px;
+/* Auth buttons */
+button {
+  transition: all 0.3s ease;
 }
 
-.hire_listing_container {
-    padding: 20px;
+button:hover {
+  transform: translateY(-2px);
 }
 
-.hire_listing {
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 10px;
+/* Login/Logout Buttons */
+.absolute button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
 }
 
-.hire_listing_header > p {
-    font-size: 20px;
-    font-weight: bold;
+.absolute button:hover {
+  background-color: #2563eb;
 }
 
-.hire_listing_details > p > mat-icon {
-    transform: translateY(7px);
+/* Welcome Section */
+.p-16 {
+  padding: 4rem;
 }
 
-.hire_listing_contact > p > mat-icon {
-    transform: translateY(7px);
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #111827;
 }
 
-.work_outside {
-    width: max-content;
-    padding: 0px 7px 0px 7px;
-    color: white;
-    background-color: #1E293B;
-    opacity: 0.8;
-    border-radius: 10px;
+h2 {
+  font-size: 1.5rem;
+  color: #6b7280;
 }
 
-.business_listing_container {
-    padding: 20px;
+/* Form Switcher Buttons */
+.switch_forms_container button {
+  background-color: white;
+  color: #374151;
+  border: 2px solid #e5e7eb;
+  font-weight: 600;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.business_listing {
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
+.switch_forms_container button:hover {
+  background-color: black;
+  color: white;
 }
 
-.business_listing_header > p {
-    font-size: 20px;
-    font-weight: bold;
+.switch_forms_container button.active {
+  background-color: transparent;
+  color: black;
+  border-radius: 12px 12px 0 0;
+  border: none;
+  border-bottom: black 2px solid;
 }
 
-.business_listing_details > p > mat-icon {
-    transform: translateY(7px);
+/* Forms */
+.admin_add_form,
+.admin_delete_form {
+  background-color: white;
+  padding: 2rem;
+  margin-top: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-.business_listing_contact > p > mat-icon {
-    transform: translateY(7px);
+/* Form Fields */
+mat-form-field,
+input[type="file"],
+textarea {
+  width: 100% !important;
+  margin-bottom: 1.5rem;
 }
 
+/* Submit Button */
+form button[type="submit"] {
+  background-color: #10b981;
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+form button[type="submit"]:hover {
+  background-color: #059669;
+}
+
+/* Sections for Sponsors and Gallery */
+.app-sponsor-section,
+.app-gallery-section {
+  background-color: #f3f4f6;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-top: 1.5rem;
+}
+
+/* Listing containers */
+.hire_listing_container,
+.business_listing_container,
 .job_board_listing_container {
-    padding: 20px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-top: 2rem;
 }
 
+/* Listing Items */
+.hire_listing,
+.business_listing,
 .job_board_listing {
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
 }
 
-.job_board_listing_header > p {
-    font-size: 20px;
-    font-weight: bold;
+/* Text Headers */
+.hire_listing_header p,
+.business_listing_header p,
+.job_board_listing_header p {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #111827;
 }
 
-.job_board_listing_contact > p > mat-icon {
-    transform: translateY(7px);
+/* Icons */
+mat-icon {
+  color: #6b7280;
 }
 
+/* Tags */
+.work_outside {
+  padding: 0.25rem 0.75rem;
+  background-color: #1e3a8a;
+  color: white;
+  font-size: 0.75rem;
+  border-radius: 9999px;
+}
+
+/* Flex classes */
 .form_flex {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
-
-.label_unapproved {
-    margin-right: 8px;
-}
-
-.label_approved {
-    margin-left: 8px;
-}
-  

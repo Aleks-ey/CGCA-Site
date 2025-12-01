@@ -21,37 +21,36 @@
   <div
     class="switch_forms_container flex flex-wrap md:flex-nowrap place-content-center mx-2 gap-2 md:gap-10"
     *ngIf="isAdmin"
-    [ngClass]="{ '': switchForm == 0, '': switchForm > 0 }"
   >
     <button
       type="button"
       (click)="switchToEvents()"
+      [ngClass]="{ active: switchForm == 1 }"
       class="w-1/2 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
-      [ngClass]="{ 'text-white bg-black': switchForm == 1 }"
     >
       Events
     </button>
     <button
       type="button"
       (click)="switchToHires()"
+      [ngClass]="{ active: switchForm == 2 }"
       class="w-1/2 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
-      [ngClass]="{ 'text-white bg-black': switchForm == 2 }"
     >
       For Hire
     </button>
     <button
       type="button"
       (click)="switchToBusinesses()"
+      [ngClass]="{ active: switchForm == 3 }"
       class="w-1/2 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
-      [ngClass]="{ 'text-white bg-black': switchForm == 3 }"
     >
       Business
     </button>
     <button
       type="button"
       (click)="switchToJobBoard()"
+      [ngClass]="{ active: switchForm == 4 }"
       class="w-1/2 py-2 px-4 border-2 border-black rounded-md hover:text-white hover:bg-black"
-      [ngClass]="{ 'text-white bg-black': switchForm == 4 }"
     >
       Job Board
     </button>

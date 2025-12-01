@@ -21,9 +21,9 @@ export class MeetComponent {
   showPopup1 = false;
   showPopup2 = false;
   showPopup3 = false;
-  showPopup4 = false;
+  // showPopup4 = false;
   showPopup5 = false;
-  showPopup6 = false;
+  // showPopup6 = false;
 
   togglePopup1() {
     this.showPopup1 = !this.showPopup1;
@@ -37,15 +37,15 @@ export class MeetComponent {
     this.showPopup3 = !this.showPopup3;
   }
 
-  togglePopup4() {
-    this.showPopup4 = !this.showPopup4;
-  }
+  // togglePopup4() {
+  //   this.showPopup4 = !this.showPopup4;
+  // }
 
   togglePopup5() {
     this.showPopup5 = !this.showPopup5;
   }
 
-  togglePopup6() {
-    this.showPopup6 = !this.showPopup6;
-  }
+  // togglePopup6() {
+  //   this.showPopup6 = !this.showPopup6;
+  // }
 }

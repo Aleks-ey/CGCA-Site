@@ -7,23 +7,14 @@ import { MatDialogModule } from "@angular/material/dialog";
   standalone: true,
   imports: [MatDialogModule],
   template: `
-    <div
-      class="flex max-h-[90vh] max-w-[90vw] md:max-h-full justify-center items-center"
-    >
+    <div class="flex max-h-[90vh] max-w-[90vw] justify-center items-center">
       <img
         [src]="data.imageUrl"
         [alt]="data.title"
-        class="h-full max-w-full max-h-screen"
+        class="h-full max-w-full object-cover"
       />
     </div>
   `,
-  styles: [
-    `
-      img {
-        object-fit: contain;
-      }
-    `,
-  ],
 })
 export class ImageDialogComponent {
   constructor(
